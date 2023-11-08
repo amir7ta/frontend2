@@ -8,3 +8,20 @@ export const variables = {
     ZARINPAL_API: "https://localhost:7089/api/zarinpal",
 }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

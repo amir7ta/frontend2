@@ -9,21 +9,21 @@ import { Link } from 'react-router-dom';
 import { selectCurrentUser } from '../store/reducers/userSlice';
 import { useSelector } from 'react-redux';
 import { usePayment } from '../utils/hooks/usePayment';
-import { pay, verify } from "../store/actions/paymentActions";
 import {  useOrder } from '../utils/hooks/useOrder';
 import { useCart } from '../utils/hooks/useCart';
 
-const tabs = ["ورود", "آدرس", "روش پرداخت", "پرداخت", "پایان"];
+// const tabs = ["ورود", "آدرس", "روش پرداخت", "پرداخت", "پایان"];
+   const tabs = ["ورود", "آدرس", "پرداخت", "پایان"];
 
 function Checkout() {
   const { createOrder, deleteOrder } = useOrder();
+  const { pay} = usePayment();
 
   const {discount, items, subtotal, defaultSubtotal, delivery, total, quantity ,orderId} = useCart();
 
   const [activeTab, setActiveTab] = useState(0);
   const currentUser = useSelector(selectCurrentUser);
-  const [payment, verify,pay] = useState(0);
-
+  const [bankName,setBankName]=useState('')
   useEffect(() => {
     if (currentUser) {
       setActiveTab(1);
@@ -34,14 +34,14 @@ function Checkout() {
   const isSecondLastTab = activeTab === tabs.length - 2;
 
   const onPaymentComplete = () => {
-    setActiveTab(4);
+    setActiveTab(3);
   };
 
   const DoPayment = () => {
     debugger;
         if(orderId==0) {
           let userId = currentUser.userID;
-          createOrder({discount, items, subtotal, defaultSubtotal, total, quantity, userId})
+          pay({discount, items, subtotal, defaultSubtotal, total, quantity, userId, orderId, bankName})
         }
   };
   const onBack = () => {
@@ -69,9 +69,9 @@ function Checkout() {
         <div className="checkout-content">
           {activeTab === 0 && <LogIn />}
           {activeTab === 1 && <Shipping />}
-          {activeTab === 2 && <Payment />}
-          {activeTab === 3 && <Confirmation onPaymentComplete={onPaymentComplete}  onBack={onBack} onPayment={DoPayment}/>}
-          {activeTab === 4 && <Complete />}
+          {/* {activeTab === 2 && <Payment />} */}
+          {activeTab === 2 && <Confirmation onPaymentComplete={onPaymentComplete}  onBack={onBack} onPayment={DoPayment}/>}
+          {activeTab === 3 && <Complete />}
         </div>
         <div className="checkout-bottom">
           {!isLastTab ? (
