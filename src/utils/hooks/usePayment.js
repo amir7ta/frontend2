@@ -18,6 +18,7 @@ export const usePayment = () => {
 
   const paymentHandler = (forPayment, e) => {
     dispatch(pay(forPayment)).then((res)=>{
+      debugger;
       if(res.payload)
         dispatch(applyCardIsSaved(res?.payload))
     });

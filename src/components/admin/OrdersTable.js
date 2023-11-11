@@ -39,7 +39,7 @@ import userApi from '../../utils/api/userApi';
           <tbody>
             {orders.map((order, index) => (
               <tr key={index} onClick={() => setSelectedOrder(order)}>
-                <td>{order.orderID}</td>
+                <td>{order.orderId}</td>
                 <td>{formatDate(order.dateTime)}</td>
                 <td>{getStatusString(order.status)}</td>
                 <td>{order.userID}</td>

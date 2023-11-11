@@ -13,7 +13,7 @@ function OrderItemsTable({ selectedOrder }) {
 
   useEffect(() => {
     if (selectedOrder) {
-      orderItemApi.getOrderItemsByOrderId(selectedOrder.orderID).then((orderItems) => {
+      orderItemApi.getOrderItemsByOrderId(selectedOrder.orderId).then((orderItems) => {
         setOrderItems(orderItems);
 
         const productSizePromises = orderItems.map((orderItem) =>
@@ -33,13 +33,13 @@ function OrderItemsTable({ selectedOrder }) {
         <div key={index} className='cart-item'>
           {products[index] && (
             <div className="cart-item-img">
-              <Link to={`/${products[index].productID}`}><img src={products[index].imageURL} /></Link>
+              <Link to={`/${products[index].productId}`}><img src={products[index].imageURL} /></Link>
             </div>
           )}
           <div className="cart-item-about">
             <div className='cart-item-details'>
               {products[index] && (
-                <Link to={`/${products[index].productID}`}><p>{products[index].brand} {products[index].name}</p></Link>
+                <Link to={`/${products[index].productId}`}><p>{products[index].brand} {products[index].name}</p></Link>
               )}
               {productSizes[index] && (
                 <p>Size: {productSizes[index].size}</p>

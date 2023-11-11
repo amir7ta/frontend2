@@ -7,7 +7,7 @@ import { formatPrice } from '../../utils/hooks/useUtil';
 
 function ProductCard({product, index}) {
   const { wishlistItems, toggleWishlistItem } = useWishlist();
-  const itemExists = wishlistItems.find((item) => item.productID === product.productID);
+  const itemExists = wishlistItems.find((item) => item.productId === product.productId);
 
 return (
   <>
@@ -18,12 +18,12 @@ return (
               onClick={() => toggleWishlistItem(product)}
             />   
           <div className='product-img'>
-              <Link to={`/${product.productID}`}>
+              <Link to={`/${product.productId}`}>
                 <img src={product.imageURL} alt="" />
               </Link>
           </div>
           <div className='product-info'>
-            <Link to={`/${product.productID}`}>
+            <Link to={`/${product.productId}`}>
               <p>{product.brand}</p>
               <h3>{product.name}</h3>
               <p> {formatPrice(product.defaultPrice)}</p>

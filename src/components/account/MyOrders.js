@@ -15,7 +15,7 @@ function MyOrders({ currentUser }) {
   useEffect(() => {
     dispatch(fetchOrdersByUserId(currentUser.userID)).then(async (response) => {
       const ordersWithItems = await Promise.all(response.payload.map(async (order, index) => {
-        const orderItems = await orderItemApi.getOrderItemsByOrderId(order.orderID);
+        const orderItems = await orderItemApi.getOrderItemsByOrderId(order.order.Id);
 
         const productSizePromises = orderItems.map((orderItem) =>
           sizeApi.getProductSize(orderItem.productSizeId)
@@ -23,7 +23,7 @@ function MyOrders({ currentUser }) {
         const productSizes = await Promise.all(productSizePromises);
 
         const productPromises = productSizes.map((productSize) =>
-          productApi.getProduct(productSize.productID)
+          productApi.getProduct(productSize.productId)
         );
         const products = await Promise.all(productPromises);
 
@@ -45,15 +45,15 @@ function MyOrders({ currentUser }) {
     <>
       <h1>My Orders</h1>
       {orders.map((order) => (
-        <div className='my-orders-div' key={order.orderID}>
+        <div className='my-orders-div' key={order.orderId}>
           <div className="line"></div>
           <div className='my-orders-about space-between'>
             <ul>
-              <li><p className='grey txt'>Order #{order.orderID}</p></li>
+              <li><p className='grey txt'>Order #{order.orderId}</p></li>
               <li><p>Placed {formatDateTime(order.dateTime)}</p></li>
             </ul>
             <ul>
-              {order.status === 0 && <li><a className='red txt'>Cancel</a></li>}
+              {order.status === 0 && <li><a className='red txt'>انصراف</a></li>}
               <li>
                 {getStatusString(order.status)}
               </li>
@@ -69,9 +69,9 @@ function MyOrders({ currentUser }) {
                   <div className="cart-item-about">
                     <div className="cart-item-details">
                       <p>{orderItem.product.brand} {orderItem.product.name}</p>
-                      <p>Size: {orderItem.productSize.size}</p>
-                      <p>Quantity: {orderItem.quantity}</p>
-                      <p>Price: {formatPrice(orderItem.productSize.price)}</p>
+                      <p>{orderItem.productSize.size} : اندازه</p>
+                      <p>{orderItem.quantity} : تعداد</p>
+                      <p>{formatPrice(orderItem.productSize.price)} : قیمت</p>
                     </div>
                   </div>
                 </div>

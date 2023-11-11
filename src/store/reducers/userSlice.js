@@ -35,6 +35,7 @@ export const userSlice = createSlice({
 
       })
       .addCase(login.fulfilled, (state, action) => {
+        debugger
         state.isLoading = false;
         state.error = null;
         state.token = action.payload.token;

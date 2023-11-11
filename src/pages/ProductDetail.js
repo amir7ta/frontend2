@@ -16,8 +16,8 @@
     const { wishlistItems, toggleWishlistItem } = useWishlist();
     const [selectedSize, setSelectedSize] = useState(null);
     const [defaultSize, setDefaultSize] = useState(null);
-    const product = products.find((product) => product?.productID === Number(id));
-    const itemExists = wishlistItems.find((item) => item?.productID === product?.productID);
+    const product = products.find((product) => product?.productId === Number(id));
+    const itemExists = wishlistItems.find((item) => item?.productId === product?.productId);
 
     useEffect(() => {
       fetchProducts();

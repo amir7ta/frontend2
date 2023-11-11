@@ -10,7 +10,7 @@ const wishlistSlice1 = createSlice({
   reducers: {
     addToWishlist: (state, action) => {
       const product = action.payload;
-      const itemIndex = state.items.findIndex((item) => item.productID === product.productID);
+      const itemIndex = state.items.findIndex((item) => item.productId === product.productId);
       if (itemIndex === -1) {
         state.items.push(product);
       }
@@ -18,7 +18,7 @@ const wishlistSlice1 = createSlice({
     },
     removeFromWishlist: (state, action) => {
       const product = action.payload;
-      state.items = state.items.filter((item) => item.productID !== product.productID);
+      state.items = state.items.filter((item) => item.productId !== product.productId);
       localStorage.setItem('wishlist', JSON.stringify(state.items));
     },
     clearWishlist: (state) => {

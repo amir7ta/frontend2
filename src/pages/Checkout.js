@@ -4,9 +4,9 @@ import LogIn from '../components/checkout/LogIn';
 import Shipping from '../components/checkout/Shipping';
 import Confirmation from '../components/checkout/Confirmation';
 import Complete from "../components/checkout/Complete"
+import { useUser} from "../utils/hooks/useUser"
 
 import { Link } from 'react-router-dom';
-import { selectCurrentUser } from '../store/reducers/userSlice';
 import { useSelector } from 'react-redux';
 import { usePayment } from '../utils/hooks/usePayment';
 import {  useOrder } from '../utils/hooks/useOrder';
@@ -17,14 +17,16 @@ import { useCart } from '../utils/hooks/useCart';
 
 function Checkout() {
   const { createOrder, deleteOrder } = useOrder();
+  const { currentUser } = useUser();
+
   const { pay} = usePayment();
 
   const {discount, items, subtotal, defaultSubtotal, delivery, total, quantity ,orderId} = useCart();
 
   const [activeTab, setActiveTab] = useState(0);
-  const currentUser = useSelector(selectCurrentUser);
   const [bankName,setBankName]=useState('')
   useEffect(() => {
+    debugger
     if (currentUser) {
       setActiveTab(1);
     }
@@ -38,11 +40,10 @@ function Checkout() {
   };
 
   const DoPayment = () => {
-    debugger;
-        if(orderId==0) {
+    
           let userId = currentUser.userID;
           pay({discount, items, subtotal, defaultSubtotal, total, quantity, userId, orderId, bankName})
-        }
+        
   };
   const onBack = () => {
     setActiveTab(activeTab - 1);

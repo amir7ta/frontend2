@@ -9,15 +9,15 @@ export const fetchProducts = createAsyncThunk(
     const products = await productApi.getProducts();
     const productSizes = await sizeApi.getProductSizes();
     const productSizesMap = productSizes.reduce((map, size) => {
-      if (!map[size.productID]) {
-        map[size.productID] = [];
+      if (!map[size.productId]) {
+        map[size.productId] = [];
       }
-      map[size.productID].push(size);
+      map[size.productId].push(size);
       return map;
     }, {});
     const productsWithSizes = products.map(product => {
-      const { productID } = product;
-      const sizes = productSizesMap[productID] || [];
+      const { productId } = product;
+      const sizes = productSizesMap[productId] || [];
       const minPrice = Math.min(...sizes.map(({ price }) => price));
       const inStock = sizes.length > 0;
       return { ...product, sizes, defaultPrice: minPrice, inStock };

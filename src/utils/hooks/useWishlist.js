@@ -7,7 +7,7 @@ export const useWishlist = () => {
   const wishlistCount = wishlistItems.length;
   
   const toggleWishlistItemHandler = (product) => {
-    const itemExists = wishlistItems.find((item) => item.productID === product.productID);
+    const itemExists = wishlistItems.find((item) => item.productId === product.productId);
     if (!itemExists){
       dispatch(addToWishlist(product));
     } else{

@@ -7,8 +7,8 @@ const pay = async (req) => {
   
   const response = await axios.post(`${API_URL}/pay`,req)
     .then(function(response) {
-      //  browserHistory.push('/features');
-      return response.data
+      debugger
+      window.location.href = response.data;
     })
     .catch(function(error) {
       alert(error?.response?.data);

@@ -8,7 +8,7 @@ function Products() {
   const { products, fetchProducts, createProduct, updateExistingProduct, removeProduct } = useProduct();
   const [localProduct, setLocalProduct] = useState({});
   const getStock = useStock();
-  const product = products.find((product) => product?.productID === localProduct?.productID);
+  const product = products.find((product) => product?.productId === localProduct?.productId);
 
   useEffect(() => {
     fetchProducts();
@@ -32,7 +32,7 @@ function Products() {
             <tbody>
                 {products.map((product, index) => (
                 <tr key={index}  onClick={() => setLocalProduct(product)}>         
-                    <td>{product.productID}</td>
+                    <td>{product.productId}</td>
                     <td>{product.brand} {product.name}</td>
                     <td>{getStock(product.inStock)}</td>
                   </tr>
@@ -50,7 +50,7 @@ function Products() {
               <div className="product-panel-info">
                 { product && ( <label className='label-small'>
                   ID
-                  <input value={localProduct?.productID} readOnly/>
+                  <input value={localProduct?.productId} readOnly/>
                 </label>)}
                 <label>
                     Brand
@@ -71,9 +71,9 @@ function Products() {
             </label>
             <div className='divider'>
                 <button className='second-button' onClick={() => setLocalProduct(null) }>CLEAR</button>
-                { product && (<button className='second-button' onClick={() => removeProduct(product?.productID)}>DELETE</button>)}
-                { product?.productID && (<button onClick={() => updateExistingProduct({ productId: product?.productID, product: localProduct })}>SAVE CHANGES</button>)}
-                { !product?.productID && (<button onClick={() => createProduct(localProduct)}>Add Product</button>)}
+                { product && (<button className='second-button' onClick={() => removeProduct(product?.productId)}>DELETE</button>)}
+                { product?.productId && (<button onClick={() => updateExistingProduct({ productId: product?.productId, product: localProduct })}>SAVE CHANGES</button>)}
+                { !product?.productId && (<button onClick={() => createProduct(localProduct)}>Add Product</button>)}
             </div>
             {product && (<ProductSizes product={product} />)}
         </div> 

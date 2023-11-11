@@ -56,7 +56,7 @@ function ProductSizes({ product }) {
               }/>
             </td>
             <td>
-              <button onClick={() => addSize({ ...newSize, productId: product.productID })}>ADD</button>
+              <button onClick={() => addSize({ ...newSize, productId: product.productId })}>افزودن</button>
             </td>
           </tr>
           {product?.sizes.map((size, index) => (
