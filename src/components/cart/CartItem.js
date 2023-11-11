@@ -10,7 +10,7 @@ function CartItem() {
   return (  
     <>
       {items.map((item) => (
-         <div className="cart-item" key={`${item.product.id}-${item.size}`}>
+         <div className="cart-item" key={`${item.product.productId}-${item.size}`}>
           <Link to={`/${item.product.productId}`}>
             <div className='cart-item-img'>
               <img src={item.product.imageURL} alt={item.product.brand} />
@@ -19,22 +19,22 @@ function CartItem() {
           <div className='cart-item-about'>
             <div className='cart-item-left'>
               <Link to={`/${item.product.productId}`}><p>{item.product.brand} {item.product.name}</p></Link>
-              <p>Brand: {item.product.brand}</p>
-              <p>Size: {item.size}</p>
-              <p>Quantity: {item.quantity}</p>
-              <a onClick={() => removeFromCart(item.product.id, item.productSizeId)}>حذف از سبد</a>
+              <p>{item.product.brand} : برند</p>
+              <p>{item.size}: اندازه</p>
+              <p>{item.quantity} : تعداد</p>
+              <a onClick={() => removeFromCart(item.product.productId, item.productSizeId)}>حذف از سبد</a>
               </div>
               <div className='cart-item-right'>
                 <p>{formatPrice(item.price)}</p>
                 <div className='cart-item-quantity'>
-                  <a onClick={() => updateQuantity(item.product.id, item.productSizeId, item.quantity - 1)}>-</a>
+                  <a onClick={() => updateQuantity(item.product.productId, item.productSizeId, item.quantity - 1)}>-</a>
                   <input type="number" value={item.quantity} onChange={(e) => {
                       const newQuantity = parseInt(e.target.value);
                       if (!isNaN(newQuantity)) {
-                        updateQuantity(item.product.id, item.productSizeId, newQuantity);
+                        updateQuantity(item.product.productId, item.productSizeId, newQuantity);
                       }
                     }} />
-                    <a onClick={() => updateQuantity(item.product.id, item.productSizeId, item.quantity + 1)}>+</a>
+                    <a onClick={() => updateQuantity(item.product.productId, item.productSizeId, item.quantity + 1)}>+</a>
                 </div>
               </div>
           </div>

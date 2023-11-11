@@ -26,14 +26,14 @@ export const useCart = () => {
     dispatch(addToCart(item));
   };
   
-  const removeFromCartHandler = (itemId, productSizeId) => {
-    const item = items.find((item) => item.product.id === itemId && item.productSizeId === productSizeId); 
-    dispatch(removeFromCart({ product: item.product, productSizeId }));
+  const removeFromCartHandler = (itemId, productSizeId, size) => {
+    const item = items.find((item) => item.product.productId === itemId && item.productSizeId === productSizeId ); 
+    dispatch(removeFromCart({ product: item.product, productSizeId, size}));
   };
   
   const updateQuantityHandler = (productId, productSizeId, newQuantity) => {
     if (newQuantity === 0) {
-      const item = items.find((item) => item.product.id === productId && item.productSizeId === productSizeId);
+      const item = items.find((item) => item.product.productId === productId && item.productSizeId === productSizeId);
       if (item) {
         dispatch(removeFromCart({ product: item.product, productSizeId }));
       }
