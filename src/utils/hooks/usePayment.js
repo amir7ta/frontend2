@@ -25,7 +25,7 @@ export const usePayment = () => {
   };
 
 
-  const verifyHandler = async (forVerify) => {
+  const verifyHandler = async (forVerify,e) => {
     dispatch(verify(forVerify));
   };
 

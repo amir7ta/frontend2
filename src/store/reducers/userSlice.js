@@ -3,10 +3,11 @@ import { login } from "../actions/userActions";
 
 const initialState = {
   currentUser: null,
-  token: localStorage.getItem("token") || "",
+  // token: localStorage.getItem("token") || "",
+  token: "",
   isLoading: false,
   error: null,
-};
+}
 
 export const userSlice = createSlice({
   name: "user",
@@ -18,6 +19,7 @@ export const userSlice = createSlice({
       state.token = "";
     },
     setUser: (state, action) => {
+      debugger
       state.currentUser = action.payload;
     },
     setLoading: (state, action) => {
@@ -35,7 +37,6 @@ export const userSlice = createSlice({
 
       })
       .addCase(login.fulfilled, (state, action) => {
-        debugger
         state.isLoading = false;
         state.error = null;
         state.token = action.payload.token;
@@ -44,9 +45,9 @@ export const userSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
-        state.token = "";
-        state.currentUser = null;
-        console.log("rejected")
+        //state.token = "";
+       // state.currentUser = null;
+        //console.log("rejected")
       });
   },
 });

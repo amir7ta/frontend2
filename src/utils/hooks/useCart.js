@@ -34,10 +34,11 @@ export const useCart = () => {
   const updateQuantityHandler = (productId, productSizeId, newQuantity) => {
     if (newQuantity === 0) {
       const item = items.find((item) => item.product.productId === productId && item.productSizeId === productSizeId);
+      alert
       if (item) {
         dispatch(removeFromCart({ product: item.product, productSizeId }));
       }
-    } else if (newQuantity <= 10) {
+    } else if (newQuantity>0) {
       dispatch(updateQuantity({ productId, productSizeId, quantity: newQuantity }));
     }
   };

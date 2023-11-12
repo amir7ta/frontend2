@@ -58,3 +58,16 @@
         margin-top: 1rem;
     }
 }
+
+.wating{
+    width: 100%;
+    @include flex(center, center, column);
+    svg{
+        color: #c6c9cb;
+        height: 100px;   
+        margin: 4rem 0 1rem;
+    }
+    button{
+        margin-top: 1rem;
+    }
+}

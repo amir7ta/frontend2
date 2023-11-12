@@ -5,6 +5,15 @@ import sizeReducer from './sizeSlice';
 import userReducer from "./userSlice"
 import wishlistReducer from "./wishlistSlice"
 import searchReducer from "./wishlistSlice"
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user', 'wishlist', 'card']
+}
+
 
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -14,4 +23,5 @@ const rootReducer = combineReducers({
   wishlist: wishlistReducer,
 });
 
-export default rootReducer;
+export default persistReducer(persistConfig, rootReducer)
+;

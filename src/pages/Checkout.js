@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Payment from '../components/checkout/Payment';
 import LogIn from '../components/checkout/LogIn';
 import Shipping from '../components/checkout/Shipping';
 import Confirmation from '../components/checkout/Confirmation';
 import Complete from "../components/checkout/Complete"
 import { useUser} from "../utils/hooks/useUser"
-
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useSearchParams } from 'react-router-dom';
 import { usePayment } from '../utils/hooks/usePayment';
 import {  useOrder } from '../utils/hooks/useOrder';
 import { useCart } from '../utils/hooks/useCart';
@@ -16,6 +13,15 @@ import { useCart } from '../utils/hooks/useCart';
    const tabs = ["ورود", "آدرس", "پرداخت", "پایان"];
 
 function Checkout() {
+  debugger
+  let [searchParams, setSearchParams] = useSearchParams();
+  let [status, setStatus] = useState(
+    searchParams.get("Status")
+  );
+  let [authority, setAuthority] = useState(
+    searchParams.get("Authority")
+  );
+
   const { createOrder, deleteOrder } = useOrder();
   const { currentUser } = useUser();
 
@@ -26,11 +32,16 @@ function Checkout() {
   const [activeTab, setActiveTab] = useState(0);
   const [bankName,setBankName]=useState('')
   useEffect(() => {
-    debugger
-    if (currentUser) {
-      setActiveTab(1);
+    if(status!=null)
+    {
+      setActiveTab(3);
     }
-  }, [currentUser]);
+    else{
+      if (currentUser) {
+        setActiveTab(1);
+      }
+    }
+  }, [status]);
 
   const isLastTab = activeTab === tabs.length -1 ;
   const isSecondLastTab = activeTab === tabs.length - 2;

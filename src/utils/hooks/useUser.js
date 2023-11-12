@@ -10,6 +10,8 @@ export const useUser = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
+  
+
   const getUsersHandler = async () => {
     await dispatch(getUsers());
   };

@@ -18,7 +18,7 @@ const pay = async (req) => {
 
 const verification = async (forVerify) => {
   const response = await axios.post(`${API_URL}/verification`,forVerify).catch(function(error) {
-    alert(response);
+    return response
   })
 }
 
