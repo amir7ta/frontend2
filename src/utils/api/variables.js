@@ -5,7 +5,7 @@ export const variables = {
     ORDER_API: "https://localhost:7089/api/order",
     PRODUCTSIZE_API: "https://localhost:7089/api/productsize",
     ORDERITEM_API: "https://localhost:7089/api/orderitem",
-    ZARINPAL_API: "https://localhost:7089/api/zarinpal",
+    PAYMENT_API: "https://localhost:7089/api/payment",
 }
 
     

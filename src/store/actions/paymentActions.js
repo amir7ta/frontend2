@@ -24,6 +24,7 @@ export const pay = createAsyncThunk("zarinpay/pay", async (forPaymentRequest) =>
 });
 
 export const verify = createAsyncThunk("zarinpay/verification", async (forVerifyPayment) => {
+  debugger
     const res = await paymentApi.verification(forVerifyPayment);
     return res;
   

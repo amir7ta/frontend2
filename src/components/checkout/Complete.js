@@ -16,6 +16,7 @@ function Complete() {
   );
   const { verify} = usePayment();
   let [verificationResult, setVerificationResult] = useState(-1)
+  let [refId, setRefId] = useState(null)
   useEffect(() => {
   if(status)  
   {
@@ -31,16 +32,18 @@ function Complete() {
   }, [status]);
 
   const DoVerify = async () => {
-    debugger
     let userId = currentUser.userID;
-    verify({status, authority})
+    var res = await verify({status, authority})
+    if (res && res.refId) {
+      setRefId(res.refId)
+      setVerificationResult(1);
+    }
   };
 
   return (
     
     <>
     {verificationResult===-1 &&
-         
         <div className='wating'>
             <FontAwesomeIcon icon={icons.question} className='fa-beat' alt="" />
             <h1>منتظر تایید سفارش شما از طریق بانک هستیم</h1>
@@ -58,8 +61,10 @@ function Complete() {
     {verificationResult===1 &&
          <div className='complete'>
              <FontAwesomeIcon icon={icons.check} alt="" />
-             <h1>سفارش شما تایید شده است!</h1>
-             <p>{currentUser.firstName} از خرید شما سپاسگذاریم.</p>
+             <h1>پرداخت شما با موفقیت ثبت شد.</h1>
+             <p>{refId} :شماره پیگیری تراکنش.</p>
+             <p>کارشناسان ما براساس نوبت و زمان نهایی شدن پرداخت شما، اقدامات لازم برای ارسال و تحویل به موقع کالا را انجام خواهند داد.</p>
+             <p>عزیز از خریدتان متشکریم {currentUser.firstName}</p>
              <Link to="/"><button>خرید دوباره</button></Link>
          </div>
      }

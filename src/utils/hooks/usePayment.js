@@ -1,37 +1,39 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { pay, verify } from "../../store/actions/paymentActions";
-import { useCart } from './useCart';
+import { selectAuthorityCode , selectPaymentId , selectRefId, selectError, setPayment} from "../../store/reducers/paymentSlice";
 
 
 export const usePayment = () => {
+  const authorityCode = useSelector(selectAuthorityCode);
+  const paymentId = useSelector(selectPaymentId);
+  const refId = useSelector(selectRefId);
+  const error = useSelector(selectError);
+
   const dispatch = useDispatch();
-  const {applyCardIsSaved } = useCart();
   useEffect(() => {
   }, []);
-  // const paymentHandler = async (forPayment) => {
-  //   const {applyCardIsSaved } = useCart();
-  //   dispatch(pay(forPayment)).then((res)=>{
-  //     dispatch(applyCardIsSaved(res.payload))
-  //   });
-  // };
+
 
   const paymentHandler = (forPayment, e) => {
-    dispatch(pay(forPayment)).then((res)=>{
-      debugger;
-      if(res.payload)
-        dispatch(applyCardIsSaved(res?.payload))
-    });
+    dispatch(pay(forPayment))
   };
 
 
   const verifyHandler = async (forVerify,e) => {
-    dispatch(verify(forVerify));
+    const { payload: payment } = await dispatch(verify(forVerify));
+    if (payment){
+      dispatch(setPayment(payment));
+    }
+    return payment;
   };
 
   return { 
     pay: paymentHandler, 
     verify: verifyHandler, 
-
+    authorityCode,
+    paymentId,
+    refId,
+    error
   };
 };

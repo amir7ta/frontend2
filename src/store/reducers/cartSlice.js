@@ -5,7 +5,7 @@ export const DELIVERY_THRESHOLD = 1200;
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    items: localStorage.getItem('cartItems')
+      items: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],    
       subtotal: 0,
@@ -55,14 +55,14 @@ const cartSlice = createSlice({
         state.delivery = 60;
         state.subtotal = subtotal;
       }
-    },   
+    },
     updateDelivery: (state, action) => {
       state.delivery = action.payload.deliveryCost;
     },
     applyDiscount: (state, action) => {
       state.discount = action.payload.discount;
       console.log("discount sat:",state.discount)
-    }, 
+    },
     applyCardIsSaved: (state, action) => {
       state.orderId = action.payload.orderId;
       console.log("cart is saved:",state.orderId)

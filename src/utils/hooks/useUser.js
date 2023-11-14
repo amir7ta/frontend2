@@ -10,7 +10,7 @@ export const useUser = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
-  
+
 
   const getUsersHandler = async () => {
     await dispatch(getUsers());
@@ -38,9 +38,9 @@ export const useUser = () => {
     getUsers: getUsersHandler, 
     getUser: getUserHandler, 
     login: loginHandler, 
-    // logout: logoutHandler,
     token, 
     currentUser, 
     isLoading, 
-    error };
+    error 
+  };
 };
