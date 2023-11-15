@@ -3,11 +3,11 @@ import { useState } from 'react';
 export const useStatusString = () => {
     return (status) => {
       const statusMap = {
-        0: { statusString: 'Pending', className: 'yellow' },
-        1: { statusString: 'Processing', className: 'green' },
-        2: { statusString: 'Shipped', className: 'green' },
-        3: { statusString: 'Delivered', className: 'green' },
-        4: { statusString: 'Cancelled', className: 'red' }
+        1: { statusString: 'تازه ثبت شده', className: 'yellow' },
+        2: { statusString: 'در حال بسته بندی', className: 'pink' },
+        3: { statusString: 'در حال حمل و نقل', className: 'blue' },
+        4: { statusString: 'تحویل داده شد', className: 'green' },
+        5: { statusString: 'لغو شده', className: 'red' }
       };
       const statusObj = statusMap[status] ?? { statusString: '', className: '' };
       return <p className={`txt ${statusObj.className}`}>{statusObj.statusString}</p>;

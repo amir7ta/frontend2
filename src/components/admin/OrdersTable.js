@@ -30,14 +30,14 @@ import userApi from '../../utils/api/userApi';
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Order Date</th>
-              <th>Status</th>
-              <th>UserID</th>
+              <th>شناسه سفارش</th>
+              <th>تاریخ</th>
+              <th>وضعیت</th>
+              <th>کد کاربر</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, index) => (
+            {orders && orders.map((order, index) => (
               <tr key={index} onClick={() => setSelectedOrder(order)}>
                 <td>{order.orderId}</td>
                 <td>{formatDate(order.dateTime)}</td>
