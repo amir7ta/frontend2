@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icons } from '../../assets/icons/icons'
 import { useUser} from "../../utils/hooks/useUser"
 import { Link, useSearchParams } from 'react-router-dom';
-import { usePayment } from '../../utils/hooks/usePayment';
+import { usePayment} from '../../utils/hooks/usePayment';
 
 function Complete() {
   const { currentUser } = useUser();
@@ -11,35 +11,63 @@ function Complete() {
   let [status, setStatus] = useState(
     searchParams.get("Status")
   );
+  let [zibalStatus, setZibalStatus] = useState(
+    searchParams.get("status")
+  );
   let [authority, setAuthority] = useState(
     searchParams.get("Authority")
   );
-  const { verify} = usePayment();
+  let [trackId, setTrackId] = useState(
+    searchParams.get("trackId")
+  );
+  let [success, setSuccess] = useState(
+    searchParams.get("success")
+  );
+
+  const { verify, authorityCode, paymentId, bankName ,paymentNotSuccess} = usePayment();
   let [verificationResult, setVerificationResult] = useState(-1)
   let [refId, setRefId] = useState(null)
   useEffect(() => {
-  if(status)  
-  {
-    if(status=="OK")
-    {
-      DoVerify();
+    if(trackId){
+      DoZibalVerify()
     }
     else{
-      setVerificationResult(0)
+      if(status)  
+        DoZarinPalVerify();
     }
-
-  }
+  
   }, [status]);
 
-  const DoVerify = async () => {
-    let userId = currentUser.userID;
-    var res = await verify({status, authority})
-    if (res && res.refId) {
-      setRefId(res.refId)
-      setVerificationResult(1);
+  const DoZarinPalVerify = async () => {
+    if(status == "OK")
+    {
+      let userId = currentUser.userID;
+      var res = await verify({status, authority, bankName})
+      if (res && res.refId) {
+        setRefId(res.refId)
+        setVerificationResult(1);
+      }
+    }
+    else{
+      var res = await paymentNotSuccess({paymentId, bankName})
+      setVerificationResult(0)
     }
   };
-
+  const DoZibalVerify = async () => {
+    if(success =="1")
+    {
+      let userId = currentUser.userID;
+      var res = await verify({status, trackId, bankName})
+      if (res && res.refId) {
+        setRefId(res.refId)
+        setVerificationResult(1);
+      }
+    }
+    else{
+      var res = await paymentNotSuccess({paymentId,"status":zibalStatus, trackId, bankName})
+      setVerificationResult(0)
+    }
+  };
   return (
     
     <>

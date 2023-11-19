@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import paymentApi from "../../utils/api/paymentApi";
 
-export const pay = createAsyncThunk("zarinpay/pay", async (forPaymentRequest) => {
+export const pay = createAsyncThunk("payment/pay", async (forPaymentRequest) => {
   debugger
   const mappedItems = forPaymentRequest.items.map((item)=>{
     return {
@@ -23,9 +23,15 @@ export const pay = createAsyncThunk("zarinpay/pay", async (forPaymentRequest) =>
   return createdOrderAndPayment;
 });
 
-export const verify = createAsyncThunk("zarinpay/verification", async (forVerifyPayment) => {
+export const verify = createAsyncThunk("payment/verification", async (forVerifyPayment) => {
   debugger
     const res = await paymentApi.verification(forVerifyPayment);
+    return res;
+  
+});
+export const paymentNotSuccess = createAsyncThunk("payment/paymentNotSuccess", async (forSaveResult) => {
+  debugger
+    const res = await paymentApi.saveNotSuccess(forSaveResult);
     return res;
   
 });

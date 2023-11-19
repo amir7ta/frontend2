@@ -7,7 +7,7 @@ const pay = async (req) => {
     try {
       const response = await axios.post(`${API_URL}/pay`,req);
       if (!response.data.error) {
-        window.location.href = response.data.gatewayUrl;
+       return response.data;
       }
       return {paymentId:null, authorityCode: null, error: response.data.error };
     } catch (error) {
@@ -41,6 +41,20 @@ const verification = async (forVerify) => {
   
 }
 
+const saveNotSuccess = async (forSaveResult) => {
+  try {
+    await axios.post(`${API_URL}/saveNotSuccess`,forSaveResult);
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+     return (error.response)
+    }
+    if (error.response && error.response.status === 500) {
+      return { refId: null,error:"ارتباط با سرور قطع است" };
+    }
+    return ({refId: null,error : "در سرور خطایی پیش آمده است."})
+  }
+  
+}
 export default {
   verification,
   pay

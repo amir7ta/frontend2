@@ -4,24 +4,31 @@ import { pay, verify } from "../actions/paymentActions";
 const paymentSlice = createSlice({
   name: 'payment',
   initialState: {
-    authorityCode:null,
+    bankPaymentId:null,
     paymentId:null,
     error:null,
     refId:null,
+    bankName:null,
   },
   reducers: {
     clearPayment: (state, action) => {
-      state.authorityCode=null;
+      state.bankPaymentId=null;
       state.paymentId=null;
       state.error=null;
       state.refId=null;
+      state.bankName=bankName;
     },
     setPayment: (state, action) => {
-      const { refId, error, paymentId, authorityCode } = action.payload;
-      state.authorityCode=authorityCode;
+      const { refId, error, paymentId, bankPaymentId} = action.payload;
+      state.bankPaymentId=bankPaymentId;
       state.paymentId=paymentId;
       state.error=error;
       state.refId=refId;
+    },
+    setBank: (state, action) => {
+      debugger
+      const { bankName} = action.payload;
+      state.bankName=bankName;
     },
   },extraReducers: (builder) => {
     builder
@@ -42,12 +49,13 @@ const paymentSlice = createSlice({
   },
 });
 
-export const { clearPayment, setPayment} = paymentSlice.actions;
+export const { clearPayment, setPayment, setBank} = paymentSlice.actions;
 
 
-export const selectAuthorityCode = (state) => state.payment.authorityCode;
+export const selectBankPaymentId = (state) => state.payment.bankPaymentId;
 export const selectPaymentId = (state) => state.payment.paymentId;
 export const selectRefId = (state) => state.payment.refId;
 export const selectError = (state) => state.payment.error;
+export const selectBankName = (state) => state.payment.bankName;
 
 export default paymentSlice.reducer;

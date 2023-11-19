@@ -3,7 +3,7 @@ import { login } from "../actions/userActions";
 
 const initialState = {
   currentUser: null,
-  // token: localStorage.getItem("token") || "",
+  token: localStorage.getItem("token") || "",
   token: "",
   isLoading: false,
   error: null,
