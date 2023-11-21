@@ -45,7 +45,24 @@ const paymentSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
         console.log("rejected")
-      });
+      })
+      
+      .addCase(pay.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(pay.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error=null;
+        state.bankPaymentId=action.payload.bankPaymentId;
+        state.paymentId=action.payload.paymentId;
+      })
+      .addCase(pay.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+        console.log("rejected")
+      })
+      ;
   },
 });
 

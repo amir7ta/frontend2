@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Register from "../components/auth/RegisterForm";
 import Login from "../components/auth/LoginForm";
+import SignUp from "../components/auth/SignUpForm";
 
 function Authentication() {
   const [activeTab, setActiveTab] = useState('login');
@@ -9,7 +10,9 @@ function Authentication() {
     <div className='auth container'>
       <div className='auth-container'>
         {activeTab === 'login' && <Login />}
-        {activeTab === 'signup' && <Register />}
+        {/* {activeTab === 'signup' && <Register />} */}
+        {activeTab === 'signup' && <SignUp/>}
+
       </div>
       <div>
         <a

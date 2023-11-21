@@ -13,6 +13,7 @@ import Account from './pages/Account';
 import Authentication from './pages/Authentication';
 import Wishlist from './pages/Wishlist';
 
+
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 
@@ -22,6 +23,7 @@ function App() {
   
   return (
     <>
+   
       {showHeaderFooter && <Header/>}
       <Routes>
         <Route path="/" element={<Home location={location} />} />
@@ -35,6 +37,7 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
       {showHeaderFooter && <Footer />}
+    
     </>
   );
 }

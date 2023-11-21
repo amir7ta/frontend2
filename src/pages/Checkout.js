@@ -15,7 +15,6 @@ import { useCart } from '../utils/hooks/useCart';
    const tabs = ["ورود", "آدرس","روش پرداخت", "پرداخت", "پایان"];
 
 function Checkout() {
-  debugger
   let [searchParams, setSearchParams] = useSearchParams();
   let [status, setStatus] = useState(
     searchParams.get("Status")

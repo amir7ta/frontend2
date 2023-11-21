@@ -21,8 +21,9 @@ export const usePayment = () => {
 
   const paymentHandler = async (forPayment, e) => {
     const { payload: payment } = await dispatch(pay(forPayment));
+
     if (payment){
-      dispatch(setPayment(payment));
+      //dispatch(setPayment(payment));
       window.location.href = payment.gatewayUrl
     }
     return payment;
@@ -38,6 +39,7 @@ export const usePayment = () => {
   };
 
   const paymentNotSuccessHandler = async (ForSaveResult,e) => {
+  debugger;
      dispatch(paymentNotSuccess(ForSaveResult));
   };
 

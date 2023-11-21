@@ -64,7 +64,7 @@ function Complete() {
       }
     }
     else{
-      var res = await paymentNotSuccess({paymentId,"status":zibalStatus, trackId, bankName})
+      var res = await paymentNotSuccess({paymentId,"status":zibalStatus, "resultCode":trackId, bankName})
       setVerificationResult(0)
     }
   };

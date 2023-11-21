@@ -29,7 +29,7 @@ export const verify = createAsyncThunk("payment/verification", async (forVerifyP
     return res;
   
 });
-export const paymentNotSuccess = createAsyncThunk("payment/paymentNotSuccess", async (forSaveResult) => {
+export const paymentNotSuccess = createAsyncThunk("payment/saveResult", async (forSaveResult) => {
   debugger
     const res = await paymentApi.saveNotSuccess(forSaveResult);
     return res;

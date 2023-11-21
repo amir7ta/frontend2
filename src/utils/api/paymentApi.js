@@ -43,7 +43,7 @@ const verification = async (forVerify) => {
 
 const saveNotSuccess = async (forSaveResult) => {
   try {
-    await axios.post(`${API_URL}/saveNotSuccess`,forSaveResult);
+    await axios.post(`${API_URL}/result`,forSaveResult);
   } catch (error) {
     if (error.response && error.response.status === 400) {
      return (error.response)
@@ -57,6 +57,6 @@ const saveNotSuccess = async (forSaveResult) => {
 }
 export default {
   verification,
-  pay
- 
+  pay,
+  saveNotSuccess
 };
