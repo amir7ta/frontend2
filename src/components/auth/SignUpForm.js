@@ -11,8 +11,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { FormControl } from '@mui/material';
-import { useForm } from 'react-hook-form';
 
 
 function Copyright(props) {
@@ -29,17 +27,36 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
-    const { register, formState: { errors } } = useForm();
     
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormValues({
-          ...formValues,
-          [name]:{
-            ...formValues[name],
-            value
+        const {name, _value} = e.target;
+        // setFormValues({
+        //   ...formValues,
+        //   [name]:{
+        //     ...formValues[name],
+        //     value
+        //   }
+        // })
+        if(_value === ''){
+            setFormValues ({
+              ...formValues,
+              [name]:{
+                ...formValues[name],
+                value:_value,
+                error:true
+              }
+            });
           }
-        })
+          else{
+            setFormValues ({
+                ...formValues,
+                [name]:{
+                  ...formValues[name],
+                  value:_value,
+                  error:false
+                }
+            });
+          }
       }
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -59,6 +76,15 @@ export default function SignUp() {
                 error:true
               }
             }
+          }else
+          {
+            newFormValues = {
+                ...newFormValues,
+                [currentField]:{
+                  ...newFormValues[currentField],
+                  error:false
+                }
+              }
           }
     
         }
@@ -72,31 +98,37 @@ export default function SignUp() {
           errorMessage:'نام را وارد کنید'
         },
         lastName:{
-          value:21,
-          error:false,
+            value:'',
+            error:false,
           errorMessage:'سن را وارد کنید'
         },
         email:{
-          value:'',
-          error:false,
+            value:'',
+            error:false,
           errorMessage:'آدرس ایمیل را وارد کنید'
         },
         password:{
-          value:'full-stack',
-          error:false,
+            value:'',
+            error:false,
           errorMessage:'رمز ورود را انتخاب کنید'
         },
         city:{
-          value:'full-stack',
+            value:'',
           error:false,
           errorMessage:'شهر را وارد کنید'
         },
         postalCode:{
-          value:'full-stack',
-          error:false,
+            value:'',
+            error:false,
           errorMessage:'کد پستی را وارد کنید'
+        },
+        agreement:{
+            value:'',
+            error:false,
+            errorMessage:'برای ثبت نام باید شرایط عضویت را بپذیرید '
         }
       })
+    
   return (
       <Container  component="main"  maxWidth="md">
         <CssBaseline />
@@ -111,15 +143,15 @@ export default function SignUp() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ mb: 5}}>
             ثبت نام
           </Typography>
-          <form  noValidate onSubmit={handleSubmit} >
+          <Box component="form"  noValidate onSubmit={handleSubmit} sx={{ m: 5}} >
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                size="small"
-                autoComplete="given-name"
+                  size="small"
+                  autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
@@ -129,54 +161,53 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={formValues.firstName.error}
                   helperText={formValues.firstName.error && formValues.firstName.errorMessage}
-
-
                 />
                 {formValues.firstName.error==false &&<span>&nbsp;</span>}
 
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                                  size="small"
-                                  required
+                  size="small"
+                  required
                   fullWidth
                   id="lastName"
                   label="نام خانوادگی"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={handleChange}
                   error={formValues.lastName.error}
                   helperText={formValues.lastName.error && formValues.lastName.errorMessage}
-
                 />
                 {formValues.lastName.error==false &&<span>&nbsp;</span>}
 
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                                 size="small"
-                                 required
+                  size="small"
+                  required
                   fullWidth
                   id="email"
                   label="نام کاربری"
                   name="email"
-                  autoComplete="email"
+                  autoComplete="e-mail"
+                  onChange={handleChange}
                   error={formValues.email.error}
                   helperText={formValues.email.error && formValues.email.errorMessage}
-
                 />
                 {formValues.email.error==false &&<span>&nbsp;</span>}
 
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                                 size="small"
-                                 required
+                  size="small"
+                  required
                   fullWidth
                   name="password"
                   label= "کلمه عبور"
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleChange}
                   error={formValues.password.error}
                   helperText={formValues.password.error && formValues.password.errorMessage}
                 />
@@ -184,15 +215,16 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                                   size="small"
-                                   required
+                    size="small"
+                    required
                     fullWidth
                     name='city'
                     id='city'
+                    autoComplete="new-city"
                     label='شهر'
+                    onChange={handleChange}
                     error={formValues.city.error}
                     helperText={formValues.city.error && formValues.city.errorMessage}
-  
                 />
                 {formValues.city.error==false &&<span>&nbsp;</span>}
 
@@ -202,14 +234,14 @@ export default function SignUp() {
                 <TextField
                     required
                     size="small"
-
                     fullWidth
                     name='postalCode'
                     id='postalCode'
+                    autoComplete="postal-code"
                     label='کد پستی'
+                    onChange={handleChange}
                     error={formValues.postalCode.error}
                     helperText={formValues.postalCode.error && formValues.postalCode.errorMessage}
-  
                 />
 
               </Grid>
@@ -218,7 +250,17 @@ export default function SignUp() {
                    مطالعه شرایط عضویت 
                 </Link>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={
+                            <Checkbox 
+                                    required
+                                    name='agreement'
+                                    id='agreement'
+                                    autoComplete="user-aggrement"
+                                    color="primary"
+                                    onChange={handleChange}
+                                    error={formValues.agreement.error}
+                                    helperText={formValues.agreement.error && formValues.agreement.errorMessage}
+                                    />}
                   label="با شرایط عضویت موافقم."
                 />
                 </Grid>
@@ -241,7 +283,7 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid> */}
-          </form>
+          </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
