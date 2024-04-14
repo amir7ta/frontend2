@@ -1,11 +1,11 @@
 .auth{
     max-width: 40rem;
-    @include flex(center, flex-start, column);
+    @include flex(center, '', column);
     h1{
         margin-bottom: 0rem;
     }
     a{
-        text-decoration: underline;
+        // text-decoration: underline;
         &.active{
             display: none;
         }

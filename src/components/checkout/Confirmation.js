@@ -32,14 +32,14 @@ function Confirmation({onPaymentComplete,onBack,onPayment}) {
             </div>
           }
         <OrderSummary onPaymentComplete={onPaymentComplete}/>
-        <div className="checkout-bottom">
+        {/* <div className="checkout-bottom">
         {currentUser && (
               <a><button className='second-button' onClick={() => onBack()}>بازگشت</button></a>
               )}
            {currentUser &&  (
             <a><button onClick={() => onPayment()}>پرداخت</button></a>
           )}
-          </div>
+          </div> */}
       </div>
     
     </div>

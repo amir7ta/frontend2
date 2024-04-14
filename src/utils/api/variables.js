@@ -6,6 +6,8 @@ export const variables = {
     PRODUCTSIZE_API: "https://localhost:7089/api/productsize",
     ORDERITEM_API: "https://localhost:7089/api/orderitem",
     PAYMENT_API: "https://localhost:7089/api/payment",
+    COMMENT_API: "https://localhost:7089/api/comment",
+
 }
 
     

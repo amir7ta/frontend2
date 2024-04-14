@@ -9,7 +9,7 @@ import { useCart } from '../../utils/hooks/useCart';
 import { useWishlist } from '../../utils/hooks/useWishlist';
 import { searchProducts} from '../../store/reducers/productSlice';
 
-function Header() {
+function Header({cardRef}) {
   const location = useLocation();
   const { quantity } = useCart();
   const { wishlistCount } = useWishlist();
@@ -51,10 +51,11 @@ function Header() {
             </div>
           </Link>    
           <Link to="/cart">
-              <div className='svg-icon'>
+              <div id="cart" className='svg-icon' ref={cardRef}>
                 <FontAwesomeIcon icon={icons.cart}/>
                 {quantity > 0 && <span>{quantity > 9 ? "9+": quantity } </span>}
               </div>
+            
           </Link>
           <div className='burger'><FontAwesomeIcon icon={icons.hamburger} /></div>
         </div>

@@ -29,20 +29,13 @@ function Copyright(props) {
 export default function SignUp() {
     
     const handleChange = (e) => {
-        const {name, _value} = e.target;
-        // setFormValues({
-        //   ...formValues,
-        //   [name]:{
-        //     ...formValues[name],
-        //     value
-        //   }
-        // })
-        if(_value === ''){
+        const {name, value} = e.target;
+        if(value === ''){
             setFormValues ({
               ...formValues,
               [name]:{
                 ...formValues[name],
-                value:_value,
+                _value:value,
                 error:true
               }
             });
@@ -52,7 +45,7 @@ export default function SignUp() {
                 ...formValues,
                 [name]:{
                   ...formValues[name],
-                  value:_value,
+                  _value:value,
                   error:false
                 }
             });
@@ -93,37 +86,37 @@ export default function SignUp() {
       }
       const [formValues, setFormValues] = useState({
         firstName:{
-          value:'',
-          error:false,
-          errorMessage:'نام را وارد کنید'
+            _value:'',
+            error:false,
+            errorMessage:'نام را وارد کنید'
         },
         lastName:{
-            value:'',
+           _value:'',
             error:false,
-          errorMessage:'سن را وارد کنید'
+            errorMessage:'سن را وارد کنید'
         },
         email:{
-            value:'',
+            _value:'',
             error:false,
-          errorMessage:'آدرس ایمیل را وارد کنید'
+            errorMessage:'آدرس ایمیل را وارد کنید'
         },
         password:{
-            value:'',
+            _value:'',
             error:false,
-          errorMessage:'رمز ورود را انتخاب کنید'
+            errorMessage:'رمز ورود را انتخاب کنید'
         },
         city:{
-            value:'',
-          error:false,
-          errorMessage:'شهر را وارد کنید'
+            _value:'',
+            error:false,
+            errorMessage:'شهر را وارد کنید'
         },
         postalCode:{
-            value:'',
+            _value:'',
             error:false,
-          errorMessage:'کد پستی را وارد کنید'
+            errorMessage:'کد پستی را وارد کنید'
         },
         agreement:{
-            value:'',
+            _value:'',
             error:false,
             errorMessage:'برای ثبت نام باید شرایط عضویت را بپذیرید '
         }

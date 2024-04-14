@@ -8,8 +8,9 @@
   import { useProduct } from '../utils/hooks/useProduct';
   import { useWishlist } from '../utils/hooks/useWishlist';
   import { formatPrice } from '../utils/hooks/useUtil';
+  import CommentForm from '../components/Comment/CommentForm';
 
-  function ProductDetail() {
+  function ProductDetail({cardRef}) {
     const { id } = useParams();
     const { addToCart } = useCart();
     const { products, fetchProducts } = useProduct();
@@ -18,6 +19,10 @@
     const [defaultSize, setDefaultSize] = useState(null);
     const product = products.find((product) => product?.productId === Number(id));
     const itemExists = wishlistItems.find((item) => item?.productId === product?.productId);
+    let addBtn, cart;
+    const speed = 500,
+    curveDelay = 300,
+    position = "fixed"; // or absolute
 
     useEffect(() => {
       fetchProducts();
@@ -32,39 +37,104 @@
       }
     }, [selectedSize, product]);
     
+ function storeItems() {
+      let itmsInCart = cart.getAttribute("data-count");
+      cart.classList.add("addedCount");
+    
+      if (!itmsInCart) {
+        cart.setAttribute("data-count", 1);
+      } else {
+        cart.setAttribute("data-count", parseInt(itmsInCart, 10) + 1);
+      }
+    }
 
+function addItem(e) {
+  debugger
+  let btnY =
+      position === "fixed"
+        ? e.currentTarget.getBoundingClientRect().top
+        : e.currentTarget.offsetTop,
+    btnX =
+      position === "fixed"
+        ? e.currentTarget.getBoundingClientRect().left
+        : e.currentTarget.offsetLeft,
+    flyingBtn = e.currentTarget.cloneNode();
+  cart = cardRef.current
+  let cartTop = cart.offsetTop-scrollPosition;
+  cart.classList.remove("addedCount");
+
+  flyingBtn.classList.add("flyingBtn");
+  flyingBtn.style.position = position;
+  flyingBtn.style.top = `${btnY}px`;
+  flyingBtn.style.left = `${btnX}px`;
+  flyingBtn.style.opacity = "1";
+  flyingBtn.style.transition = `all ${speed / 1000}s ease, top ${(speed +
+    curveDelay) /
+    1000}s ease, left ${speed / 1000}s ease, transform ${speed /
+    1000}s ease ${(speed - 10) / 1000}s`;
+
+  document.body.appendChild(flyingBtn);
+debugger
+  flyingBtn.style.top = `${cartTop + cart.offsetHeight - 35}px`;
+  flyingBtn.style.left = `${cart.offsetLeft + cart.offsetWidth - 35}px`;
+  flyingBtn.style.height = "1rem";
+  flyingBtn.style.width = "1rem";
+  flyingBtn.style.transform = "scale(0)";
+
+  setTimeout(() => {
+    flyingBtn.remove();
+    storeItems();
+  }, speed * 1.5);
+  
+  addToCart({ product: product, size: selectedSize?.size || product.sizes[0].size, price: selectedSize?.price || product.defaultPrice, productSizeId: selectedSize?.productSizeId|| product.sizes[0].productSizeId})
+}
+const [scrollPosition, setScrollPosition] = useState(0);
+const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+};
+
+useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+}, []);
     return (
       <>
         {product && (
           <div className='flex container'>
-            <div className='product-detail-img flex-2'>
-              <img src={product.imageURL} alt="" />
-            </div>
-            <div className='product-detail-about flex-1'>
-              <h2>{product.brand}</h2>
-              <h1>{product.brand} {product.name}</h1>
-              <p>
-              {selectedSize ? `${formatPrice(selectedSize?.price)}` : `${formatPrice(product.defaultPrice)}`}
-            </p>     
-          <div>
-              <label htmlFor="size-select">اندازه های موجود</label>
-              <select id="size-select" value={selectedSize ? JSON.stringify(selectedSize) : JSON.stringify(product.sizes[defaultSize])} onChange={(e) => setSelectedSize(JSON.parse(e.target.value))}>
-                {product?.sizes?.slice()?.sort((a,b) => a.size - b.size)?.map((size, index) => (
-                  <option key={index} value={JSON.stringify(size)}>
-                    {size?.size} - قیمت {formatPrice(size?.price)} {size.quantity <= 3 ? `(فقط ${size.quantity} عدد موجود در انبار)`  : "" }
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className='divider'>
-            <button onClick={() => {debugger; addToCart({ product: product, size: selectedSize?.size || product.sizes[0].size, price: selectedSize?.price || product.defaultPrice, productSizeId: selectedSize?.productSizeId|| product.sizes[0].productSizeId})}}>افزودن به سبد خرید</button>
-              <button className='second-button' onClick={() => toggleWishlistItem(product)}>
-                <span>لیست علاقمندی ها</span><FontAwesomeIcon icon={itemExists ? icons.heartFull : icons.heart}/>
-              </button>
-            </div>  
-            <p>{product.description}</p>
+              <div className='product-detail-img flex-2'>
+                    <img src={product.imageURL} alt="" />
+              </div>
+              <div className='product-detail-about flex-1' style={{margin:'10px'}}>
+                    <h2>{product.brand}</h2>
+                    <h1>{product.brand} {product.name}</h1>
+                    <p>
+                    {selectedSize ? `${formatPrice(selectedSize?.price)}` : `${formatPrice(product.defaultPrice)}`}
+                    </p>     
+                    <div>
+                        <label htmlFor="size-select">اندازه های موجود</label>
+                        <select id="size-select" value={selectedSize ? JSON.stringify(selectedSize) : JSON.stringify(product.sizes[defaultSize])} onChange={(e) => setSelectedSize(JSON.parse(e.target.value))}>
+                          {product?.sizes?.slice()?.sort((a,b) => a.size - b.size)?.map((size, index) => (
+                            <option key={index} value={JSON.stringify(size)}>
+                              {size?.size} - قیمت {formatPrice(size?.price)} {size.quantity <= 3 ? `(فقط ${size.quantity} عدد موجود در انبار)`  : "" }
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className='divider'>
+                      {/* <button onClick={() => {debugger; addToCart({ product: product, size: selectedSize?.size || product.sizes[0].size, price: selectedSize?.price || product.defaultPrice, productSizeId: selectedSize?.productSizeId|| product.sizes[0].productSizeId})}}>افزودن به سبد خرید</button> */}
+                      <button  id='btn-add-to-card' className='button' onClick={(e)=>addItem(e)} >افزودن به سبد خرید</button>
+                        <button className='second-button' onClick={() => toggleWishlistItem(product)}>
+                          <span>لیست علاقمندی ها</span><FontAwesomeIcon icon={itemExists ? icons.heartFull : icons.heart}/>
+                        </button>
+                      </div>  
+                    <p>{product.description}</p>
+              </div>
+              <CommentForm params={product.productId}/>
           </div>
-        </div>
       )}
     </>
   );

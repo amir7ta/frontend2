@@ -10,7 +10,7 @@ export const fetchOrders = createAsyncThunk(
   }
 );
 
-export const fetchOrdersByUserId = createAsyncThunk('products/fetchProductById', async (userId) => {
+export const fetchOrdersByUserId = createAsyncThunk('products/fetchOrdersByUserId', async (userId) => {
   const orders = await orderApi.getOrdersByUserId(userId);
   return orders;
 });

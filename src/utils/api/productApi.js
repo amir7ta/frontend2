@@ -4,6 +4,7 @@ import { variables } from './variables.js';
 const API_URL = variables.PRODUCT_API
 
 const getProducts = async () => {
+  debugger
   const response = await axios.get(API_URL);
   return response.data;
 }

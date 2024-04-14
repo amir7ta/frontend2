@@ -1,12 +1,12 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import productApi from '../../utils/api/productApi';
+import commentApi from '../../utils/api/commentApi';
 import sizeApi from '../../utils/api/sizeApi';
 
-export const fetchProducts = createAsyncThunk(
-  'products/fetchProducts',
+export const fetchComments = createAsyncThunk(
+  'comments/fetchComments',
   async () => {
-    const products = await productApi.getProducts();
+    const comments = await productApi.getProducts();
     const productSizes = await sizeApi.getProductSizes();
     const productSizesMap = productSizes.reduce((map, size) => {
       if (!map[size.productId]) {
@@ -29,7 +29,6 @@ export const fetchProducts = createAsyncThunk(
 
   export const fetchProductById = createAsyncThunk('products/fetchProductById', async (productId) => {
     const product = await productApi.getProduct(productId);
-    
     return product;
   });
   
