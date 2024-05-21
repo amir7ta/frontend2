@@ -10,9 +10,24 @@ function Products() {
   const getStock = useStock();
   const product = products.find((product) => product?.productId === localProduct?.productId);
 
+  const mapProduct=(prod)=>{
+    debugger
+    console.log(prod)
+    return ( 
+            <tr key={index}  onClick={() => setLocalProduct(prod)}>         
+              <td>{prod.productId}</td>
+              <td>{prod.brand} {prod.name}</td>
+              <td>{getStock(prod.inStock)}</td>
+            </tr>
+          )
+  }
   useEffect(() => {
     fetchProducts();
   }, [products])
+  useEffect(() => {
+    debugger
+    console.log(products);
+  }, [])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,18 +39,15 @@ function Products() {
         <table className='product-table'>
             <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Model</th>
-                  <th>Stock</th>
+                  <th>کد محصول</th>
+                  <th>مدل</th>
+                  <th>موجودی</th>
                 </tr>
             </thead>
             <tbody>
-                {products.map((product, index) => (
-                <tr key={index}  onClick={() => setLocalProduct(product)}>         
-                    <td>{product.productId}</td>
-                    <td>{product.brand} {product.name}</td>
-                    <td>{getStock(product.inStock)}</td>
-                  </tr>
+                {products.map((pp, index) => (
+                  mapProduct(pp)
+               
                 ))}
             </tbody>
         </table>
@@ -49,24 +61,24 @@ function Products() {
               }
               <div className="product-panel-info">
                 { product && ( <label className='label-small'>
-                  ID
+                  کد محصول
                   <input value={localProduct?.productId} readOnly/>
                 </label>)}
                 <label>
-                    Brand
+                    برند
                   <input id="productBrand" name="brand" maxLength="50" value={localProduct?.brand || ''} onChange={handleInputChange} />
                 </label>
                 <label>
-                  Model
+                  مدل
                   <input id="productName" name="name" maxLength="100" value={localProduct?.name || ''} onChange={handleInputChange}/>
                 </label>
               </div>
               <label htmlFor="">
-                  Description
+                  توضیحات
                   <textarea id="productDescription" name="description" maxLength="500" rows="4" value={localProduct?.description || ''} onChange={handleInputChange}></textarea>
               </label>
             <label>
-                Image URL
+                تصویر
                 <input id="productImageURL" name="imageURL" maxLength="100" value={localProduct?.imageURL || ''} onChange={handleInputChange}/>
             </label>
             <div className='divider'>

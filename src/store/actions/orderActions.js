@@ -26,7 +26,6 @@ export const createOrder = createAsyncThunk('order/createOrder', async ({discoun
   })
   const newOrder = { "discount":discount, "items":mappedItems, "totalPrice" : total ,"userId":userId};
   const createdOrder = await orderApi.createOrder(newOrder);
-  debugger;
   return createdOrder;
 });
 

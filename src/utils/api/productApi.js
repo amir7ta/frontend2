@@ -3,13 +3,23 @@ import { variables } from './variables.js';
 
 const API_URL = variables.PRODUCT_API
 
+const getProductImages = async () => {
+  const response = await axios.get(`${API_URL}/images`);
+  return response.data;
+};
+
+const getProductImagesByProductId = async (productId) => {
+  const response = await axios.get(`${API_URL}/${productId}/image`);
+  return response.data;
+};
+
 const getProducts = async () => {
-  debugger
   const response = await axios.get(API_URL);
   return response.data;
 }
 
 const getProduct = async (productId) => {
+  debugger
   const response = await axios.get(`${API_URL}/${productId}`);
   return response.data;
 }
@@ -34,5 +44,7 @@ export default {
   getProduct,
   addProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductImagesByProductId,
+  getProductImages
 };

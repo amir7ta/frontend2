@@ -1,144 +1,111 @@
-import React, { useState, useEffect } from "react";
-import { MentionsInput, Mention } from "react-mentions";
-import styles from "./commentFormStyle.module.css";
-import mentionStyle from "./style.module.css";
+import React, { useState, useEffect,useRef } from 'react';
+import StarRatings from 'react-star-ratings';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const CommentForm = ({productId,parentId}) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [comment, setComment] = useState("");
-  const [dataResp, setDataResp] = useState([]);
+function CommentForm({callBackSuccess}) {
+    const [rating, setRating] = useState(5);
+    const [comment, setComment] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [error, setError] = useState('');
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [submittedComment, setSubmittedComment] = useState(null);
+    const handleRatingChange = (newRating) => {
+        setRating(newRating);
+    };
+    const buttonRef = useRef(null);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const currentDate = new Date().toLocaleString();
-    const platform = getPlatform();
-
-    const newComment = {
-      name,
-      email,
-      comment,
-      curdate: currentDate,
-      platform,
-      productId:{productId},
-      parentId:{parentId}
-
+    const handleCommentChange = (event) => {
+        setComment(event.target.value);
+    };
+   
+  
+    const openModal = () => {
+        setIsModalOpen(true);
     };
 
-    setSubmittedComment(newComment);
-    clearForm();
-  };
+    const closeModal = () => {
+      setIsModalOpen(false);
+      setIsSubmitted(false); // Reset isSubmitted state
+    };
 
-  const clearForm = () => {
-    setName("");
-    setEmail("");
-    setComment("");
-  };
+    const handleKeyDown = (event) => {
+        if (event.key === 'Escape' && isModalOpen) {
+            closeModal();
+        }
+    };
 
-  const getPlatform = () => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const isTablet = /(iPad|Android)/i.test(navigator.userAgent);
+    const validationSchema = Yup.object().shape({
+        comment: Yup.string().required('نظر نمی‌تواند خالی باشد!')
+    });
 
-    if (isMobile) {
-      return "Mobile";
-    } else if (isTablet) {
-      return "Tablet";
-    } else {
-      return "PC";
-    }
-  };
+    // const formik = useFormik({
+    //   initialValues: {
+    //       comment: ''
+          
+    //   },
+    //   validationSchema: validationSchema,
+    //   onSubmit: (values) => {
+    //       console.log(values);
+    //       setIsSubmitted(true);
+    //       setTimeout(() => {
+    //           closeModal();
+    //       }, 1500); // Close modal after 1.5 seconds
+    //   }
+    // });
 
-  useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/iamVictorSam/react-mentions-with-form/7d03dd94f7ae1740e835bef959d704ca81d1355b/src/names.json"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        const mentionableNames = json.people.map((person) => ({
-          id: person.name,
-          display: person.name,
-        }));
-        setDataResp(mentionableNames);
-      })
-      .catch((error) => console.log(error));
-  }, []);
 
-  return (
-    <div>
-      {/* Displaying User's comment */}
-      {submittedComment && (
-        <div className={styles.commentTile}>
-          <div>
-            <strong>User #{submittedComment.id}</strong> -{" "}
-            {submittedComment.name}
-          </div>
-          <div>Email: {submittedComment.email}</div>
-          <div>
-            Comment: <strong> {submittedComment.comment}</strong>
-          </div>
-          <div>ID: {submittedComment.id}</div>
-          <div>Date: {submittedComment.date}</div>
-          <div>Platform: {submittedComment.platform}</div>
-        </div>
-      )}
+    return (
+        <>
+           
 
-      <form className={styles.container} onSubmit={handleSubmit}>
-        <div className={styles.form_group}>
-          <label className={styles.label} htmlFor="name">
-            Name:
-          </label>
-          <input
-            className={styles.input}
-            type="text"
-            id="name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
-        <div className={styles.form_group}>
-          <label className={styles.label} htmlFor="email">
-            Email:
-          </label>
-          <input
-            className={styles.input}
-            type="email"
-            id="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
-        <div className={styles.form_group}>
-          <label className={styles.label} htmlFor="comment">
-            Comment:
-          </label>
-          {/* Using the Mention Component */}
-          <MentionsInput
-            value={comment}
-            classNames={mentionStyle}
-            onChange={(event, newValue) => setComment(newValue)}
-          >
-            <Mention
-              trigger="@"
-              data={dataResp}
-              className={mentionStyle.mentions__mention}
-            />
-            <Mention
-              trigger="#"
-              data={dataResp}
-              className={mentionStyle.mentions__mention}
-            />
-          </MentionsInput>
-        </div>
-
-        <button className={styles["submit-btn"]} type="submit">
-          Submit
-        </button>
-      </form>
-    </div>
-  );
-};
+              <Formik
+                    initialValues={{
+                      rating: 5,
+                      comment: ''
+                    }}
+                    validationSchema={Yup.object().shape({
+                      rating: Yup.number()
+                        .min(1, 'امتیاز باید حداقل 1 باشد')
+                        .max(5, 'امتیاز نمی‌تواند بیشتر از 5 باشد')
+                        .required('امتیاز الزامی است'),
+                      comment: Yup.string()
+                        .min(5, 'نظر باید حداقل 5 کاراکتر باشد')
+                        .required('نظر الزامی است')
+                    })}
+                    onSubmit={(values, { setSubmitting }) => {
+                      callBackSuccess()
+                    }}
+                  >
+                    {({ isSubmitting }) => (
+                      <Form>
+                        <div>
+                        <label htmlFor="rating">امتیاز:</label>
+                                              <StarRatings
+                                              name="rating" 
+                                                  rating={rating}
+                                                  starRatedColor="gold"
+                                                  changeRating={handleRatingChange}
+                                                  numberOfStars={5}
+                                                  starDimension="25px"
+                                                  starSpacing="5px"
+                                                  title="امتیاز"
+                                              />
+                          <ErrorMessage name="rating" component="div" className='errorMessage'/>
+                        </div>
+                        <div>
+                          <label htmlFor="comment">نظر:</label>
+                          <Field as="textarea" name="comment" id="comment" className='textarea-comment'/>
+                          <ErrorMessage name="comment" component="div" className='errorMessage' />
+                        </div>
+                        <button type="submit" disabled={isSubmitting}>
+                          {isSubmitting ? 'در حال ارسال...' : 'ثبت نظر'}
+                        </button>
+                      </Form>
+                    )}
+                  </Formik>
+        </>
+    );
+}
 
 export default CommentForm;

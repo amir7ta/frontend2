@@ -52,14 +52,12 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logout } = userSlice.actions;
-
 export const selectToken = (state) => state.user.token;
 export const selectCurrentUser = (state) => state.user.currentUser;
 export const selectIsLoading = (state) => state.user.isLoading;
 export const selectError = (state) => state.user.error;
 
-export const { setUser, setLoading, setError } = userSlice.actions;
+export const { setUser, setLoading, setError, logout } = userSlice.actions;
 
 
 export default userSlice.reducer;

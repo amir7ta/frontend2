@@ -68,13 +68,18 @@
 
 .second-button{
     max-width: 10rem;
-    border: 2px solid $color-smoke;
-    background: $color-smoke;
-    color: $color-blue;
+    border: 2px solid #f6f6f6;
+    background: #f6f6f6;
+    color: #0070ba;
     gap: 1rem;
     flex-grow: 0;
     flex-shrink: 1;
-    transition: all 0.1s ease-in-out;
+    //transition: all 0.1s ease-in-out;
+    //display: flex;
+    //justify-content: center;
+     align-items: unset !important; 
+    flex-direction: row;
+    //transition: all 0.1s ease-in-out;
     &:hover{
         background: $color-blue;
         color: white;
@@ -120,7 +125,7 @@
 }
 .input-wrapper {
     display: flex;
-    align-items: center;
+    //align-items: center;
     border: 1px solid $color-lightgrey;
     background: white;
     border-radius: 3px;
@@ -143,3 +148,5 @@ form span{
     color: rgb(180, 0, 0);
     font-size: 0.8rem;
 }
+
+

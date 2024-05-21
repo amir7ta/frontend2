@@ -27,13 +27,11 @@ const cartSlice = createSlice({
     },
     
     removeFromCart: (state, action) => {
-      debugger
       const { product, productSizeId } = action.payload; 
       state.items = state.items.filter(item => item.product.productId !== product.productId || item.productSizeId !== productSizeId ); 
       localStorage.setItem('cartItems', JSON.stringify(state.items));
     },
     updateQuantity: (state, action) => {
-      debugger
       const { productId, productSizeId, quantity } = action.payload;
       const cartItemIndex = state.items.findIndex(item => item.product.productId === productId && item.productSizeId === productSizeId);
       if (cartItemIndex !== -1) { 

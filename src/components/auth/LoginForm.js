@@ -87,7 +87,6 @@ const handleSubmit = async(e) => {
         'email':formValues.email._value,
         'password':formValues.password._value
       }
-      debugger
 
       const user = await login(requestData);
       if (user && location.pathname === '/authentication') {

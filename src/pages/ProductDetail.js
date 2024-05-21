@@ -10,7 +10,7 @@
   import { formatPrice } from '../utils/hooks/useUtil';
   import CommentForm from '../components/Comment/CommentForm';
 
-  function ProductDetail({cardRef}) {
+  function ProductDetailGpt({cardRef}) {
     const { id } = useParams();
     const { addToCart } = useCart();
     const { products, fetchProducts } = useProduct();
@@ -49,7 +49,6 @@
     }
 
 function addItem(e) {
-  debugger
   let btnY =
       position === "fixed"
         ? e.currentTarget.getBoundingClientRect().top
@@ -74,7 +73,6 @@ function addItem(e) {
     1000}s ease ${(speed - 10) / 1000}s`;
 
   document.body.appendChild(flyingBtn);
-debugger
   flyingBtn.style.top = `${cartTop + cart.offsetHeight - 35}px`;
   flyingBtn.style.left = `${cart.offsetLeft + cart.offsetWidth - 35}px`;
   flyingBtn.style.height = "1rem";
@@ -133,11 +131,12 @@ useEffect(() => {
                       </div>  
                     <p>{product.description}</p>
               </div>
-              <CommentForm params={product.productId}/>
+              <CommentForm productId={product.productId} />
+
           </div>
       )}
     </>
   );
 }
 
-export default ProductDetail;
+export default ProductDetailGpt;

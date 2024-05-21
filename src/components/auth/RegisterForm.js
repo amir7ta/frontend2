@@ -46,7 +46,6 @@ function Register() {
    
   };
   const submitHandler = event => {
-    debugger;
     event.preventDefault();
     let classes = event.target.className.replace('was-validated','') ;
     classes +=' was-validated';

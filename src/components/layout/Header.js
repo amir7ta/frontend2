@@ -32,7 +32,7 @@ function Header({cardRef}) {
         </div>
       </div>
       <div className="header-container">
-        <Link className="header-main header-section" to="/"><h1>داروخانه وکیلی</h1></Link>
+        {/* <Link className="header-main header-section" to="/"><h1>داروخانه وکیلی</h1></Link> */}
         <ul className='header-section'>
         <li><Link to="/shop">محصولات</Link></li>
           <li><Link to="/">تماس با ما</Link></li>

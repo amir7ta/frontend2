@@ -8,8 +8,9 @@ const getProductSizes = async () => {
   return response.data;
 };
 
+
 const getProductSizesByProductId = async (productId) => {
-  const response = await axios.get(`${API_URL}/${productId}`);
+  const response = await axios.get(`${API_URL}/${productId}/productsize`);
   return response.data;
 };
 

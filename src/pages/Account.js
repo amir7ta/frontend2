@@ -14,10 +14,8 @@ function MyAccount() {
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
-    debugger
     if (!currentUser) {
       navigate('/authentication');
-
     }
   }, [currentUser, navigate]);
 

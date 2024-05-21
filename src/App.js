@@ -5,15 +5,13 @@ import Footer from './components/layout/Footer';
 // import pages
 import Home from "./pages/Home";
 import Shop from './pages/Shop';
-import ProductPage from './pages/ProductDetail';
+import ProductPage from './pages/ProductPageGpt';
 import CartPage from "./pages/Cart"
 import CheckoutPage from './pages/Checkout';
 import Admin from "./pages/AdminPanel"
 import Account from './pages/Account';
 import Authentication from './pages/Authentication';
 import Wishlist from './pages/Wishlist';
-
-
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { createRef } from 'react';
 
@@ -29,7 +27,7 @@ function App() {
       {showHeaderFooter && <Header cardRef = {cardRef}/>}
       <Routes>
         <Route path="/" element={<Home location={location} />} />
-        <Route path="/:id" element={<ProductPage cardRef = {cardRef}/>} /> 
+        <Route path="/:id" element={<ProductPage cardReference = {cardRef}/>} /> 
         <Route path="/authentication" element={<Authentication />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
