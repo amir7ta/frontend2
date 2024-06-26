@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductItem';
-import { useProduct } from '../../utils/hooks/useProduct';
-import { useSelector } from 'react-redux';
+// import { useProduct } from '../../utils/hooks/useProduct';
+import { useDispatch, useSelector } from 'react-redux';
 import { icons } from '../../assets/icons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useToggle  from "../../utils/hooks/useUtil"
+import LoadingModal from "../common/LoadingModal";
+
+
+import {  selectProducts, fetchProducts , selectLoading, selectError } from '../../store/reducers/productSlice';
 
 function ProductList() {
   const { toggle, isToggled } = useToggle();
-  const { products, fetchProducts } = useProduct();
   const { minPrice: filterMinPrice, maxPrice: filterMaxPrice } = useSelector((state) => state.product.filter);
 
   const [minPrice, setMinPrice] = useState(filterMinPrice || '');
@@ -16,10 +19,19 @@ function ProductList() {
   const [sortOrder, setSortOrder] = useState('asc');
   const [size, setSize] = useState('');
 
+  const products = useSelector(selectProducts);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+  const dispatch = useDispatch();
+
+
   useEffect(() => {
-    fetchProducts();
+    dispatch(fetchProducts(1));
   }, []);
 
+  if (error) {
+    return <div>خطا: {error}</div>;
+  }
   const filteredProducts = products.filter((product) => {
     const minPriceFilter = minPrice === '' || product.defaultPrice >= parseFloat(minPrice);
     const maxPriceFilter = maxPrice === '' || product.defaultPrice <= parseFloat(maxPrice);
@@ -36,7 +48,9 @@ function ProductList() {
   });
 
   return (
+    
     <div className='shop'>
+      <LoadingModal loading={loading} />
       <div className='filter-control'>
         <div className='filter-div toggle'>
           <a onClick={() => toggle()}><FontAwesomeIcon icon={icons.filter}/></a>
@@ -70,7 +84,7 @@ function ProductList() {
         }
       </div>
       <div className="product-grid">
-        {filteredProducts.reverse().map((product, index) => <ProductCard product={product} key={index} />)}
+        { filteredProducts.reverse().map((product, index) => <ProductCard product={product} key={index} />)}
       </div>
     </div>
   );

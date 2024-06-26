@@ -6,14 +6,13 @@ import { formatPrice } from '../../utils/hooks/useUtil';
 
 function CartItem() {
   const { removeFromCart, updateQuantity, items } = useCart();
-
   return (  
     <>
       {items.map((item) => (
          <div className="cart-item" key={`${item.product.productId}-${item.size}`}>
           <Link to={`/${item.product.productId}`}>
             <div className='cart-item-img'>
-              <img src={item.product.imageURL} alt={item.product.brand} />
+              <img src={item.product.images.find(image=>image.isMainImage==true).path} alt={item.product.brand} />
             </div>
           </Link>
           <div className='cart-item-about'>

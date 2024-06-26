@@ -1,0 +1,119 @@
+.review-container {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    max-width: 310px;
+    flex-direction: column;
+    position: absolute;
+    //min-width: 310px;
+
+  }
+
+
+
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .average-rating span {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+//   form {
+//     display: flex;
+//     flex-direction: column;
+//   }
+  
+  label {
+    margin-bottom: 5px;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+  }
+  
+  // .button {
+  //   padding: 10px 20px;
+  //   background-color: #007bff;
+  //   color: #fff;
+  //   border: none;
+  //   border-radius: 5px;
+  //   cursor: pointer;
+  //   margin-top: 10px;
+  // }
+  .review-container {
+    position: fixed;
+    border: none;
+    top: 0;
+    width: 100%;
+    background-color: white; /* یا هر رنگ پس‌زمینه‌ای که نیاز دارید */
+    flex:2 1;
+    max-height: 170px;
+  }
+  .sticky-review-container {
+    position: -webkit-sticky; /* برای پشتیبانی از مرورگرهای قدیمی‌تر */
+    position: sticky;
+    top:183px;
+    background-color: white; /* یا هر رنگ پس‌زمینه‌ای که نیاز دارید */
+    z-index: 9;
+  }
+
+  .comment-section{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+
+  @media screen and (max-width: 825px) {
+   
+  .review-container{
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+  .comment-list {
+      flex: 1 1 100%;
+  }
+  .sticky-review-container {
+    //top: 700px; /* فاصله از بالای صفحه هنگام چسبندگی */
+    position: relative;
+  }
+
+
+}
+
+.rtl {
+    transform: scaleY(-1) rotate(180deg);
+    direction: ltr;
+}
+
+
+
+
+// @media (min-width: 1024px) {
+//     .text-h5 {
+//         font-size: 1.6rem;
+//     }
+// }
+// .text-h5{
+//     font-size: 1.4rem;
+//     font-weight: 700;
+//     line-height: 2.1;
+// }
+
+// .py-3 {
+//     padding-top: 12px;
+//     padding-bottom: 12px;
+// }

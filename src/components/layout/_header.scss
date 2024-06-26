@@ -1,10 +1,16 @@
+.nav-container{
+    position: fixed;
+    z-index: 13;
+    width: 100%;
+    top: 0px;
+}
 .header-container{
     width: 100%;
     margin: auto;
-    max-width: 1080px;
-    margin: auto;
     padding: 1rem;
     flex: 1;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     @include flex(space-between, center, row);
     ul{
         @include flex(space-between, center, row);
@@ -41,7 +47,7 @@
     @include flex(center, center, row);
     span{
         @include flex(center, center, row);
-        z-index: 9999;
+        z-index: 300;
         top: 10%;
         right: 0;
         border: 2px solid white;
@@ -127,3 +133,7 @@
         display: none;
     }
   }
+
+
+
+

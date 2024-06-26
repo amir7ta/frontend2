@@ -1,70 +1,86 @@
 import React, { useState, useEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 // import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icons } from "../assets/icons/icons";
-import { useParams } from "react-router-dom";
-import { useCart } from "../utils/hooks/useCart";
-//import { useProduct } from "../utils/hooks/useProduct";
-import { useWishlist } from "../utils/hooks/useWishlist";
-import { formatPrice } from "../utils/hooks/useUtil";
-import "react-tabs/style/react-tabs.css";
 
+import { useParams, NavLink  } from "react-router-dom";
+import { useCart } from "../utils/hooks/useCart";
+
+import "react-tabs/style/react-tabs.css";
+import Scrollspy from 'react-scrollspy';
 
 // Import components
 import CommentTab from "../components/Comment/CommentTab";
 import SpecificationTab from "../components/product/SpecificationTab";
+import SpecificationPanel from "../components/product/SpecificationPanel";
+import BuyBoxSide from "../components/product/BuyBoxSide";
+import BuyBoxBottom from "../components/product/BuyBoxBottom";
+
 import IntroductionTab from "../components/product/IntroductionTab";
 import LoadingModal from "../components/common/LoadingModal";
-
-
 import { useDispatch, useSelector } from 'react-redux';
-import { productDetail, fetchProductDetail ,error,loading} from '../store/reducers/productSlice';
+import { fetchProductDetail, selectProductDetail, selectLoading, selectError, selectBreadCrumbs} from '../store/reducers/productSlice';
 
 function ProductPage({ cardReference }) {
+
   const [selectedSize, setSelectedSize] = useState(null);
-  const [defaultSize, setDefaultSize] = useState(null);
-  const [product, setProduct] = useState(null);
   const [commentContent, setCommentContent] = useState("");
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const { id } = useParams();
   const { addToCart } = useCart();
   const dispatch = useDispatch();
-  const { wishlistItems, toggleWishlistItem } = useWishlist();
   const [mainImage, setMainImage] = useState("");
-  const { prodDetail } = useSelector(productDetail);
-  const { ploading } = useSelector(loading);
-  const { perror } = useSelector(error);
+
+  const productDetail = useSelector(selectProductDetail);
+  const breadCrumbs = useSelector(selectBreadCrumbs);
+
+  const loading = useSelector(selectLoading);
+
+  const error = useSelector(selectError);
+  let addBtn, cart;
+  const speed = 1200,
+  curveDelay = 300,
+  position = "fixed"; // or absolute
+  const [isMobile, setIsMobile] = useState(false)
+
+  const handleResize = () => {
+    if (window.innerWidth < 1023) {
+        setIsMobile(true)
+    } else {
+        setIsMobile(false)
+    }
+  }
+  
+  // create an event listener
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize(); // برای تنظیم مقدار اولیه
+  
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [productDetail]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [productDetail]);
 
   useEffect(() => {
-    debugger
     dispatch(fetchProductDetail(id));
-  }, [id,fetchProductDetail]);
+  }, [id, dispatch]);
 
+  useEffect(() => {
+    console.log("Product detail: ", productDetail);
+    if (productDetail && productDetail.mainImage) {
+      setMainImage(productDetail.mainImage);
+    } else {
+      console.error("Product detail is missing main image");
+    }
+  }, [productDetail]);
 
-  // useEffect(()=>{
-  //   debugger
-  //   if (productDetail) {
-  //     debugger
-  //     setMainImage(productDetail.imageURL);
-  //     setLoading(false);
-  //     setDefaultSize(
-  //       productDetail.sizes.findIndex((size) => size.price === productDetail.defaultPrice)
-  //     );
-  //   }
-  // },[productDetail])
-
-  const itemExists = wishlistItems.find(
-    (item) => item?.productId === product?.productId
-  );
 
   function storeItems() {
     let itmsInCart = cart.getAttribute("data-count");
@@ -77,164 +93,153 @@ function ProductPage({ cardReference }) {
     }
   }
 
-  function addItem(e) {
-    let btnY =
-        position === "fixed"
-          ? e.currentTarget.getBoundingClientRect().top
-          : e.currentTarget.offsetTop,
-      btnX =
-        position === "fixed"
-          ? e.currentTarget.getBoundingClientRect().left
-          : e.currentTarget.offsetLeft,
-      flyingBtn = e.currentTarget.cloneNode();
+  const addItem = (e)=> {
+    const bigProductImage = document.getElementById('productDetailMainImage');
+
+    let btnY = position === "fixed" ? e.target.getBoundingClientRect().top : e.target.offsetTop;
+    let btnX = position === "fixed" ? e.target.getBoundingClientRect().left : e.target.offsetLeft;
+    let flyingTumbnail = bigProductImage.cloneNode();
     cart = cardReference.current;
     let cartTop = cart.offsetTop - scrollPosition;
     cart.classList.remove("addedCount");
 
-    flyingBtn.classList.add("flyingBtn");
-    flyingBtn.style.position = position;
-    flyingBtn.style.top = `${btnY}px`;
-    flyingBtn.style.left = `${btnX}px`;
-    flyingBtn.style.opacity = "1";
-    flyingBtn.style.transition = `all ${speed / 1000}s ease, top ${
-      (speed + curveDelay) / 1000
-    }s ease, left ${speed / 1000}s ease, transform ${speed / 1000}s ease ${
-      (speed - 10) / 1000
-    }s`;
+    flyingTumbnail.classList.add("flyingBtn");
+    flyingTumbnail.style.position = position;
+    flyingTumbnail.style.top = `${btnY}px`;
+    flyingTumbnail.style.left = `${btnX}px`;
+    flyingTumbnail.style.opacity = "1";
+    flyingTumbnail.style.transition = `all ${speed / 500}s ease, top ${(speed + curveDelay) / 1000}s ease, left ${speed / 500}s ease, transform ${speed / 1200}s ease ${(speed - 10) / 500}s`;
 
-    document.body.appendChild(flyingBtn);
-    flyingBtn.style.top = `${cartTop + cart.offsetHeight - 35}px`;
-    flyingBtn.style.left = `${cart.offsetLeft + cart.offsetWidth - 35}px`;
-    flyingBtn.style.height = "1rem";
-    flyingBtn.style.width = "1rem";
-    flyingBtn.style.transform = "scale(0)";
-
+    document.body.appendChild(flyingTumbnail);
+    flyingTumbnail.style.top = `${cartTop + cart.offsetHeight - 35}px`;
+    flyingTumbnail.style.left = `${cart.offsetLeft + cart.offsetWidth - 35}px`;
+    flyingTumbnail.style.maxHeight  = "50px";
+    flyingTumbnail.style.maxWidth = "50px";
+    flyingTumbnail.style.width = "50px";
+    flyingTumbnail.style.height = "50px";
+    flyingTumbnail.style.transform = "scale(0)";
+    flyingTumbnail.style
     setTimeout(() => {
-      flyingBtn.remove();
+      flyingTumbnail.remove();
       storeItems();
     }, speed * 1.5);
 
     addToCart({
-      product: product,
-      size: selectedSize?.size || product.sizes[0].size,
-      price: selectedSize?.price || product.defaultPrice,
-      productSizeId:
-        selectedSize?.productSizeId || product.sizes[0].productSizeId,
+      product: productDetail,
+      size: selectedSize?.size || productDetail.sizes[0].size,
+      price: selectedSize?.price || productDetail.defaultPrice,
+      productSizeId: selectedSize?.productSizeId || productDetail.sizes[0].productSizeId,
     });
   }
 
-  const handleSubmitComment = () => {
-    axios
-      .post("آدرس_API/ثبت_کامنت", {
-        productId: product.productId,
-        content: commentContent,
-      })
-      .then((response) => {
-        console.log("Comment submitted successfully:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error submitting comment:", error);
-      });
-  };
-
-  const handleScroll = () => {
+   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
+
+  const handleTabClick = (e, targetId) => {
+    e.preventDefault();
+    const offset = 180; // مقدار offset به پیکسل
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const y = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const handleSelectedSizeChange = (newSelectedSize) => {
+    setSelectedSize(newSelectedSize);
+  };
+
   if (error) {
     return <div>خطا: {error}</div>;
   }
+
   return (
     <>
       <LoadingModal loading={loading} />
-      {productDetail && (
+      {productDetail && productDetail.images &&(
         <div className="product-page-container">
-           <div className="product-detail">
-            <div className="product-detail-img">
-                <img src={mainImage} alt="Product" />
-                <div className="image-gallery">
-                    {product.images.map((image, index) => (
-                        <img
-                            key={index}
-                            src={image.path}
-                            alt={`Thumbnail ${index}`}
-                            onClick={() => setMainImage(image.path)}
-                        />
+          <div className="product-detail">
+              <div>
+                {/* نمایش breadcrumb به عنوان لیست */}
+                <ul>
+                    <li><NavLink to="/">صفحه اصلی</NavLink></li>
+                    {breadCrumbs && breadCrumbs.map((item, index) => (
+                        <li key={index}>
+                            <NavLink to={item.route}>{item.title}</NavLink>
+                        </li>
                     ))}
+                </ul>
+            </div>
+            
+            <div className="product-detail-img">
+              <img src={mainImage} alt="Product" id="productDetailMainImage" />
+              <div className="image-gallery">
+                    {productDetail.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image.path}
+                        alt={`Thumbnail ${index}`}
+                        onClick={() => setMainImage(image.path)}
+                      />
+                    ))}
+              </div>
+            </div>
+            <div className="product-detail-other">
+              <div className ="product-detail-product-title">
+                  <h1>{productDetail.name}</h1>
+              </div>
+              <div className ="product-detail-Specification-buybox">
+                
+                <div className="product-detail-Specification">
+                  <SpecificationPanel  onSelectedSizeChange={handleSelectedSizeChange}/>
+                </div>
+
+                {!isMobile &&
+                <div className="product-detail-BuyBoxSide">
+                  <BuyBoxSide addItemCallBack={addItem} selectedSize={selectedSize}/>
+                </div>
+                }
                 </div>
             </div>
-            <div className="product-detail-about">
-              <h2>{productDetail.brand}</h2>
-              <h1>{productDetail.name}</h1>
-              <p className="product-price">
-                {selectedSize
-                  ? formatPrice(selectedSize.price)
-                  : formatPrice(productDetail.defaultPrice)}
-              </p>
-              <div className="size-select-container">
-                <label htmlFor="size-select">اندازه‌های موجود</label>
-                <select
-                  id="size-select"
-                  value={
-                    selectedSize
-                      ? JSON.stringify(selectedSize)
-                      : JSON.stringify(productDetail.sizes[defaultSize])
-                  }
-                  onChange={(e) => setSelectedSize(JSON.parse(e.target.value))}
-                >
-                  {productDetail.sizes
-                    .slice()
-                    .sort((a, b) => a.size - b.size)
-                    .map((size, index) => (
-                      <option key={index} value={JSON.stringify(size)}>
-                        {size.size} - قیمت {formatPrice(size.price)}{" "}
-                        {size.quantity <= 3
-                          ? `(فقط ${size.quantity} عدد موجود در انبار)`
-                          : ""}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <div className="divider">
-                <button
-                  id="btn-add-to-card"
-                  className="button"
-                  onClick={(e) => addItem(e)}
-                >
-                  افزودن به سبد خرید
-                </button>
-                <button
-                  className="second-button"
-                  onClick={() => toggleWishlistItem(productDetail)}
-                >
-                  <span>لیست علاقمندی‌ها</span>
-                  <FontAwesomeIcon
-                    icon={itemExists ? icons.heartFull : icons.heart}
-                  />
-                </button>
-              </div>
-              <p className="product-description">{productDetail.description}</p>
+             {isMobile &&
+            <div className="product-detail-BuyBoxBottom">
+              <BuyBoxBottom addItemCallBack={addItem} selectedSize={selectedSize}/>
             </div>
+            }
+            
           </div>
+           <div className="tabArea">
+              <div className="tabs-container">
+                  <Scrollspy 
+                    className="ulTab" items={ ['introduction', 'specifications', 'comments'] } 
+                    currentClassName="isCurrent" offset={-95}>
+                      <li>
+                        <a href="#introduction" onClick={(e) => handleTabClick(e, 'introduction')}>معرفی</a> 
+                        <div className='li_Title_line_red'></div>
+                      </li>   
+                      <li>
+                        <a href="#specifications" onClick={(e) => handleTabClick(e, 'specifications')}>مشخصات</a>
+                        <div className='li_Title_line_red'></div>
+                      </li>   
+                      <li>
+                        <a href="#comments" onClick={(e) => handleTabClick(e, 'comments')}>دیدگاه کاربران</a>
+                        <div className='li_Title_line_red'></div>
+                      </li>   
+                  </Scrollspy>
+              </div>
 
-          <div className="tabs-container">
-            <Tabs>
-              <TabList>
-                <Tab>معرفی</Tab>
-                <Tab>مشخصات</Tab>
-                <Tab>نظرات کاربران</Tab>
-              </TabList>
-              <TabPanel>
-                <IntroductionTab />
-              </TabPanel>
-              <TabPanel>
+              <div  className="tab-top-bottom-border">
+                  <IntroductionTab />
+              </div>
+              <div  className="tab-top-bottom-border">
                 <SpecificationTab />
-              </TabPanel>
-              <TabPanel>
+              </div>
+              <div  className="tab-top-bottom-border">
                 <CommentTab />
-              </TabPanel>
-            </Tabs>
-          </div>
+              </div>
+            </div>
         </div>
       )}
     </>

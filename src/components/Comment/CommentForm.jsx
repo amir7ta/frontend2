@@ -1,83 +1,81 @@
 import React, { useState, useEffect,useRef } from 'react';
+import { useParams } from "react-router-dom";
+
 import StarRatings from 'react-star-ratings';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { createComment, selectLoading, selectError } from '../../store/reducers/commentSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import LoadingModal from "../common/LoadingModal";
+import { selectProductDetail } from '../../store/reducers/productSlice';
+import { StarRate } from '@mui/icons-material';
 
-function CommentForm({callBackSuccess}) {
+function CommentForm({callBackSuccess, callBackClose, commentToReply}) {
     const [rating, setRating] = useState(5);
     const [comment, setComment] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [error, setError] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
 
+    const dispatch = useDispatch();
+    const loading = useSelector(selectLoading);
+    const error = useSelector(selectError);
+    const productDetail = useSelector(selectProductDetail);
+
+
+    const initialComment = {
+      userId:1,
+      rating: 5,
+      comment: '',
+      parentId:commentToReply?.commentId ||null,
+      productId: productDetail.productId || ''
+  };
+
+    // useEffect(()=>{
+    //   setComment(prevState => ({ ...prevState, ['productId']: productDetail.productId }));
+    // },[productDetail])
+
+    // useEffect(()=>{
+    //   setComment(prevState => ({ ...prevState, ['parentId']: commentToReply.commentId }));
+    // },[commentToReply])
+
     const handleRatingChange = (newRating) => {
-        setRating(newRating);
+        setRating(newRating)  
+        setComment(prevState => ({ ...prevState, ['rating']: newRating }));
     };
     const buttonRef = useRef(null);
 
-    const handleCommentChange = (event) => {
-        setComment(event.target.value);
-    };
-   
-  
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-      setIsModalOpen(false);
-      setIsSubmitted(false); // Reset isSubmitted state
-    };
-
-    const handleKeyDown = (event) => {
-        if (event.key === 'Escape' && isModalOpen) {
-            closeModal();
-        }
-    };
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setComment(prevState => ({ ...prevState, [name]: value }));
+    };  
 
     const validationSchema = Yup.object().shape({
-        comment: Yup.string().required('نظر نمی‌تواند خالی باشد!')
+        rating: Yup.number()
+            .min(1, 'امتیاز باید حداقل 1 باشد')
+            .max(5, 'امتیاز نمی‌تواند بیشتر از 5 باشد')
+            .required('امتیاز الزامی است'),
+        comment: Yup.string()
+            .min(5, 'نظر باید حداقل 5 کاراکتر باشد')
+            .required('نظر الزامی است')
     });
-
-    // const formik = useFormik({
-    //   initialValues: {
-    //       comment: ''
-          
-    //   },
-    //   validationSchema: validationSchema,
-    //   onSubmit: (values) => {
-    //       console.log(values);
-    //       setIsSubmitted(true);
-    //       setTimeout(() => {
-    //           closeModal();
-    //       }, 1500); // Close modal after 1.5 seconds
-    //   }
-    // });
-
 
     return (
         <>
-           
-
+         <LoadingModal loading={loading} />
               <Formik
-                    initialValues={{
-                      rating: 5,
-                      comment: ''
-                    }}
-                    validationSchema={Yup.object().shape({
-                      rating: Yup.number()
-                        .min(1, 'امتیاز باید حداقل 1 باشد')
-                        .max(5, 'امتیاز نمی‌تواند بیشتر از 5 باشد')
-                        .required('امتیاز الزامی است'),
-                      comment: Yup.string()
-                        .min(5, 'نظر باید حداقل 5 کاراکتر باشد')
-                        .required('نظر الزامی است')
-                    })}
-                    onSubmit={(values, { setSubmitting }) => {
-                      callBackSuccess()
-                    }}
+                 initialValues={initialComment}
+                 validationSchema={validationSchema}
+                 onSubmit={async (values, { setSubmitting }) => {
+                     try {
+                         await dispatch(createComment(values)).unwrap();
+                         callBackSuccess();
+                     } catch (err) {
+                         console.error("Failed to create comment: ", err);
+                     } finally {
+                         setSubmitting(false);
+                     }
+                 }}
                   >
-                    {({ isSubmitting }) => (
+                    {({ isSubmitting , setFieldValue }) => (
                       <Form>
                         <div>
                         <label htmlFor="rating">امتیاز:</label>
@@ -85,7 +83,10 @@ function CommentForm({callBackSuccess}) {
                                               name="rating" 
                                                   rating={rating}
                                                   starRatedColor="gold"
-                                                  changeRating={handleRatingChange}
+                                                  changeRating={(newRating) => {
+                                                    handleRatingChange(newRating);
+                                                    setFieldValue('rating', newRating);
+                                                }}
                                                   numberOfStars={5}
                                                   starDimension="25px"
                                                   starSpacing="5px"
@@ -94,12 +95,19 @@ function CommentForm({callBackSuccess}) {
                           <ErrorMessage name="rating" component="div" className='errorMessage'/>
                         </div>
                         <div>
-                          <label htmlFor="comment">نظر:</label>
-                          <Field as="textarea" name="comment" id="comment" className='textarea-comment'/>
+                          {commentToReply&& (<label htmlFor="comment">پاسخ به : {commentToReply.text}</label>)}
+                          {!commentToReply&& (<label htmlFor="comment">نظر:</label>)}
+
+                          <Field as="textarea" name="comment" id="comment" className='textarea-comment' />
                           <ErrorMessage name="comment" component="div" className='errorMessage' />
                         </div>
+                        {error && <div>خطا: {error}</div>}
+
                         <button type="submit" disabled={isSubmitting}>
-                          {isSubmitting ? 'در حال ارسال...' : 'ثبت نظر'}
+                            {isSubmitting ? 'در حال ارسال...' : 'ثبت نظر'}
+                        </button>
+                        <button className='default-button' disabled={isSubmitting} onClick={callBackClose}>
+                            {isSubmitting ? 'در حال ارسال...' : 'بستن'}
                         </button>
                       </Form>
                     )}

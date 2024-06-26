@@ -25,7 +25,6 @@ function Payment() {
   };
 
   const handleChange = e => {
-    debugger
     const { value } = e.target;
     setBankState(value);
     setBankName(value);

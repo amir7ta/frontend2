@@ -14,7 +14,6 @@ const getOrdersByUserId = async (userId) => {
 }
 
 const createOrder = async (order) => {
-  debugger
   const response = await axios.post(`${API_URL}`, order);
   return response.data;
 }

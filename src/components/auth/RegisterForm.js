@@ -16,7 +16,6 @@ function Register() {
   // var forms = document.querySelectorAll('.needs-validation')
   // Array.prototype.slice.call(forms)
   //   .forEach(function (form) {
-  //     debugger
   //     form.addEventListener('submit', function (event) {
   //       if (!form.checkValidity()) {
   //         event.preventDefault()
@@ -40,7 +39,6 @@ function Register() {
   };
 
   const onSubmit = async (registerData) => {
-    // debugger;
     // const response =  userApi.createUser(registerData)
     // console.log( response.data)
    

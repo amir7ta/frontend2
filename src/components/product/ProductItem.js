@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { icons } from '../../assets/icons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,10 +8,10 @@ import { formatPrice } from '../../utils/hooks/useUtil';
 function ProductCard({product, index}) {
   const { wishlistItems, toggleWishlistItem } = useWishlist();
   const itemExists = wishlistItems.find((item) => item.productId === product.productId);
-
+  
 return (
   <>
-  {product.inStock &&
+  {/* {product.inStock && */}
         <div className='product-card' key={index}>   
             <FontAwesomeIcon
               icon={itemExists ? icons.heartFull : icons.heart}
@@ -19,7 +19,7 @@ return (
             />   
           <div className='product-img'>
               <Link to={`/${product.productId}`}>
-                <img src={product.imageURL} alt="" />
+                <img src={product.mainImage} alt="" />
               </Link>
           </div>
           <div className='product-info'>
@@ -30,7 +30,7 @@ return (
             </Link>
           </div>
       </div>
-  }
+  {/* } */}
   </>
 );}
 

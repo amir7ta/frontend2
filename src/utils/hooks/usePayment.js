@@ -39,7 +39,6 @@ export const usePayment = () => {
   };
 
   const paymentNotSuccessHandler = async (ForSaveResult,e) => {
-  debugger;
      dispatch(paymentNotSuccess(ForSaveResult));
   };
 

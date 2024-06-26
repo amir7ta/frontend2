@@ -1,6 +1,6 @@
 /* General container styling */
 .shop {
-    padding: 2rem 1rem;
+    padding: 10rem 1rem;
     max-width: 1080px;
     width: 100%;
     margin: auto;
@@ -42,7 +42,7 @@
     padding: 0.3rem;
     border-radius: 50%;
     color: $color-dark;
-    z-index: 9999;
+    z-index: 10;
 }
 
 @media (max-width: 600px) {
@@ -50,24 +50,6 @@
         margin-bottom: 1rem;
         max-width: none;
     }
-}
-
-/* Product image styling */
-.product-img {
-    height: 300px; /* Increased height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: $color-smoke;
-}
-
-.product-img img {
-    max-width: 90%;
-    object-fit: cover;
-}
-
-.product-img a {
-    height: 100%;
 }
 
 /* Product info styling */
@@ -90,18 +72,15 @@
 }
 
 /* Product detail styling */
-.product-detail-img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: $color-smoke;
-    min-height: 70vh; /* Increased min-height */
-    flex: 2;
-}
+// .product-detail-img {
+//     align-items: center;
+//     justify-content: center;
+//     background: $color-smoke;
+//     flex: 2;
+//     max-width: 90%;
+// }
 
-.product-detail-img img {
-    max-width: 90%; /* Increased max-width */
-}
+
 
 /* Product detail about section */
 .product-detail-about {
@@ -132,32 +111,32 @@
 
 /* Product page container styling */
 .product-page-container {
-    padding: 20px;
-    background-color: #f9f9f9;
+    padding: 10px;
+    margin-top: 110px;
 }
 
 /* Product detail section styling */
 .product-detail {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 10px;
+    //align-items: center;
+    //justify-content: center;
 }
 
-.product-detail-img {
-    flex: 2;
-    position: relative;
-}
+
 
 .product-detail-img img {
-    width: 100%;
-    height: auto;
+    //width: 100%;
+    height: 100%;
     border-radius: 8px;
-    max-width: 750px; /* Adjusted max-width for larger image */
+    max-height: 350px; /* Adjusted max-width for larger image */
+    
 }
 
 .product-detail-about {
-    flex: 1;
+    flex: 1 1 20%;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -171,14 +150,15 @@
 }
 
 .size-select-container {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .size-select-container select {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    max-width: 500px;
 }
 
 .divider {
@@ -187,16 +167,15 @@
     margin-bottom: 20px;
 }
 
-.button, .second-button {
-    flex: 1;
-    padding: 10px;
-    background-color: #e91e63;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    max-width: 200px; /* Ensures buttons do not get too large */
-}
+// .button, .second-button {
+//     padding: 10px;
+//     background-color: #e91e63;
+//     color: white;
+//     border: none;
+//     border-radius: 4px;
+//     cursor: pointer;
+//     max-width: 200px; /* Ensures buttons do not get too large */
+// }
 
 .second-button {
     background-color: #ff9800;
@@ -212,71 +191,202 @@
 }
 
 /* Tabs container styling */
-.tabs-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 24px;
+.product-detail-Specification{
+    width: 100%;
+    padding-left: 20px;
 }
 
-/* Image gallery styling */
-.image-gallery {
+
+
+
+.product-detail-img {
     display: flex;
     flex-direction: column;
+    flex: 1 1;
+    margin: 0 auto;
     align-items: center;
-    position: absolute;
-    top: 0;
-    right: -100px;
+    justify-content: center;
+  }
+  .product-detail-BuyBoxSide{
+    width: 350px;
+    max-width: 350px;
+    min-width: 350px;
+    border-top: 1px solid var(--color-neutral-200);
+    background: #e4e4e4;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 5px;
+    padding: 10px;
 }
+.product-detail-other{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+.product-detail-product-title{
+    flex: 1 1 ;
+    width: 100%;
+    padding-top: 10px;
+}
+.product-detail-Specification-buybox{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.product-detail-title-line {
+    height: 1px;
+    background-color: var(--color-neutral-200);
+    flex-grow: 1;
+}
+  .image-gallery {
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: center;
+    // margin-left: 10px;
+    // padding: 5px;
 
-.image-gallery img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-top: 10px;
+    justify-content: center;
+
+  }
+  
+  .image-gallery img {
+    width: 70px;
+    height: 70px;
+    margin: 5px 5px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease;
+    border: 1px solid ;
+    border-color: #bdbbbb;
+  }
+  
+  .image-gallery img:hover {
+    transform: scale(1.2);
+  }
+  
+ 
+
+
+.styles_Title_line_red {
+    background-color: #e91e63;
+    margin-top: 8px;
+    width: 7rem;
+    height: .2rem;
 }
 
-.image-gallery img:hover {
-    transform: scale(1.1);
+
+.tabs-container {
+    position: -webkit-sticky; /* برای پشتیبانی از مرورگرهای وب‌کیت مثل سافاری */
+    position: sticky;
+    top:98px;
+    background-color: white; /* تنظیم رنگ پس‌زمینه به سفید یا هر رنگ دیگری */
+    z-index: 10; /* تنظیم z-index برای قرار گرفتن روی دیگر عناصر */
+    border-bottom: 1px solid var(--color-neutral-200);
+    @media (max-width:850px){
+        top:70px;
+    }
+}
+
+
+.tab-top-bottom-border{
+    border-bottom: 4px solid #f0f0f1;
+    padding: 25px;
+}
+
+
+ 
+  .tab-content {
+    margin-top: 50px; /* فاصله بیشتر برای مطمئن شدن از 30 پیکسل فاصله */
+  }
+  
+  .tab-content > div {
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+//////////////////////////////////////////////////////////////// 
+.App {
+  font-family: sans-serif;
+}
+.scrollspy {
+  top: 0;
+  right: 0
+}
+
+.isCurrent {
+  font-weight: bold;
+}
+
+.isCurrent a {
+    color: #e91e63;
+}
+.isCurrent div {
+    background-color: var(--color-button-primary);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 4px;
+    left: 50%;
+    width: 100%;
+}
+
+.ulTab{
+    display: flex;
+    align-items: center;    /* تراز کردن عمودی */
+    height: 8vh;          /* ارتفاع کل viewport */
+  }
+  
+  .ulTab li {
+    float: right;
+    color: var(--color-primary-500);
+  }
+  
+  .ulTab li a {
+    text-align: center;
+    text-decoration: none;
+  }
+
+
+.tabArea{
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-
+    .tabTitle-redUnderline{
+        display: none;
+    }
     .product-page-container {
         padding: 16px;
     }
-
-    .product-detail {
-        flex-wrap: wrap;
+    .product-detail-Specification{
+        width: 100%;
+    }
+    .product-detail-other {
+        width: 100%;
     }
 
-    .product-detail-img,
-    .product-detail-about {
-        flex: 1 1 100%;
-    }
-
-    .product-detail-img img {
-        max-width: 450px; /* Adjusted max-width for larger image */
-    }
-
-    .image-gallery {
-        gap: 8px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .image-gallery img {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-    }
-
+    // .product-detail-img,
+     .product-detail-Specification{
+        padding-left: 0px;
+     }
+    // .product-Detail-buyBoxBottom-container {
+    //      flex: 1 100%;
+    // }
+        .product-detail{
+            display: grid;
+        }
+    
+        
     .product-detail-about h2,
     .product-detail-about h1,
     .product-detail-about p {
@@ -287,51 +397,5 @@
     .divider {
         margin: 16px 0;
     }
-
-    .button,
-    .second-button {
-        width: 100%;
-        padding: 12px;
-        margin: 8px 0;
-        max-width: none; /* Ensures buttons do not get too large */
-    }
-
-    .tabs-container {
-        margin-top: 32px;
-    }
-}
-
-.product-detail-img {
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    background: #f1f1f1; /* رنگ پس زمینه */
-    flex-direction: column;
-}
-
-.product-detail-img img {
-    max-width: 80%;
-    border-radius: 8px;
-}
-
-.image-gallery {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    right: -100px; /* Adjust as needed */
-    top: 0;
-}
-
-.image-gallery img {
-    width: 80px; /* اندازه کوچک‌تر برای عکس‌های آلبوم */
-    height: 80px; /* اندازه کوچک‌تر برای عکس‌های آلبوم */
-    margin-bottom: 10px; /* فاصله بین عکس‌ها */
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.image-gallery img:hover {
-    transform: scale(1.1);
+   
 }

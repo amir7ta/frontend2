@@ -22,7 +22,6 @@ export const useCart = () => {
   }, [subtotal, delivery, dispatch, discount]);
 
   const addToCartHandler = (item) => {
-    debugger
     dispatch(addToCart(item));
   };
   

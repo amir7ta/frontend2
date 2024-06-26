@@ -3,40 +3,74 @@ import { variables } from './variables.js';
 
 const API_URL = variables.IMAGE_API
 
-
-const geImagesByProductId = async (productId) => {
-  const response = await axios.get(`${API_URL}/${productId}/productImage`);
-  return response.data;
+const getImagesByProductId = async (productId) => {
+  try {
+    const response = await axios.get(`${API_URL}/product/${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching images by product ID:', error);
+    throw error;
+  }
 };
 
 const deleteImagesByProductId = async (productId) => {
-  const response = await axios.delete(`${API_URL}/${productId}/productImage`);
-  return response.data;
+  try {
+    const response = await axios.delete(`${API_URL}/product/${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting images by product ID:', error);
+    throw error;
+  }
 }
 
 const getImages = async () => {
-  const response = await axios.get(API_URL);
-  return response.data;
+  try {
+    const response = await axios.get(API_URL);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    throw error;
+  }
 }
 
 const getImage = async (imageId) => {
-  const response = await axios.get(`${API_URL}/${imageId}`);
-  return response.data;
+  try {
+    const response = await axios.get(`${API_URL}/${imageId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    throw error;
+  }
 }
 
 const addImage = async (image) => {
-  const response = await axios.post(API_URL, image);
-  return response.data;
+  try {
+    const response = await axios.post(API_URL, image);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding image:', error);
+    throw error;
+  }
 }
 
 const updateImage = async (imageId, image) => {
-  const response = await axios.put(`${API_URL}/${imageId}`, image);
-  return response.data;
+  try {
+    const response = await axios.put(`${API_URL}/${imageId}`, image);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating image:', error);
+    throw error;
+  }
 }
 
 const deleteImage = async (imageId) => {
-  const response = await axios.delete(`${API_URL}/${imageId}`);
-  return response.data;
+  try {
+    const response = await axios.delete(`${API_URL}/${imageId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    throw error;
+  }
 }
 
 export default {
@@ -46,5 +80,5 @@ export default {
   updateImage,
   deleteImage,
   deleteImagesByProductId,
-  geImagesByProductId
+  getImagesByProductId
 };

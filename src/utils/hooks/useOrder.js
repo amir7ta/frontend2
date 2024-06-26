@@ -12,7 +12,6 @@ export const useOrder = () => {
 
   const CreateOrderHandler = ({ discount, items, subtotal, defaultSubtotal, total, quantity, userId,orderId }, e) => {
     dispatch(createOrder({ discount, items, subtotal, defaultSubtotal, total, quantity, userId ,orderId})).then((res) => {
-      debugger
       dispatch(applyCardIsSaved(res.payload))
     });
 

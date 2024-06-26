@@ -21,7 +21,7 @@
     const itemExists = wishlistItems.find((item) => item?.productId === product?.productId);
     let addBtn, cart;
     const speed = 500,
-    curveDelay = 300,
+    curveDelay = 300;
     position = "fixed"; // or absolute
 
     useEffect(() => {
@@ -49,6 +49,8 @@
     }
 
 function addItem(e) {
+  const position = "fixed"; // یا "absolute"
+
   let btnY =
       position === "fixed"
         ? e.currentTarget.getBoundingClientRect().top
@@ -88,8 +90,8 @@ function addItem(e) {
 }
 const [scrollPosition, setScrollPosition] = useState(0);
 const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
+    const pos = window.pageYOffset;
+    setScrollPosition(pos);
 };
 
 useEffect(() => {

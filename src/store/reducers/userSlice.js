@@ -19,7 +19,6 @@ export const userSlice = createSlice({
       state.token = "";
     },
     setUser: (state, action) => {
-      debugger
       state.currentUser = action.payload;
     },
     setLoading: (state, action) => {

@@ -20,6 +20,9 @@ $color-blue: #0070ba;
 @import "../components/layout/footer";
 @import "../components/checkout/confirm";
 @import "../components/product/filter";
+@import "../components/product/SpecificationPanel";
+@import "../components/product/BuyBoxSide";
+@import "../components/product/BuyBoxBottom";
 
 // pages
 @import "../components/wishlist/wishlist";
@@ -32,7 +35,9 @@ $color-blue: #0070ba;
 @import "../components/product/product";
 @import "../components/common/LoadinModal";
 
+@import "../components/Comment/SuccessMessage";
+
+@import "../components/Comment/CommentList";
 
 
-
-
+@import "../components/Comment/CommentTab";

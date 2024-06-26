@@ -11,7 +11,6 @@ function Products() {
   const product = products.find((product) => product?.productId === localProduct?.productId);
 
   const mapProduct=(prod)=>{
-    debugger
     console.log(prod)
     return ( 
             <tr key={index}  onClick={() => setLocalProduct(prod)}>         
@@ -25,7 +24,6 @@ function Products() {
     fetchProducts();
   }, [products])
   useEffect(() => {
-    debugger
     console.log(products);
   }, [])
 

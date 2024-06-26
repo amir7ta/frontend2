@@ -9,11 +9,10 @@ function SuccessMessage() {
   });
 
   return (
-    <animated.div style={animation}>
       <div className="success-message">
-        <span role="img" aria-label="success">&#9989;</span> نظر شما با موفقیت ثبت شد
+        <span role="img" aria-label="success"></span> نظر شما با موفقیت ثبت شد
       </div>
-    </animated.div>
+
   );
 }
 

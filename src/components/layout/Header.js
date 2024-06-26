@@ -23,7 +23,7 @@ function Header({cardRef}) {
   }
 
   return (
-    <nav>
+    <nav className='nav-container'>
       <div className='header-second'>
         <div className="header-second-msg">
           <p>پرداخت <span>امن</span> از طریق درگاه بانکی</p>

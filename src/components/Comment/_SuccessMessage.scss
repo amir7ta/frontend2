@@ -1,0 +1,29 @@
+@keyframes success-animation {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .success-message {
+    display: inline-block;
+    padding: 1px 1px;
+    background-color: #4CAF50;
+    color: white;
+    width: 90%;
+    border-radius: 5px;
+    height: 50px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: success-animation 0.5s ease-in-out;
+  }

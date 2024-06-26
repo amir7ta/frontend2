@@ -26,7 +26,6 @@ const paymentSlice = createSlice({
       state.refId=refId;
     },
     setBank: (state, action) => {
-      debugger
       const { bankName} = action.payload;
       state.bankName=bankName;
     },
