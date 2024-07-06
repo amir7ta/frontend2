@@ -11,7 +11,6 @@ $color-blue: #0070ba;
     align-items: $align;
     flex-direction: $direction;
 }
-
 @import "global";
 @import "utilities";
 
@@ -23,6 +22,7 @@ $color-blue: #0070ba;
 @import "../components/product/SpecificationPanel";
 @import "../components/product/BuyBoxSide";
 @import "../components/product/BuyBoxBottom";
+@import "../components/FormatPrice/formatPrice";
 
 // pages
 @import "../components/wishlist/wishlist";
@@ -31,7 +31,9 @@ $color-blue: #0070ba;
 @import "../components/auth/auth"; 
 @import "../components/cart/cart";
 @import "../components/checkout/checkout";
-@import "../components/home/home"; 
+@import "../components/home/home";
+@import "../components/home/AmazingOffersSlider";
+
 @import "../components/product/product";
 @import "../components/common/LoadinModal";
 

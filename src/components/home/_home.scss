@@ -103,5 +103,25 @@
         }
     }
 }
-
-
+//14030406
+  .category-section {
+    margin: 20px 0;
+  }
+  
+  .categories {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .category-card {
+    width: 30%;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .category-card img {
+    width: 100%;
+    height: auto;
+  }
+  

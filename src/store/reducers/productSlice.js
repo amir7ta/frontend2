@@ -1,10 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import productApi from '../../utils/api/productApi';
 import sizeApi from '../../utils/api/sizeApi';
-import imageApi from '../../utils/api/imageApi';
+import categoryApi from '../../utils/api/categoryApi';
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async (page) => {
-  const products = await productApi.getProducts(page);
+  const params = {
+    name: null,
+    page: page,
+    isSpecialOffer: null,
+    minPrice: null,
+    maxPrice: null,
+    brand: null
+  };
+  const products = await productApi.getProducts(params);
   const productSizes = await sizeApi.getProductSizes();
   const productSizesMap = productSizes.reduce((map, size) => {
     if (!map[size.productId]) {
@@ -28,6 +36,45 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (p
 
   return productsWithSizes;
 });
+
+export const fetchSpecialProducts = createAsyncThunk('products/fetchSpecialProducts', async ({filterRequest}) => {
+  const defaultParams = {
+    name: '',
+    page: 1,
+    isSpecialOffer: true,
+    minPrice: '',
+    maxPrice: '',
+    brand: ''
+  };
+
+  // ترکیب پارامترهای پیش‌فرض با پارامترهای ورودی
+  const combinedParams = { ...defaultParams, ...filterRequest };
+  const products = await productApi.getProducts(combinedParams);
+  if(products.length == 0) return false;
+  const productIds = products.map(product =>  product.productId);
+    const productSizes = await sizeApi.getProductSizesByProductId(productIds);
+    const productSizesMap = productSizes.reduce((map, size) => {
+      if (!map[size.productId]) {
+        map[size.productId] = [];
+      }
+      map[size.productId].push(size);
+      return map;
+    }, {});
+  const productsWithSizes = await Promise.all(products.map(async (product) => {
+    const { productId } = product;
+    const sizes = productSizesMap[productId] || [];
+    const minPrice = Math.min(...sizes.map(({ price }) => price));
+    const inStock = sizes.length > 0;
+    const images = product.images;
+    const mainImage = images && images.length > 0 
+    ? (images.find(image => image.isMainImage)?.path || images[0].path)
+    : 'images/products/noimage.png';
+    return { ...product, sizes, defaultPrice: minPrice, inStock, images, mainImage };
+  }));
+
+  return productsWithSizes;
+});
+
 
 export const fetchProductBreadCrumb = createAsyncThunk('products/fetchProductBreadCrumb', async (productId) => {
   const breads = await productApi.getProductBreadCrumb(productId);
@@ -159,6 +206,17 @@ const productSlice = createSlice({
       .addCase(fetchProductBreadCrumb.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(fetchSpecialProducts.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchSpecialProducts.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.specialProducts = action.payload;
+      })
+      .addCase(fetchSpecialProducts.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       });
   },
 });
@@ -174,5 +232,6 @@ export const selectLoading = (state) => state.product.loading;
 export const selectError = (state) => state.product.error;
 export const selectProducts = (state) => state.product.products;
 export const selectBreadCrumbs = (state) => state.product.breadCrumbs;
+export const selectSpecialProducts = (state) => state.product.specialProducts;
 
 export default productSlice.reducer;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 // import axios from "axios";
+import { Helmet } from 'react-helmet-async';
 
 import { useParams, NavLink  } from "react-router-dom";
 import { useCart } from "../utils/hooks/useCart";
@@ -14,13 +15,20 @@ import SpecificationTab from "../components/product/SpecificationTab";
 import SpecificationPanel from "../components/product/SpecificationPanel";
 import BuyBoxSide from "../components/product/BuyBoxSide";
 import BuyBoxBottom from "../components/product/BuyBoxBottom";
+import { useLocation } from 'react-router-dom';
 
 import IntroductionTab from "../components/product/IntroductionTab";
 import LoadingModal from "../components/common/LoadingModal";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductDetail, selectProductDetail, selectLoading, selectError, selectBreadCrumbs} from '../store/reducers/productSlice';
+import { variables } from '../utils/api/variables';
+
+const BaseWebUrl = variables.BASE_WEB_URL
 
 function ProductPage({ cardReference }) {
+  const location = useLocation();
+
+  const canonicalUrl = `${BaseWebUrl}${location.pathname}`;
 
   const [selectedSize, setSelectedSize] = useState(null);
   const [commentContent, setCommentContent] = useState("");
@@ -157,91 +165,96 @@ function ProductPage({ cardReference }) {
 
   return (
     <>
+        <Helmet>
+            <link rel="canonical" href={canonicalUrl} />
+        </Helmet>
       <LoadingModal loading={loading} />
       {productDetail && productDetail.images &&(
         <div className="product-page-container">
-          <div className="product-detail">
-              <div>
-                {/* نمایش breadcrumb به عنوان لیست */}
-                <ul>
-                    <li><NavLink to="/">صفحه اصلی</NavLink></li>
-                    {breadCrumbs && breadCrumbs.map((item, index) => (
-                        <li key={index}>
-                            <NavLink to={item.route}>{item.title}</NavLink>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            
-            <div className="product-detail-img">
-              <img src={mainImage} alt="Product" id="productDetailMainImage" />
-              <div className="image-gallery">
-                    {productDetail.images.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image.path}
-                        alt={`Thumbnail ${index}`}
-                        onClick={() => setMainImage(image.path)}
-                      />
-                    ))}
+            <div className="product-detail">
+                <div>
+                  {/* نمایش breadcrumb به عنوان لیست */}
+                  <ul>
+                      <li><NavLink to="/">صفحه اصلی</NavLink></li>
+                      {breadCrumbs && breadCrumbs.map((item, index) => (
+                          <li key={index}>
+                              <NavLink to={item.route}>{item.title}</NavLink>
+                          </li>
+                      ))}
+                  </ul>
               </div>
-            </div>
-            <div className="product-detail-other">
-              <div className ="product-detail-product-title">
-                  <h1>{productDetail.name}</h1>
+              
+              <div className="product-detail-img">
+                <img src={mainImage} alt="Product" id="productDetailMainImage" />
+                <div className="image-gallery">
+                      {productDetail.images.map((image, index) => (
+                        <img
+                          key={index}
+                          src={image.path}
+                          alt={`Thumbnail ${index}`}
+                          onClick={() => setMainImage(image.path)}
+                        />
+                      ))}
+                </div>
               </div>
-              <div className ="product-detail-Specification-buybox">
-                
-                <div className="product-detail-Specification">
-                  <SpecificationPanel  onSelectedSizeChange={handleSelectedSizeChange}/>
+              <div className="product-detail-other">
+                <div className ="product-detail-product-title">
+                    <h1>{productDetail.name}</h1>
+                </div>
+                <div className ="product-detail-Specification-buybox">
+                  
+                  <div className="product-detail-Specification">
+                    <SpecificationPanel  onSelectedSizeChange={handleSelectedSizeChange}/>
+                  </div>
+
+                  {!isMobile &&
+                  <div className="product-detail-BuyBoxSide">
+                    <BuyBoxSide addItemCallBack={addItem} selectedSize={selectedSize}/>
+                  </div>
+                  }
+                  </div>
+              </div>
+              {isMobile &&
+              <div className="product-detail-BuyBoxBottom">
+                <BuyBoxBottom addItemCallBack={addItem} selectedSize={selectedSize}/>
+              </div>
+              }
+              
+            </div>
+
+            <div className="tabArea">
+                <div className="tabs-container">
+                    <Scrollspy 
+                      className="ulTab" items={ ['introduction', 'specifications', 'comments'] } 
+                      currentClassName="isCurrent" offset={-95}>
+                        <li>
+                          <a href="#introduction" onClick={(e) => handleTabClick(e, 'introduction')}>معرفی</a> 
+                          <div className='li_Title_line_red'></div>
+                        </li>   
+                        <li>
+                          <a href="#specifications" onClick={(e) => handleTabClick(e, 'specifications')}>مشخصات</a>
+                          <div className='li_Title_line_red'></div>
+                        </li>   
+                        <li>
+                          <a href="#comments" onClick={(e) => handleTabClick(e, 'comments')}>دیدگاه کاربران</a>
+                          <div className='li_Title_line_red'></div>
+                        </li>   
+                    </Scrollspy>
                 </div>
 
-                {!isMobile &&
-                <div className="product-detail-BuyBoxSide">
-                  <BuyBoxSide addItemCallBack={addItem} selectedSize={selectedSize}/>
+                <div  className="tab-top-bottom-border">
+                    <IntroductionTab />
                 </div>
-                }
+                <div  className="tab-top-bottom-border">
+                  <SpecificationTab />
                 </div>
-            </div>
-             {isMobile &&
-            <div className="product-detail-BuyBoxBottom">
-              <BuyBoxBottom addItemCallBack={addItem} selectedSize={selectedSize}/>
-            </div>
-            }
-            
-          </div>
-           <div className="tabArea">
-              <div className="tabs-container">
-                  <Scrollspy 
-                    className="ulTab" items={ ['introduction', 'specifications', 'comments'] } 
-                    currentClassName="isCurrent" offset={-95}>
-                      <li>
-                        <a href="#introduction" onClick={(e) => handleTabClick(e, 'introduction')}>معرفی</a> 
-                        <div className='li_Title_line_red'></div>
-                      </li>   
-                      <li>
-                        <a href="#specifications" onClick={(e) => handleTabClick(e, 'specifications')}>مشخصات</a>
-                        <div className='li_Title_line_red'></div>
-                      </li>   
-                      <li>
-                        <a href="#comments" onClick={(e) => handleTabClick(e, 'comments')}>دیدگاه کاربران</a>
-                        <div className='li_Title_line_red'></div>
-                      </li>   
-                  </Scrollspy>
-              </div>
-
-              <div  className="tab-top-bottom-border">
-                  <IntroductionTab />
-              </div>
-              <div  className="tab-top-bottom-border">
-                <SpecificationTab />
-              </div>
-              <div  className="tab-top-bottom-border">
-                <CommentTab />
-              </div>
+                <div  className="tab-top-bottom-border">
+                  <CommentTab />
+                </div>
             </div>
         </div>
       )}
+    
     </>
   );
 }

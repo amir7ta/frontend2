@@ -1,0 +1,114 @@
+
+ 
+  .amazing-offers-slider{
+    margin: 20px 0;
+    width: auto !important;
+    background-color:#d22c4e ;
+    border-radius: 5px;
+    padding: 15px;
+    color: #fff;
+    .product-card{
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .product-img{
+        border-radius: 5px;
+    }
+    .fixed-slide{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        height: 270px;
+        img {
+                width: 100px;
+        }
+        .slide-text {
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: flex-end;
+          }
+          .link-text {
+            font-size: 18px;
+            // display: flex;
+            // flex-direction: column;
+            //flex-grow: 2;
+            // justify-content: flex-end;
+            color: #fff;
+          }
+    }
+  } .swiper-button-prev:after{
+    font-size: 20px!important;
+    color: #424750 !important;   
+     font-size: 15px !important;
+
+  }
+  .swiper-button-next:after{
+    color: #424750 !important;
+    font-size: 20px!important;
+    font-size: 15px !important;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    background: #ffffff;
+    border-color:#e0e0e2;
+    border-style: solid;
+    border-width: 1px;
+    width: 45px !important;
+    border-radius: 50%; /* شعاع گوشه */
+    display: flex; /* نمایش به صورت فلکس */
+    justify-content: center; /* تراز متن در مرکز */
+    align-items: center; /* تراز افقی در مرکز */
+    font-size: 15px; /* اندازه فونت */
+    cursor: pointer; /* نشانگر موس */
+    position: absolute; /* موقعیت نسبی */
+    z-index: 10; /* نمایانی */
+  }
+
+
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+  display: none;
+  cursor: auto;
+  pointer-events: none;
+}
+
+.amazing-link-container{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  //padding-right: 50px;
+  .link-text{
+    color: #fff;
+    font-size: 18px;
+  }
+}
+
+
+.fixed-last-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //height: 100vh; /* ارتفاع صفحه کامل */
+  margin: 0;
+  flex-direction: column;
+  padding-top: 25px;
+  p{
+    padding-top: 70px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-end;
+    padding-bottom: 20px;
+  }
+}
+.centered-link {
+  font-size: 2em; /* اندازه متن بزرگ */
+  text-decoration: none; /* حذف زیرخط لینک */
+  color: rgb(255, 255, 255); /* رنگ متن */
+ 
+}

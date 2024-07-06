@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Persian from 'persianjs';
 
 export const useStatusString = () => {
     return (status) => {
@@ -41,7 +42,7 @@ export default function useToggle(initialValue = false) {
 
 export function formatPrice(price) {
   //return price.toLocaleString('fa-IR', { style: 'currency', currency: 'IRR' });
-      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " تومان";
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 export function formatDate(date) {
@@ -52,4 +53,18 @@ export function formatDate(date) {
 export function formatDateTime(dateTime) {
   const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
   return new Date(dateTime).toLocaleDateString('fa-IR', options);
+}
+export function NumberInPersian(number) {
+  debugger
+  if(number)
+    return  Persian(number).englishNumber().toString();
+  else 
+  return ''
+}
+
+export function truncateString(str, num) {
+  if (str.length <= num) {
+    return str;
+  }
+  return str.slice(0, num) + '...';
 }

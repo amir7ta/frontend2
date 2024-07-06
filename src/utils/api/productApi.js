@@ -3,9 +3,9 @@ import { variables } from './variables.js';
 
 const API_URL = variables.PRODUCT_API
 
-const getProducts = async (page) => {
+const getProducts = async (params) => {
   try {
-    const response = await axios.get(`${API_URL}/page/${page}`);
+    const response = await axios.get(`${API_URL}/filter`,{params});
     return response.data;
   } catch (error) {
     console.error('Error fetching products:', error);

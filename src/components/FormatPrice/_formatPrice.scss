@@ -1,0 +1,42 @@
+.price-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+   .original-price, .price {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+   .discount-price {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #a3a3a3;
+    text-decoration: line-through;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  .discount-price svg{
+    color:#a3a3a3;
+  }
+  .toman-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--color-neutral-700);
+    margin-right: 4px;
+  }
+  .price-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+.discount-price-info{
+  padding: 5px;
+}
+  

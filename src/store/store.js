@@ -11,6 +11,7 @@ import userReducer from './reducers/userSlice';
 import wishlistReducer from './reducers/wishlistSlice';
 import paymentReducer from './reducers/paymentSlice';
 import commentReducer from './reducers/commentSlice';
+import categoryReducer from './reducers/categorySlice';
 
 const persistConfig = {
   key: 'root',
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   wishlist: wishlistReducer,
   payment: paymentReducer,
+  category: categoryReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

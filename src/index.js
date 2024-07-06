@@ -12,6 +12,8 @@ import rtlPlugin from 'stylis-plugin-rtl';
 import { prefixer } from 'stylis';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import { HelmetProvider } from 'react-helmet-async';
+import  Svg from "./pages/svg"
 
 const cacheRtl = createCache({
   key: 'muirtl',
@@ -30,17 +32,22 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter>
-        <CacheProvider value={cacheRtl}>
-          <ThemeProvider theme={theme}>
-            <App />
-          </ThemeProvider>
-        </CacheProvider>
-      </BrowserRouter>
-    </PersistGate>
-  </Provider>
+  <HelmetProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <CacheProvider value={cacheRtl}>
+            <ThemeProvider theme={theme}>
+            <Svg />
+
+                <App />
+            </ThemeProvider>
+          </CacheProvider>
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
+  </HelmetProvider>
+
 );
 
 reportWebVitals();
