@@ -45,6 +45,13 @@ const categorySlice = createSlice({
     status: 'idle'
   },
   reducers: {
+    setLoad(state, action) {
+      state.loading = action.payload;
+    },
+    setError(state, action) {
+      state.error = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCategoryForMenu.pending, (state) => {
@@ -80,18 +87,17 @@ const categorySlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-  },
- },
-});
-
+    },
+  });
+  
 export const {
   setLoad,
   setError,
 } = categorySlice.actions;
-export const selectCategoriesForMenu= (state) => state.category.categoriesForMenu;
-export const selectLoading = (state) => state.category.loading;
-export const selectError = (state) => state.category.error;
+export const selectCategoriesForMenu = (state) => state.category.categoriesForMenu;
+export const selectCategoryLoading = (state) => state.category.loading;
+export const selectCategoryError = (state) => state.category.error;
 export const selectCategories = (state) => state.category.categories;
-export const selectBreadCrumbs = (state) => state.category.breadCrumbs;
+export const selectCategoryBreadCrumbs = (state) => state.category.breadCrumbs;
 
 export default categorySlice.reducer;

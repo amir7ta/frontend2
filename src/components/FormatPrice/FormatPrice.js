@@ -6,7 +6,6 @@ function FormatPrice(params) {
 const {defaultPrice, discountPercent} = params
 const [price, setPrice] = useState(0)
 useEffect(()=>{
-  debugger
   if(discountPercent && discountPercent>0)
       setPrice(defaultPrice - ((defaultPrice /100) * discountPercent))
     else

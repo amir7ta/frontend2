@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useToggle from '../utils/hooks/useUtil';
 import LoadingModal from "../components/common/LoadingModal";
 import { selectSpecialProducts, selectProducts, fetchProducts, selectLoading, selectError, fetchSpecialProducts } from '../store/reducers/productSlice';
+
 import CategorySection from '../components/home/CategorySection';
 import AmazingOffersSlider from '../components/home/AmazingOffersSlider';
 
@@ -19,7 +20,7 @@ function Home() {
   const [size, setSize] = useState('');
 
  
-  const products = useSelector(selectProducts);
+  // const products = useSelector(selectProducts);
   const specialProducts = useSelector(selectSpecialProducts);
 
   const loading = useSelector(selectLoading);
@@ -41,20 +42,6 @@ function Home() {
     return <div>خطا: {error}</div>;
   }
 
-  const filteredProducts = products.filter((product) => {
-    const minPriceFilter = minPrice === '' || product.defaultPrice >= parseFloat(minPrice);
-    const maxPriceFilter = maxPrice === '' || product.defaultPrice <= parseFloat(maxPrice);
-    const sizeFilter = size === '' || product.sizes.map(ps => ps.size).includes(parseInt(size));
-    return minPriceFilter && maxPriceFilter && sizeFilter;
-  }).sort((a, b) => {
-    if (sortOrder === 'lowToHigh') {
-      return a.defaultPrice - b.defaultPrice;
-    } else if (sortOrder === 'highToLow') {
-      return b.defaultPrice - a.defaultPrice;
-    } else {
-      return 0;
-    }
-  });
 
   const filteredSpecialProducts = specialProducts ? specialProducts.filter((product) => {
     const minPriceFilter = minPrice === '' || product.defaultPrice >= parseFloat(minPrice);
@@ -76,9 +63,6 @@ function Home() {
       <LoadingModal loading={loading} />
       <AmazingOffersSlider products={filteredSpecialProducts.slice(0, 10)} />
 
-      <div className="product-grid">
-        {filteredProducts.reverse().map((product, index) => <ProductCard product={product} key={index} />)}
-      </div>
       <CategorySection />
     </div>
   );

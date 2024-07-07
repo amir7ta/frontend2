@@ -55,7 +55,6 @@ export function formatDateTime(dateTime) {
   return new Date(dateTime).toLocaleDateString('fa-IR', options);
 }
 export function NumberInPersian(number) {
-  debugger
   if(number)
     return  Persian(number).englishNumber().toString();
   else 
