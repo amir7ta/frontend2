@@ -5,9 +5,10 @@
 }
 body {
     line-height: 150%;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Vazirmatn;
     overflow-x: hidden;
     color: $color-dark;
+
 }
 h1, h2{
     font-size: 1.4rem;
@@ -28,7 +29,7 @@ li{
 }
 input, textarea, select{
     padding: 0.75rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Vazirmatn;
     border: 1px solid $color-lightgrey;
     font-size: 0.8rem;
     margin-bottom: 1rem;
@@ -40,29 +41,29 @@ select{
 select{
   padding: 0.5rem;
 }
-button{
-    height: 35px;
-    padding: 5px;
-    //padding-bottom: 20px !important;
+ button{
+//     height: 35px;
+//     padding: 5px;
+//     //padding-bottom: 20px !important;
     font-family: Vazirmatn;
-    cursor: pointer;
-    margin : 5px;
-    background: $color-blue;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    border: 2px solid $color-blue;
-    border-radius: 5px;
-    min-width: 60px;
-    //flex-grow: 1;
-    //flex-shrink: 0;
-    //letter-spacing: 1px;
-    transition: all 0.1s ease-in-out;
-    &:hover{
-      background: $lighter-main;
-      border: 2px solid $lighter-main;
-  }
-}
+//     cursor: pointer;
+//     margin : 5px;
+//     background: $color-blue;
+//     font-size: 0.8rem;
+//     font-weight: bold;
+//     color: white;
+//     border: 2px solid $color-blue;
+//     border-radius: 5px;
+//     min-width: 60px;
+//     //flex-grow: 1;
+//     //flex-shrink: 0;
+//     //letter-spacing: 1px;
+//     transition: all 0.1s ease-in-out;
+//     &:hover{
+//       background: $lighter-main;
+//       border: 2px solid $lighter-main;
+//   }
+ }
 .textarea-comment {
   width:100%;
   max-width:100%;

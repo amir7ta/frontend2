@@ -1,0 +1,102 @@
+.main-slider {
+  position: relative; /* Parent element should have relative positioning */
+  overflow: hidden; /* Hide overflow to ensure images don't go beyond the slider's edges */
+  border-radius: 15px;
+
+}
+
+.main-slider-image {
+ // width: 100%; /* Make sure the image takes up the full width of the slider */
+  height: 400px; /* Maintain aspect ratio */
+  object-fit: cover; /* Cover the entire slider area, cropping edges if necessary */
+  border-radius: 15px;
+}
+.main-slider-next,
+.main-slider-prev {
+  background: #ffffff ;
+  border-color: #bbbbbb;
+  border-style: solid ;
+  border-width: 1px ;
+  width: 45px ;
+  border-radius: 50% ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ;
+  font-size: 15px ;
+  cursor: pointer ;
+  position: absolute ;
+  z-index: 10 ;
+  height: 45px;
+  top: 80%; /* Center vertically */
+  transform: translateY(-50%); /* Center vertically */
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Initially hidden */
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+
+}
+
+.main-slider-next svg
+{
+  padding-left: 0px;
+  fill: #3d3d3d !important;
+  width: 30px;
+}
+.main-slider-prev svg
+{
+  padding-left: 3px;
+  fill: #3d3d3d !important;
+  width: 33px;
+}
+
+.main-slider:hover .main-slider-next,
+.main-slider:hover .main-slider-prev {
+  opacity: 1; /* Show buttons on hover */
+  visibility: visible; /* Show buttons on hover */
+}
+
+.main-slider-next {
+  right: 90px; /* تنظیم موقعیت دکمه Next */
+}
+
+.main-slider-prev {
+  right: 30px; /* تنظیم موقعیت دکمه Prev */
+}
+
+.swiper-button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.swiper-button-hidden {
+  display: none;
+}
+
+.swiper-button-lock {
+  pointer-events: none;
+}
+
+.swiper-navigation-disabled {
+  opacity: 0.3;
+}
+@media (max-width: 1023px) {
+  // .main-slider-next,
+  // .main-slider-prev {
+  //   display: none !important; /* Hide navigation buttons on mobile */
+  // }
+  .swiper-slide img {
+    // width: 100%; /* Make sure the image takes up the full width of the slider */
+     height: 350px; /* Maintain aspect ratio */
+     object-fit: cover; /* Cover the entire slider area, cropping edges if necessary */
+   }
+}
+@media (max-width: 800px) {
+  .main-slider-next,
+  .main-slider-prev {
+    display: none !important; /* Hide navigation buttons on mobile */
+  }
+  .swiper-slide img {
+    // width: 100%; /* Make sure the image takes up the full width of the slider */
+     height: 280px; /* Maintain aspect ratio */
+     object-fit: cover; /* Cover the entire slider area, cropping edges if necessary */
+   }
+}

@@ -67,3 +67,9 @@ export function truncateString(str, num) {
   }
   return str.slice(0, num) + '...';
 }
+export function truncateNumber(number, num) {
+  if (number.length <= num) {
+    return number;
+  }
+  return number.slice(0, num);
+}

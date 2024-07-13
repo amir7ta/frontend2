@@ -2,16 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import productApi from '../../utils/api/productApi';
 import sizeApi from '../../utils/api/sizeApi';
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async (page) => {
-  const params = {
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({filterRequest}) => {
+  const defaultParams = {
     name: null,
-    page: page,
+    page: 1,
+    pageSize:24,
     isSpecialOffer: null,
     minPrice: null,
     maxPrice: null,
     brand: null
   };
-  const products = await productApi.getProducts(params);
+  const combinedParams = { ...defaultParams, ...filterRequest };
+
+  const products = await productApi.getProducts(combinedParams);
   const productSizes = await sizeApi.getProductSizes();
   const productSizesMap = productSizes.reduce((map, size) => {
     if (!map[size.productId]) {
@@ -24,9 +27,9 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (p
   const productsWithSizes = await Promise.all(products.map(async (product) => {
     const { productId } = product;
     const sizes = productSizesMap[productId] || [];
-    const minPrice = Math.min(...sizes.map(({ price }) => price));
+    const minPrice =sizes.length>0 ? Math.min(...sizes.map(({ price }) => price)):0;
     const inStock = sizes.length > 0;
-    const images = product.images;
+    const images = product.productImages;
     const mainImage = images && images.length > 0 
     ? (images.find(image => image.isMainImage)?.path || images[0].path)
     : 'images/products/noimage.png';
@@ -64,7 +67,7 @@ export const fetchSpecialProducts = createAsyncThunk('products/fetchSpecialProdu
     const sizes = productSizesMap[productId] || [];
     const minPrice = Math.min(...sizes.map(({ price }) => price));
     const inStock = sizes.length > 0;
-    const images = product.images;
+    const images = product.productImages;
     const mainImage = images && images.length > 0 
     ? (images.find(image => image.isMainImage)?.path || images[0].path)
     : 'images/products/noimage.png';
@@ -101,7 +104,7 @@ export const fetchProductDetail = createAsyncThunk('products/fetchProductDetail'
   const sizes = await sizeApi.getProductSizesByProductId(productId);
   const minPrice = Math.min(...sizes.map(({ price }) => price));
   const inStock = sizes.length > 0;
-  const images = response.images;
+  const images = response.productImages;
   const mainImage = images && images.length > 0 
   ? (images.find(image => image.isMainImage)?.path || images[0].path)
   : 'images/products/noimage.png';

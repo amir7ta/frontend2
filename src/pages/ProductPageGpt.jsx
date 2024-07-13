@@ -22,12 +22,13 @@ import LoadingModal from "../components/common/LoadingModal";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductDetail, selectProductDetail, selectLoading, selectError, selectBreadCrumbs} from '../store/reducers/productSlice';
 import { variables } from '../utils/api/variables';
+import { useCard } from '../components/common/CardContext';
 
 const BaseWebUrl = variables.BASE_WEB_URL
 
-function ProductPage({ cardReference }) {
+function ProductPage() {
   const location = useLocation();
-
+  const cardReference = useCard();
   const canonicalUrl = `${BaseWebUrl}${location.pathname}`;
 
   const [selectedSize, setSelectedSize] = useState(null);
@@ -41,7 +42,6 @@ function ProductPage({ cardReference }) {
 
   const productDetail = useSelector(selectProductDetail);
   const breadCrumbs = useSelector(selectBreadCrumbs);
-
   const loading = useSelector(selectLoading);
 
   const error = useSelector(selectError);
@@ -81,12 +81,12 @@ function ProductPage({ cardReference }) {
   }, [id, dispatch]);
 
   useEffect(() => {
-    console.log("Product detail: ", productDetail);
-    if (productDetail && productDetail.mainImage) {
-      setMainImage(productDetail.mainImage);
-    } else {
-      console.error("Product detail is missing main image");
+    if (productDetail) {
+      if (productDetail.mainImage) {
+        setMainImage(productDetail.mainImage);
+      }
     }
+    
   }, [productDetail]);
 
 
@@ -185,7 +185,7 @@ function ProductPage({ cardReference }) {
               </div>
               
               <div className="product-detail-img">
-                <img src={mainImage} alt="Product" id="productDetailMainImage" />
+                <img src={`../../${mainImage}`} alt="Product" id="productDetailMainImage" />
                 <div className="image-gallery">
                       {productDetail.images.map((image, index) => (
                         <img

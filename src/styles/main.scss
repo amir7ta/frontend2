@@ -17,12 +17,17 @@ $color-blue: #0070ba;
 // components
 @import "../components/layout/header";
 @import "../components/layout/footer";
+@import "../components/layout/megaMenu";
+@import "../components/layout/bottomMenu";
+
 @import "../components/checkout/confirm";
 @import "../components/product/filter";
 @import "../components/product/SpecificationPanel";
 @import "../components/product/BuyBoxSide";
 @import "../components/product/BuyBoxBottom";
 @import "../components/FormatPrice/formatPrice";
+@import "../components/home/AmazingOffersSlider";
+@import "../components/home/MainSlider";
 
 // pages
 @import "../components/wishlist/wishlist";
@@ -32,7 +37,7 @@ $color-blue: #0070ba;
 @import "../components/cart/cart";
 @import "../components/checkout/checkout";
 @import "../components/home/home";
-@import "../components/home/AmazingOffersSlider";
+@import "../components/categories/categories";
 
 @import "../components/product/product";
 @import "../components/common/LoadinModal";

@@ -265,7 +265,7 @@
     z-index: 10; /* تنظیم z-index برای قرار گرفتن روی دیگر عناصر */
     border-bottom: 1px solid var(--color-neutral-200);
     @media (max-width:850px){
-        top:70px;
+        top:50px;
     }
 }
 
@@ -288,9 +288,7 @@
   }
 
 //////////////////////////////////////////////////////////////// 
-.App {
-  font-family: sans-serif;
-}
+
 .scrollspy {
   top: 0;
   right: 0
@@ -392,3 +390,21 @@
 
   }
   
+  .product-rating{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 8px;
+    height: 30px;
+    width: 100%;
+    color: var(--color-icon-rating-0-2);
+    font-size: .8rem;
+    font-weight: 700;
+    span{
+        color: #333;
+        padding-left: 5px;
+    }
+    svg{
+        width: 12px;
+    }
+}

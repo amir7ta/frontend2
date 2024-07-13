@@ -26,12 +26,12 @@ const CategorySection = () => {
     <>
     <LoadingModal loading={loading} />
     <div className="category-section">
-      <h2>خرید بر اساس دسته‌بندی</h2>
+      <span className='category-section-title'>خرید بر اساس دسته‌بندی</span>
       <div className="categories">
         {categoriesForMenu.map((category, index) => ( 
           <div className="category-card" key={index}>
             <img src={category.imagePath} alt={category.title} />
-            <h3>{category.title}</h3>
+            <span className='category-title'>{category.title}</span>
           </div>
         ))}
       </div>

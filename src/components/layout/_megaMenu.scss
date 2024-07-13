@@ -1,0 +1,144 @@
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.navbar-logo {
+  color: #181818;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 3rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  position: relative;
+}
+
+/* Mega menu button */
+.mega-menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mega-menu-button .hamburger-icon {
+  fill: #0e0e0e;
+}
+
+.mega-menu-button:focus {
+  outline: none;
+}
+
+/* Overlay styles */
+.overlay {
+  position: fixed;
+  transform: translateY(25px);
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998; /* Ensure it's below the mega menu */
+  display: none; /* Initially hidden */
+}
+
+.overlay.show {
+  display: block; /* Show overlay when mega menu is open */
+  
+}
+
+/* Mega menu styles */
+.mega-menu {
+  top: 46px;
+  position: absolute;
+  background-color: #fff;
+  display: none; /* Initially hidden */
+  justify-content: center;
+  z-index: 999; /* Ensure it's above the overlay */
+  opacity: 0; /* Initially invisible */
+  transition: opacity 1s ease; /* افزودن انیمیشن باز و بسته شدن */
+}
+
+.mega-menu.show {
+  display: flex; /* Show mega menu when open */
+  opacity: 1; /* Make visible when open */
+}
+.mega-menu-content {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  padding: 20px;
+}
+
+.mega-menu-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.mega-menu-section a {
+  text-decoration: none;
+  margin-bottom: 5px;
+  color: rgb(107, 107, 107); /* رنگ پیش‌فرض دسته‌بندی‌ها */
+  svg{
+    fill: rgb(107, 107, 107);
+  }
+}
+.mega-menu-section a:hover {
+  color: rgb(245, 94, 94); /* رنگ دسته‌بندی‌ها هنگام هاور شدن */
+}
+/* Hamburger icon style */
+.hamburger-icon {
+  cursor: pointer;
+  transition: fill 0.3s;
+}
+
+.mega-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* چهار ستون با عرض یکسان */
+  gap: 20px; /* فاصله بین ستون‌ها */
+  width: 800px;
+}
+
+.navbar-links li {
+  position: relative;
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+}
+
+.navbar-links li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: red; /* رنگ خط زیر آیتم */
+  transform: scaleX(0); /* شروع با عرض صفر */
+  transition: transform 0.3s ease; /* انیمیشن تغییر عرض */
+}
+
+.navbar-links li:hover::before {
+  transform: scaleX(1); /* عرض خط زیر آیتم هنگام هاور */
+}
+.category-title {
+  display: flex;
+  //justify-content: space-between;
+  //align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+ 
+}

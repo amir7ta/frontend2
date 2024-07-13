@@ -1,43 +1,37 @@
 .nav-container{
+    top: 0;
     position: fixed;
-    z-index: 13;
+    z-index: 1000;
     width: 100%;
-    top: 0px;
-}
-.header-container{
-    width: 100%;
-    margin: auto;
-    padding: 1rem;
-    flex: 1;
+    padding: .5rem 3rem .5rem 3rem;
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    @include flex(space-between, center, row);
-    ul{
-        @include flex(space-between, center, row);
-        gap: 1.5rem;
-        @media (max-width: 850px) {
-            display: none;
-        }
+    border-bottom: 1px solid rgb(211, 211, 211);
+    box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1);
+}
+
+.header-second{
+    width: 100%;
+    max-width: 1900px;
+    margin: auto;
+    flex: 1;
+    @media (max-width: 850px) {
+        display: none;
     }
+    @include flex(flex-start, center, row);
+   
     a h1{
         margin-bottom: 0;
         font-size: 1.2rem;
     }
+    
 }
-.burger{
-    font-size: 2rem;
-    margin-left: 1rem;
-    display: none;
-    @media (max-width: 850px) {
-        display: block;
-    }
-}
-.header-tools{
+
+.header-second-tools{
     flex: 1;
     @include flex(flex-end, flex-end, row);
-    svg{
-        padding: 0.5rem;
-    }
+    // svg{
+    //     padding: 0.5rem;
+    // }
 }
 
 .svg-icon{
@@ -62,70 +56,85 @@
     }
 }
 
-.header-second{
+.header-first{
+    display: flex;
     width: 100%;
     margin: auto;
-    @include flex(center, center, row);
-    background: $color-smoke;
-    border: 1px solid $color-lightgrey;
+    width: 100%;
+    max-width: 1900px;
+    align-items: center;
+    flex-direction: row;
+    height: 50px;
+
+    // @media (max-width: 850px) {
+    //     padding:0;
+    // }
+}
+
+.header-first-logo{
+    object-fit:"contain";
+    margin-left: 2rem;
     @media (max-width: 850px) {
         display: none;
     }
 }
 
-.header-second-msg{
-    @include flex(space-between, center, row);
-    max-width: 1080px;
+.header-second-menu{
+    display: flex;
     width: 100%;
-    padding: 0.25rem 1rem;
-    p{
-        font-weight: bold;
-        color: #666666;
-        font-size: 0.7rem;
-    }
-    p span{
-        color: $color-blue;
-    }
+    margin: auto;
+    width: 100%;
+    max-width: 1900px;
+    height: 50px;
 }
 
-.header-second-msg p:first-child {
-    flex: 1;
-    text-align: left;
-  }
-  
-  .header-second-msg p:nth-child(2) {
-    flex: 1;
-    text-align: center;
-  }
-  
-  .header-second-msg p:last-child {
-    flex: 1;
-    text-align: right;
-  }
 
-  .header-main{
-    flex: 1;
-
-  }
-
-  .header-search{
-    display: none;
-    width: 100%;
-    border-top: 1px solid $color-lightgrey;
-    border-bottom: 1px solid $color-lightgrey;
+  .header-first-search{
+    @media (max-width: 850px) {
+        width: 100%;
+        max-width: 850px;
+    }
     .input-wrapper{
+        background-color: #eeeeee;
+        border-radius: 10px;
         border: none;
-        max-width: 1080px;
+        width: 500px;
+        max-width: 600px;
         margin: auto;
-        input{
+        height: 40px;
+        align-items: center;
+        @media (max-width: 850px) {
             width: 100%;
+            max-width: 850px;
+            
         }
+        svg{
+            height: 18px;
+            padding-right: 1rem ;
+            color: #666666;
+        }
+        input{
+            background-color: #eeeeee;
+
+            width: 100%;
+            border-radius: 10px;
+            height: 40px;
+            font-size: 16px;
+            padding-right: 3rem;
+        }
+        input:focus {
+            /* استایل‌هایی که برای وضعیت focus (و همچنین focus-visible در برخی موارد) تعریف می‌شود */
+            outline: none; /* مثال: حذف اوت لاین در وضعیت فوکوس */
+            border-color: blue; /* به عنوان مثال */
+            box-shadow: 0 0 3px rgba(0, 0, 255, 0.5); /* به عنوان مثال */
+          }
     }
     &.active{
         display: block;
     }
   }
 
+  
   .header-line{
     height: 1px;
     background: $color-lightgrey;
@@ -134,6 +143,51 @@
     }
   }
 
+  .category-title {
+    font-size: 16px; /* Font size for main categories */
+    color: #333; /* Gray color */
+  }
+  
+  .subcategory-link {
+    font-size: 14px; /* Font size for subcategories */
+    color: #333; /* Gray color */
+  }
+  
+  /* Hamburger icon */
+  .hamburger-icon {
+    cursor: pointer;
+    transition: fill 0.3s;
+    height: 20px;
+    width: 20px;
+  }
+  .product-first-header
+  {
+        display: flex;
+        width: 100%;
+        margin: auto;
+        width: 100%;
+        max-width: 1900px;
+        align-items: center;
+        flex-direction: row;
+        height: 50px;
+        justify-content: space-between;
+  }
+.product-first-header-tools{
+    display: flex;
+    gap: 20px;
+}
 
+.product-first-header-back{
+    display: flex;
+    gap: 20px;
+    svg{
+        width: 30px;
+        height: 30px;
+        fill: var(--color-icon-high-emphasis);
+    }
+    img{
 
+        margin-right: 10px;
+    }
+}
 

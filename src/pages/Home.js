@@ -9,6 +9,7 @@ import { selectSpecialProducts, selectProducts, fetchProducts, selectLoading, se
 
 import CategorySection from '../components/home/CategorySection';
 import AmazingOffersSlider from '../components/home/AmazingOffersSlider';
+import MainSlider from '../components/home/MainSlider';
 
 function Home() {
   const { toggle, isToggled } = useToggle();
@@ -35,13 +36,12 @@ function Home() {
       maxPrice: '',
       brand: ''
   };
-    dispatch(fetchSpecialProducts(filterRequest));
+    dispatch(fetchSpecialProducts({filterRequest}));
   }, [dispatch]);
 
   if (error) {
     return <div>خطا: {error}</div>;
   }
-
 
   const filteredSpecialProducts = specialProducts ? specialProducts.filter((product) => {
     const minPriceFilter = minPrice === '' || product.defaultPrice >= parseFloat(minPrice);
@@ -59,10 +59,10 @@ function Home() {
   }) : [];
 
   return (
-    <div className='shop'>
+    <div className='home-page'>
       <LoadingModal loading={loading} />
-      <AmazingOffersSlider products={filteredSpecialProducts.slice(0, 10)} />
-
+      <MainSlider />
+      <AmazingOffersSlider products={filteredSpecialProducts.slice(0, 10)} /> 
       <CategorySection />
     </div>
   );
