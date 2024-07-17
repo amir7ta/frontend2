@@ -33,6 +33,16 @@ const getCategoriesForMenu = async () => {
   }
 }
 
+const getCategoriesHirearchyByRoute = async (route) => {
+  try {
+    const response = await axios.get(`${API_URL}/${route}/forfilter`);
+    return response.data;
+  } catch (error) {
+    console.error('Error get Categories Hirearchy By Route for filter:', error);
+    throw error;
+  }
+}
+
 const getCategoryById = async (categoryId) => {
   try {
     const response = await axios.get(`${API_URL}/${categoryId}`);
@@ -93,5 +103,6 @@ export default {
   getCategories,
   addCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  getCategoriesHirearchyByRoute
 };

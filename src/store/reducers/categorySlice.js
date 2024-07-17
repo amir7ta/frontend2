@@ -7,6 +7,11 @@ export const fetchCategoryForMenu = createAsyncThunk('categories/fetchCategoryFo
   return models;
 });
 
+export const fetchCategoriesHirearchyByRoute = createAsyncThunk('categories/fetchCategoriesHirearchyByRoute', async () => {
+  const models = await categoryApi.getCategoriesHirearchyByRoute();
+  return models;
+});
+
 export const fetchAllCategory = createAsyncThunk('categories/fetchAllCategory', async () => {
   const models = await categoryApi.getCategories();
   return models;
@@ -39,6 +44,7 @@ const categorySlice = createSlice({
   initialState: {
     categories: [],
     categoriesForMenu: [],
+    categoriesHirearchyForFilter:[],
     breadCrumbs:[],
     loading: false,
     error: false,
@@ -62,6 +68,17 @@ const categorySlice = createSlice({
         state.categoriesForMenu = action.payload;
       })
       .addCase(fetchCategoryForMenu.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchCategoriesHirearchyByRoute.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCategoriesHirearchyByRoute.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.categoriesHirearchyForFilter = action.payload;
+      })
+      .addCase(fetchCategoriesHirearchyByRoute.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
@@ -94,6 +111,7 @@ export const {
   setLoad,
   setError,
 } = categorySlice.actions;
+export const selectCategoriesHirearchyForFilter = (state) => state.category.categoriesHirearchyForFilter;
 export const selectCategoriesForMenu = (state) => state.category.categoriesForMenu;
 export const selectCategoryLoading = (state) => state.category.loading;
 export const selectCategoryError = (state) => state.category.error;

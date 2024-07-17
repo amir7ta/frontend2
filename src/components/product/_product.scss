@@ -120,13 +120,13 @@
 
 
 
-.product-detail-img img {
-    //width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    max-height: 350px; /* Adjusted max-width for larger image */
+// .product-detail-img img {
+//     //width: 100%;
+//     height: 100%;
+//     border-radius: 8px;
+//     max-height: 350px; /* Adjusted max-width for larger image */
     
-}
+// }
 
 .product-detail-about {
     flex: 1 1 20%;
@@ -186,6 +186,11 @@
     margin: 0 auto;
     align-items: center;
     justify-content: center;
+    min-height: 600px;
+    img{
+             border-radius: 8px;
+             
+    }
   }
   .product-detail-BuyBoxSide{
     width: 350px;

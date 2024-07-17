@@ -1,40 +1,49 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-const categories = [
-  {
-    title: 'Category 1',
-    imagePath: 'https://via.placeholder.com/50',
-    route: '/category1',
-    subcategories: [
-      { title: 'Subcategory 1-1', imagePath: 'https://via.placeholder.com/50', route: '/category1/subcategory1-1' },
-      { title: 'Subcategory 1-2', imagePath: 'https://via.placeholder.com/50', route: '/category1/subcategory1-2' },
-      { title: 'Subcategory 1-3', imagePath: 'https://via.placeholder.com/50', route: '/category1/subcategory1-3' },
-    ],
-  },
-  {
-    title: 'Category 2',
-    imagePath: 'https://via.placeholder.com/50',
-    route: '/category2',
-    subcategories: [
-      { title: 'Subcategory 2-1', imagePath: 'https://via.placeholder.com/50', route: '/category2/subcategory2-1' },
-      { title: 'Subcategory 2-2', imagePath: 'https://via.placeholder.com/50', route: '/category2/subcategory2-2' },
-      { title: 'Subcategory 2-3', imagePath: 'https://via.placeholder.com/50', route: '/category2/subcategory2-3' },
-    ],
-  },
-  {
-    title: 'Category 3',
-    imagePath: 'https://via.placeholder.com/50',
-    route: '/category3',
-    subcategories: [
-      { title: 'Subcategory 3-1', imagePath: 'https://via.placeholder.com/50', route: '/category3/subcategory3-1' },
-      { title: 'Subcategory 3-2', imagePath: 'https://via.placeholder.com/50', route: '/category3/subcategory3-2' },
-      { title: 'Subcategory 3-3', imagePath: 'https://via.placeholder.com/50', route: '/category3/subcategory3-3' },
-    ],
-  },
-];
+import { useNavigate } from 'react-router-dom';
+import { selectCategoriesForMenu, fetchCategoryForMenu, selectCategoryLoading, selectCategoryError } from '../../store/reducers/categorySlice';
+import LoadingModal from "../common/LoadingModal";
+
+// const categories = [
+//   {
+//     title: 'Category 1',
+//     imagePath: 'https://via.placeholder.com/50',
+//     route: '/category1',
+//     subcategories: [
+//       { title: 'Subcategory 1-1', imagePath: 'https://via.placeholder.com/50', route: '/category1/subcategory1-1' },
+//       { title: 'Subcategory 1-2', imagePath: 'https://via.placeholder.com/50', route: '/category1/subcategory1-2' },
+//       { title: 'Subcategory 1-3', imagePath: 'https://via.placeholder.com/50', route: '/category1/subcategory1-3' },
+//     ],
+//   },
+//   {
+//     title: 'Category 2',
+//     imagePath: 'https://via.placeholder.com/50',
+//     route: '/category2',
+//     subcategories: [
+//       { title: 'Subcategory 2-1', imagePath: 'https://via.placeholder.com/50', route: '/category2/subcategory2-1' },
+//       { title: 'Subcategory 2-2', imagePath: 'https://via.placeholder.com/50', route: '/category2/subcategory2-2' },
+//       { title: 'Subcategory 2-3', imagePath: 'https://via.placeholder.com/50', route: '/category2/subcategory2-3' },
+//     ],
+//   },
+//   {
+//     title: 'Category 3',
+//     imagePath: 'https://via.placeholder.com/50',
+//     route: '/category3',
+//     subcategories: [
+//       { title: 'Subcategory 3-1', imagePath: 'https://via.placeholder.com/50', route: '/category3/subcategory3-1' },
+//       { title: 'Subcategory 3-2', imagePath: 'https://via.placeholder.com/50', route: '/category3/subcategory3-2' },
+//       { title: 'Subcategory 3-3', imagePath: 'https://via.placeholder.com/50', route: '/category3/subcategory3-3' },
+//     ],
+//   },
+// ];
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategoriesForMenu);
+  const error = useSelector(selectCategoryError);
+  const loading = useSelector(selectCategoryLoading);
+
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const megaMenuRef = useRef(null);
 
@@ -49,13 +58,24 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+      dispatch(fetchCategoryForMenu())
+  }, [dispatch]);
+
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
+  if (error) {
+    return <div>خطا: {error}</div>;
+  }
+
   return (
+    <>
+    <LoadingModal loading={loading} />
+
     <nav className="navbar">
       <ul className="navbar-links">
         <li className="navbar-item">
@@ -73,13 +93,13 @@ const Navbar = () => {
                   <div className="mega-menu-grid">
                     {categories.map((category) => (
                       <div className="mega-menu-section" key={category.title}>
-                        <a href={category.route} className="category-title">
+                        <a href={`/shop/${category.route}`} className="category-title">
                           {category.title}
                           <svg width="20" height="20"><use xlinkHref="#chevronLeft"></use></svg>
                         </a>
-                        {category.subcategories.map((subcategory) => (
-                          <a href={subcategory.route} className="subcategory-link" key={subcategory.title}>
-                            {subcategory.title}
+                        {category.childCategories && category.childCategories.map((child) => (
+                          <a href={child.route} className="subcategory-link" key={child.title}>
+                            {child.title}
                           </a>
                         ))}
                       </div>
@@ -95,6 +115,7 @@ const Navbar = () => {
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
+    </>
   );
 };
 

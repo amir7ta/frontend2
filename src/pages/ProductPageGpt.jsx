@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 // import axios from "axios";
 import { Helmet } from 'react-helmet-async';
@@ -50,6 +50,7 @@ function ProductPage() {
   curveDelay = 300,
   position = "fixed"; // or absolute
   const [isMobile, setIsMobile] = useState(false)
+  const prevScrollPosition = useRef(window.scrollY);
 
   const handleResize = () => {
     if (window.innerWidth < 1023) {
@@ -61,6 +62,8 @@ function ProductPage() {
   
   // create an event listener
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     window.addEventListener("resize", handleResize);
     handleResize(); // برای تنظیم مقدار اولیه
   
@@ -185,7 +188,7 @@ function ProductPage() {
               </div>
               
               <div className="product-detail-img">
-                <img src={`../../${mainImage}`} alt="Product" id="productDetailMainImage" />
+                <img src={`${process.env.PUBLIC_URL}${mainImage}`} alt="Product" id="productDetailMainImage" />
                 <div className="image-gallery">
                       {productDetail.images.map((image, index) => (
                         <img

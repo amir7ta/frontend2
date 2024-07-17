@@ -41,6 +41,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/account" element={<Account />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:categoryRoute" element={<Shop />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/categories" element={<Categories />} />
         </Routes>

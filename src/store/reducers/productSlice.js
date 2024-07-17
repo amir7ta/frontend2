@@ -4,13 +4,14 @@ import sizeApi from '../../utils/api/sizeApi';
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({filterRequest}) => {
   const defaultParams = {
-    name: null,
-    page: 1,
-    pageSize:24,
-    isSpecialOffer: null,
-    minPrice: null,
-    maxPrice: null,
-    brand: null
+    name: '',
+    page: '',
+    pageSize:'',
+    isSpecialOffer: '',
+    minPrice: '',
+    maxPrice: '',
+    brand: '',
+    categoryRoute:'',
   };
   const combinedParams = { ...defaultParams, ...filterRequest };
 

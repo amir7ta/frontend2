@@ -12,6 +12,7 @@ export const variables = {
     CATEGORY_API: `${baseApiUrl}/category`,
     SLIDER_API: `${baseApiUrl}/slider`,
     SLIDERIMAGE_API: `${baseApiUrl}/sliderimage`,
+    BRAND_API: `${baseApiUrl}/brand`,
 
 }
 

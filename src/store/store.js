@@ -13,6 +13,7 @@ import paymentReducer from './reducers/paymentSlice';
 import commentReducer from './reducers/commentSlice';
 import categoryReducer from './reducers/categorySlice';
 import sliderReducer from './reducers/SliderSlice';
+import brandReducer from './reducers/brandSlice';
 
 const persistConfig = {
   key: 'root',
@@ -29,7 +30,9 @@ const rootReducer = combineReducers({
   wishlist: wishlistReducer,
   payment: paymentReducer,
   category: categoryReducer,
-  slider:sliderReducer
+  slider:sliderReducer,
+  brand:brandReducer
+
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
