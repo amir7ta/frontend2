@@ -24,7 +24,7 @@ function ProductList() {
   });
   const [minPrice, setMinPrice] = useState(filterMinPrice || '');
   const [maxPrice, setMaxPrice] = useState(filterMaxPrice || '');
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortByPrice, setSortByPrice] = useState('asc');
   const [size, setSize] = useState('');
   const [pageSize, setPageSize] = useState(20);
   const [currentPage, setCurrentPage] = useState(0); // متغیر جدید currentPage
@@ -56,21 +56,21 @@ function ProductList() {
   //   };
   //   dispatch(fetchProducts({ filterRequest }));
   // };
+  const fetchProd=()=>{
+    const filterRequest = {
+      minPrice,
+      maxPrice,
+      sortByPrice,
+      size,
+      pageSize,
+      categoryRoute,
+      page: currentPage+1,
+    };
+    dispatch(fetchProducts({ filterRequest }))
+  };
   useEffect(() => {
-    debugger
-    if (inView && !loading) {
-      const filterRequest = {
-              minPrice,
-              maxPrice,
-              sortOrder,
-              size,
-              pageSize,
-              categoryRoute,
-              page: currentPage+1,
-            };
-            dispatch(fetchProducts({ filterRequest }))
-    }
-  }, [categoryRoute,loading,inView, filters]);
+    fetchProd();
+  }, []);
 
   const handleSortOrderChange = (newSortOrder) => {
     setSortOrder(newSortOrder);
@@ -87,10 +87,14 @@ function ProductList() {
   useEffect(() => {
     if(products.length > 0)
       {
+        if (inView && !loading) {
+          //fetchProd();
+        }
+        console.log("prods=>",products)
         setCurrentPage((prev)=>prev+1)
         setAllProducts((prev) => [...prev, ...products]); // به روز رسانی allProducts
       }
-  }, [products]);
+  }, [products,loading,inView]);
 
   if (error) {
     return <div>خطا: {error}</div>;
@@ -167,7 +171,6 @@ function ProductList() {
       <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
         <Filters />
       </Col>
-      <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
 
         {allProducts.map((product, index) => (
             <Link
@@ -176,6 +179,8 @@ function ProductList() {
                 product.name.replace(/\s+/g, "-")
               )}`}
             >
+              <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
+
               <Card
                 hoverable
                 cover={<img alt={product.name} src={`${process.env.PUBLIC_URL}${product.mainImage}`} />}
@@ -225,9 +230,10 @@ function ProductList() {
                   </div>
                 )}
               </Card>
+              </Col>
+
             </Link>
         ))}
-                  </Col>
 
       </Row>
       <div ref={ref}></div>

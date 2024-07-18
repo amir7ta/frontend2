@@ -16,25 +16,25 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
   const combinedParams = { ...defaultParams, ...filterRequest };
 
   const products = await productApi.getProducts(combinedParams);
-  const productSizes = await sizeApi.getProductSizes();
-  const productSizesMap = productSizes.reduce((map, size) => {
-    if (!map[size.productId]) {
-      map[size.productId] = [];
-    }
-    map[size.productId].push(size);
-    return map;
-  }, {});
+  // const productSizes = await sizeApi.getProductSizes();
+  // const productSizesMap = productSizes.reduce((map, size) => {
+  //   if (!map[size.productId]) {
+  //     map[size.productId] = [];
+  //   }
+  //   map[size.productId].push(size);
+  //   return map;
+  // }, {});
 
   const productsWithSizes = await Promise.all(products.map(async (product) => {
-    const { productId } = product;
-    const sizes = productSizesMap[productId] || [];
-    const minPrice =sizes.length>0 ? Math.min(...sizes.map(({ price }) => price)):0;
-    const inStock = sizes.length > 0;
+    //const { productId } = product;
+    //const sizes = product.sizes;// productSizesMap[productId] || [];
+    const minPrice =product.sizes.length>0 ? Math.min(...product.sizes.map(({ price }) => price)):0;
+    const inStock = product.sizes.length > 0;
     const images = product.productImages;
     const mainImage = images && images.length > 0 
     ? (images.find(image => image.isMainImage)?.path || images[0].path)
     : 'images/products/noimage.png';
-    return { ...product, sizes, defaultPrice: minPrice, inStock, images, mainImage };
+    return { ...product, defaultPrice: minPrice, inStock, images, mainImage };
   }));
 
   return productsWithSizes;
