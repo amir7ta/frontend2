@@ -19,14 +19,32 @@ $color-blue: #0070ba;
 @import "../components/layout/footer";
 @import "../components/layout/megaMenu";
 @import "../components/layout/bottomMenu";
+
+@import "../components/checkout/confirm";
+@import "../components/product/filter";
+@import "../components/product/SpecificationPanel";
+@import "../components/product/BuyBoxSide";
+@import "../components/product/BuyBoxBottom";
 @import "../components/FormatPrice/formatPrice";
+@import "../components/home/AmazingOffersSlider";
+@import "../components/home/MainSlider";
+@import "../components/shop/CategoryTree";
+@import "../components/shop/breadCrums-container";
 
 // pages
 @import "../components/wishlist/wishlist";
 @import "../components/account/account";
+@import "../components/admin/admin";
 @import "../components/auth/auth"; 
+@import "../components/cart/cart";
+@import "../components/checkout/checkout";
+@import "../components/home/home";
 @import "../components/categories/categories";
+@import "../components/product/sortContainer";
+@import "../components/product/not_fount";
+@import "../components/product/productPageGPT";
 
+@import "../components/product/product";
 @import "../components/common/LoadinModal";
 
 

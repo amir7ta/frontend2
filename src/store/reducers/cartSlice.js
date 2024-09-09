@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const DELIVERY_THRESHOLD = 1200;
+export const DELIVERY_THRESHOLD = 1000000;
 
 const cartSlice = createSlice({
   name: 'cart',

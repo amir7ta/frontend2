@@ -24,7 +24,12 @@ export const useCart = () => {
   const addToCartHandler = (item) => {
     dispatch(addToCart(item));
   };
-  
+
+  const isInCartHandler = (itemId, productSizeId) => {
+    const item = items.find((item) => item.product.productId === itemId && item.productSizeId === productSizeId ); 
+    return item!==null && item!==undefined;
+  };
+
   const removeFromCartHandler = (itemId, productSizeId, size) => {
     const item = items.find((item) => item.product.productId === itemId && item.productSizeId === productSizeId ); 
     dispatch(removeFromCart({ product: item.product, productSizeId, size}));
@@ -65,6 +70,7 @@ export const useCart = () => {
   return { 
     addToCart: addToCartHandler, 
     removeFromCart: removeFromCartHandler, 
+    isInCart: isInCartHandler,
     updateQuantity: updateQuantityHandler, 
     clearCart: clearCartHandler, 
     applyDiscount: applyDiscountHandler,

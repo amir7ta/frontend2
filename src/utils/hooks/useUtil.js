@@ -14,7 +14,22 @@ export const useStatusString = () => {
       return <p className={`txt ${statusObj.className}`}>{statusObj.statusString}</p>;
     };
 };
+export const persianToEnglishDigits = (str) => {
+  if (typeof str !== 'string') {
+    str = String(str);
+  }
+  
+  const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+  const englishDigits = '0123456789';
+  
+  return str.replace(/[۰-۹]/g, (d) => englishDigits[persianDigits.indexOf(d)]);
+};
+// export const persianToEnglishDigits = (str) => {
+//   const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+//   const englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+//   return str.replace(/[۰-۹]/g, (w) => englishDigits[persianDigits.indexOf(w)]);
+// };
 export const useStock = () => {
   return (stock) => {
     const stockMap = {
@@ -40,11 +55,12 @@ export default function useToggle(initialValue = false) {
   return { toggle, isToggled };
 }
 
-export function formatPrice(price) {
-  //return price.toLocaleString('fa-IR', { style: 'currency', currency: 'IRR' });
-      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
+export const formatPrice = (price) => {
+  if (price == null) {
+    return '0';
+  }
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 export function formatDate(date) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(date).toLocaleDateString('fa-IR', options);
@@ -60,7 +76,12 @@ export function NumberInPersian(number) {
   else 
   return ''
 }
-
+export function NumberInEnglish(number) {
+  if(number)
+    return  englishNumber(number);
+  else 
+  return ''
+}
 export function truncateString(str, num) {
   if (str.length <= num) {
     return str;

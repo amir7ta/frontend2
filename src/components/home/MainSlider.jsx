@@ -87,7 +87,7 @@ const MainSlider = () => {
       <div className="main-slider">
         <span id="span-main-slider-next" className="main-slider-next"><svg><use xlinkHref="#chevronLeft"></use></svg></span>
         <span id="span-main-slider-prev" className="main-slider-prev"><svg><use xlinkHref="#chevronRight"></use></svg></span>
-      <LoadingModal loading={loading} />
+        <LoadingModal loading={loading} />
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           {...settings}
@@ -102,8 +102,6 @@ const MainSlider = () => {
             navigationDisabledClass: 'swiper-navigation-disabled'
           }}
           pagination={{ clickable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("اسلاید تغییر کرد")}
         >
           {Sliders.filter((slider) => slider.sliderType === 1).map(
             (slider, sliderIndex) =>

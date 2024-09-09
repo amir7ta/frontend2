@@ -35,6 +35,7 @@
 .filter-option{
     width: 100%;
     display: flex;
+    justify-content: space-between;
 }
 
 .filter-spec{
@@ -49,4 +50,129 @@
 
 input[id=maxPrice], input[id=minPrice] {
     width: 80px;
+}
+
+.filter-stock-options{
+    padding-top: 10px;
+    display: flex;
+}
+
+.title-filter{
+    height: 40px;
+    color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: right;
+    padding: 5px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.filter-price{
+    padding-top: 10px;
+}
+.filter-price-collapse {
+    font-family: 'vazirmatn';
+    background: #ffffff;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    margin: 16px 0;
+    padding: 16px 0;
+    border-radius: 0;
+  }
+  
+//   .price-range-labels {
+//     display: flex;
+//     justify-content: space-between;
+//     margin-top: 16px;
+//   }
+  
+//   .price-range-labels span {
+//     display: block;
+//   }
+.price-range-labels{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+.price-range-label-from{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    label{
+            width: 10px;
+    }
+    input{
+        border-top: none !important;
+        border-right: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #e8e8e8;
+        padding-right: 0rem !important;
+        padding-top: 0rem !important;
+        padding-left: 1rem !important;
+        padding-bottom: 0rem !important; 
+        font-family: "Vazirmatn";
+        font-size: 2rem;
+        margin-bottom:0 !important;
+        direction: ltr;
+        width: 80%;
+    }
+    input:focus {
+        outline: none; /* Removes the default outline */
+        border-top:none !important;
+        border-right:none !important;
+        border-left:none !important;
+        border-bottom: 1px solid #a8a8a8;
+    }
+    span{
+        font-size: 2rem;
+    }
+ 
+}
+.price-range-label-to{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    label{
+            width: 10px;
+    }
+    input{
+        border-top: none !important;
+        border-right: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #e8e8e8;
+        padding-right: 0rem !important;
+        padding-top: 0rem !important;
+        padding-left: 1rem !important;
+        padding-bottom: 0rem !important; 
+        font-family: "Vazirmatn";
+        font-size: 2rem;
+        margin-bottom:0 !important;
+        direction: ltr;
+        width: 80%;
+    }
+    input:focus {
+        outline: none; /* Removes the default outline */
+        border-top:none !important;
+        border-right:none !important;
+        border-left:none !important;
+        border-bottom: 1px solid #a8a8a8;
+    }
+    span{
+        font-size: 2rem;
+    }
+}
+.ant-slider-mark{
+    span{
+        font-family: 'vazirmatn';
+    }
+}
+.filter-options{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
 }

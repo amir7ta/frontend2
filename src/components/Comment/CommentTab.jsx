@@ -10,10 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadingModal from "../common/LoadingModal";
 import StarRatings from 'react-star-ratings';
 
-const CommentTab = () => {
+const CommentTab = ({selectedProductSizeId}) => {
     // const { productId  } = useParams();
     // const { id } = useParams();
     const [isFixed, setIsFixed] = useState(false);
+    const [modalContent, setModalContent] = useState(null);
 
     const [userLikedCommentIds, setUserLikedCommentIds] = useState([]);
     const [showCommentModal, setShowCommentModal] = useState(false);
@@ -23,14 +24,24 @@ const CommentTab = () => {
     const error = useSelector(selectError);
     const comments = useSelector(selectComments);
     const productDetail = useSelector(selectProductDetail);
-    const [rating, setRating] = useState(4.5);
+    const [rating, setRating] = useState(5);
+    const size = productDetail.sizes.find(size => size.productSizeId === selectedProductSizeId);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+      if(!productDetail) return;
       if(!comments || comments.length ==0 )
         dispatch(fetchComments(productDetail.productId));
-    }, [productDetail, dispatch, comments]);
+       
+    }, [productDetail, dispatch]);
+
+    useEffect(() => {
+      if(comments && comments.productRating && comments.productRating>0) 
+       { setRating(comments.productRating)}
+       else
+       {   setRating(-1)}
+    }, [comments]);
 
       const handleLike = commentId => {
         // ارسال درخواست به API برای لایک کردن کامنت با شناسه commentId
@@ -56,6 +67,12 @@ const CommentTab = () => {
       const openModal = () => {
         setIsModalOpen(true);
         document.body.classList.add("modal-open");
+        setModalContent({
+            image: productDetail.mainImage,
+            name: productDetail.name,
+            price: size.price || productDetail.defaultPrice,
+            size: size
+        });
       };
     
       const closeModal = () => {
@@ -91,24 +108,29 @@ const CommentTab = () => {
     <div className="comment-section">
       
     <div className="review-container sticky-review-container">
-        <div className="average-rating">
-          <span className="rating">{4.5}</span> از 5
-        </div>
-         <div className="star-rating rtl">
-           <StarRatings 
-                  name="rating" 
-                  rating={rating}
-                  starRatedColor="gold"
-                  numberOfStars={5}
-                  starDimension="25px"
-                  starSpacing="5px"
-                  ignoreInlineStyles = {false}
-                  title="امتیاز"
-            />
-        </div>
-    
-      شما هم درباره این کالا دیدگاه ثبت کنید
-      <button onClick={openModal}>ثبت دیدگاه</button>
+          {
+            rating > -1 && (
+              <>
+                <div className="average-rating">
+                  <span className="rating">{rating}</span> از 5
+                </div>
+                <div className="star-rating rtl">
+                  <StarRatings 
+                    name="rating" 
+                    rating={rating}
+                    starRatedColor="gold"
+                    numberOfStars={5}
+                    starDimension="25px"
+                    starSpacing="5px"
+                    ignoreInlineStyles={false}
+                    title="امتیاز"
+                  />
+                </div>
+              </>
+        )
+      }
+      <span style={{fontSize:'.8rem',paddingBottom:'20px'}}>شما هم درباره این کالا دیدگاه ثبت کنید</span>
+      <button className='review-container-button' onClick={openModal}>ثبت دیدگاه</button>
       {/* لیست نظرات را در اینجا نمایش دهید */}
      
     </div>
@@ -122,7 +144,7 @@ const CommentTab = () => {
                 &times;
               </span>
               {!showSuccessMessage && (
-                <CommentForm callBackSuccess={CommentSubmited} callBackClose={closeModal} />
+                <CommentForm callBackSuccess={CommentSubmited} callBackClose={closeModal}  modalContent={modalContent}/>
               )}
               {showSuccessMessage && <SuccessMessage />}
             </div>
@@ -131,7 +153,7 @@ const CommentTab = () => {
       </div>
       <LoadingModal loading={loading} />
       <CommentList
-        initialComments={comments}
+        initialComments={comments.comments}
         
       />
       

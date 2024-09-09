@@ -1,41 +1,113 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { useCart } from '../../utils/hooks/useCart';
-import { formatPrice } from '../../utils/hooks/useUtil';
+import { NumberInPersian, formatPrice } from '../../utils/hooks/useUtil';
 
 
 function CartItem() {
-  const { removeFromCart, updateQuantity, items } = useCart();
-  return (  
+  const { removeFromCart, updateQuantity, addToCart, items } = useCart();
+ 
+  const handleRemoveFromCart = (productId, productSizeId) => {
+    removeFromCart(productId, productSizeId); // حذف محصول از سبد خرید
+  };
+
+  const handleQuantityChange = (productId, productSizeId,delta) => {
+    updateQuantity( productId, productSizeId, delta); // تغییر مقدار محصول در سبد خرید
+  };
+
+
+  return (
     <>
       {items.map((item) => (
-         <div className="cart-item" key={`${item.product.productId}-${item.size}`}>
-          <Link to={`/${item.product.productId}`}>
-            <div className='cart-item-img'>
-              <img src={item.product.images.find(image=>image.isMainImage==true).path} alt={item.product.brand} />
+        <div
+          className="cart-item"
+          key={`${item.product.productId}-${item.size}`}
+        >
+          <Link
+            target="_blank"
+            to={`/product/${item.product.productId}/${encodeURIComponent(
+              item.product.name.replace(/\s+/g, "-")
+            )}`}
+          >
+            <div className="cart-item-img">
+              <img src={item.product.mainImage} alt={item.product.brandName} />
             </div>
           </Link>
-          <div className='cart-item-about'>
-            <div className='cart-item-left'>
-              <Link to={`/${item.product.productId}`}><p>{item.product.brand} {item.product.name}</p></Link>
-              <p>{item.product.brand} : برند</p>
-              <p>{item.size}: اندازه</p>
-              <p>{item.quantity} : تعداد</p>
-              <a onClick={() => removeFromCart(item.product.productId, item.productSizeId)}>حذف از سبد</a>
+
+          <div className="cart-item-about">
+            <div className="cart-item-left">
+              <Link
+                target="_blank"
+                to={`/product/${item.product.productId}/${encodeURIComponent(
+                  item.product.name.replace(/\s+/g, "-")
+                )}`}
+              >
+                <p>
+                  {item.product.brandName} {item.product.name}
+                </p>
+              </Link>
+              <p>سایز {item.size}</p>
+            </div>
+            <div className="cart-item-right">
+              <span className="cart-product-price">
+                {NumberInPersian(formatPrice(item.price))}
+                <svg className="toman-icon" style={{ color: "#a3a3a3" }}>
+                  <use xlinkHref="#toman"></use>
+                </svg>
+              </span>
+
+              <div className="cart-controls">
+                <button
+                  className="cart-controls-button"
+                  onClick={() =>
+                    handleQuantityChange(
+                      item.product.productId,
+                      item.productSizeId,
+                      item.quantity + 1
+                    )
+                  }
+                >
+                  +
+                </button>
+                <button className="cart-controls-quantity">
+                  {NumberInPersian(item?.quantity || 0)}
+                </button>
+                {item?.quantity > 1 ? (
+                  <button
+                    className="cart-controls-button"
+                    onClick={() =>
+                      handleQuantityChange(
+                        item.product.productId,
+                        item.productSizeId,
+                        item.quantity - 1
+                      )
+                    }
+                  >
+                    -
+                  </button>
+                ) : (
+                  <button
+                    className="cart-controls-button"
+                    onClick={() =>
+                      handleRemoveFromCart(
+                        item.product.productId,
+                        item.productSizeId
+                      )
+                    }
+                  >
+                    <svg
+                      style={{
+                        width: "18px",
+                        height: "18px",
+                        fill: "var(--color-icon-primary)",
+                      }}
+                    >
+                      <use xlinkHref="#delete"></use>
+                    </svg>
+                  </button>
+                )}
               </div>
-              <div className='cart-item-right'>
-                <p>{formatPrice(item.price)}</p>
-                <div className='cart-item-quantity'>
-                  <a onClick={() => updateQuantity(item.product.productId, item.productSizeId, item.quantity - 1)}>-</a>
-                  <input type="number" value={item.quantity} onChange={(e) => {
-                      const newQuantity = parseInt(e.target.value);
-                      if (!isNaN(newQuantity)) {
-                        updateQuantity(item.product.productId, item.productSizeId, newQuantity);
-                      }
-                    }} />
-                    <a onClick={() => updateQuantity(item.product.productId, item.productSizeId, item.quantity + 1)}>+</a>
-                </div>
-              </div>
+            </div>
           </div>
         </div>
       ))}

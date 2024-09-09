@@ -1,0 +1,33 @@
+
+.not-found-container {
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+.not-found-image-container {
+  margin-bottom: 20px; /* Adjust spacing between image and message */
+}
+
+.not-found-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Adjust spacing between messages */
+  font-size: small;
+  border: 1px solid var(--color-neutral-200);
+  padding: 10px;
+  width: 300px;
+  border-radius: 5px;
+
+}
+
+.not-found-warning-message {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adjust spacing between SVG and text */
+}

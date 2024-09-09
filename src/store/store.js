@@ -14,6 +14,7 @@ import commentReducer from './reducers/commentSlice';
 import categoryReducer from './reducers/categorySlice';
 import sliderReducer from './reducers/SliderSlice';
 import brandReducer from './reducers/brandSlice';
+import filterReducer from './reducers/filterSlice';
 
 const persistConfig = {
   key: 'root',
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   payment: paymentReducer,
   category: categoryReducer,
   slider:sliderReducer,
-  brand:brandReducer
+  brand:brandReducer,
+  filters:filterReducer
 
 });
 

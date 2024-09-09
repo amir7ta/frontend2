@@ -3,8 +3,10 @@ import commentApi from '../../utils/api/commentApi';
 
 
 export const fetchComments = createAsyncThunk('comments/fetchComments', async (productId) => {
-  const comments = await commentApi.getComments(productId);
-  return comments;
+  const data = await commentApi.getComments(productId);
+  const comments = data.comments;
+  const productRating = data.productRating ;
+  return {comments,productRating};
 });
 
 export const createComment = createAsyncThunk('comments/createComment', async (model) => {

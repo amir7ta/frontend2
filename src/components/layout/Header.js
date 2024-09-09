@@ -33,12 +33,7 @@ function Header() {
   return (
     <nav className="nav-container">
       <div className="header-first-container">
-        {/* <div className="header-second-msg">
-          <p>پرداخت <span>امن</span> از طریق درگاه بانکی</p>
-          <p><span>پیک رایگان</span> برای خرید های بیشتر از 500 هزار تومان</p>
-          <p><span>100%</span> معتبر</p>
-        </div> */}
-       { !isProduct &&
+      
           <div className="header-first">
             <img className='header-first-logo'
               src="/images/site/logo.svg"
@@ -62,83 +57,45 @@ function Header() {
               
             
             </div>
+            
           </div>
-       }
-       { isProduct &&
-          
-                <div className='product-first-header'>
-                                  
-                                <div className="product-first-header-back">
-                                  <Link  to="/">
-                                    <svg>
-                                          <use xlinkHref="#arrowRight"></use>
-                                    </svg>
-                                    <img 
-                                            src="../../images/site/logo.svg"
-                                            width="100"
-                                            height="25"
-                                            alt="لوگوی داروخانه دکتر وکیلی"
-                                            title=""
-                                          ></img>
-                                    </Link>
-                                </div>
-                                <div className="product-first-header-tools">
-                                    <Link  to="/checkout">
-                                      <div className="flex cursor-pointer ml-6">
+          <div className="product-first-header-tools">
+                                    <Link  to="/cart">
+                                      <div className="svg-icon">
                                           <svg style={{width: '24px', height: '24px', fill: 'var(--color-icon-high-emphasis)'}}>
                                             <use xlinkHref="#cartOff"></use>
                                           </svg>
+                                          {quantity > 0 && <span>{quantity > 9 ? "9+" : quantity} </span>}
                                       </div>
                                     </Link>
                                     <Link  to="/wishlist">
-                                      <div className="z-1 whitespace-nowrap ml-6 lg:ml-4" data-cro-id="pdp-favorite">
-                                          <div className="flex cursor-pointer cursor-pointer">
+                                          <div className="svg-icon">
                                           <svg style={{width: '24px', height: '24px', fill: 'var(--color-icon-high-emphasis)'}}>
                                                 <use xlinkHref="#favoriteOff"></use>
                                             </svg>
+                                            {wishlistCount > 0 && (
+                                                <span>{wishlistCount > 9 ? "9+" : wishlistCount} </span>
+                                              )}
                                           </div>
-                                      </div>
                                     </Link>
-                                    <Link>
-                                    <div className="flex cursor-pointer">
+                                    <Link to="/account">
+                                    <div className="svg-icon">
                                     <svg style={{width: '24px', height: '24px', fill: 'var(--color-icon-high-emphasis)'}}>
-                                          <use xlinkHref="#moreVert"></use>
+                                          <use xlinkHref="#profileOff"></use>
                                       </svg>
                                     </div>
                                     </Link>
-                                </div>
 
-
+                                    <div className="header-second-tools header">
+            
           </div>
-        }
+          </div>
       </div>
       <div className={`header-second-container`}>
         <div className={`header-second `}>
           {/* <Link className="header-main header-section" to="/"><h1>داروخانه وکیلی</h1></Link> */}
           <div className="header-second-menu">
               <MegaMenu />
-          </div>
-          <div className="header-second-tools header">
-            <Link to="/account">
-              <div className="svg-icon">
-                <FontAwesomeIcon icon={icons.user} />
-              </div>
-            </Link>
-            <Link to="/wishlist">
-              <div className="svg-icon">
-                <FontAwesomeIcon icon={icons.heart} />
-                {wishlistCount > 0 && (
-                  <span>{wishlistCount > 9 ? "9+" : wishlistCount} </span>
-                )}
-              </div>
-            </Link>
-            <Link to="/cart">
-              <div id="cart" className="svg-icon" ref={cardRef}>
-                <FontAwesomeIcon icon={icons.cart} />
-                {quantity > 0 && <span>{quantity > 9 ? "9+" : quantity} </span>}
-              </div>
-            </Link>
-           
           </div>
         </div>
       </div>

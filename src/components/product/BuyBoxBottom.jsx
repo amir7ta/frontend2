@@ -2,28 +2,104 @@ import React, { useState, useEffect } from "react";
 import { selectProductDetail } from '../../store/reducers/productSlice';
 import { useSelector } from 'react-redux';
 import { useWishlist } from "../../utils/hooks/useWishlist";
-import { formatPrice } from "../../utils/hooks/useUtil";
+import { NumberInPersian, formatPrice } from "../../utils/hooks/useUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icons } from "../../assets/icons/icons";
-const BuyBoxBottom  =  ({addItemCallBack, selectedSize})  => {
+import FormatPrice from "../FormatPrice/FormatPrice";
+import { useCart } from "../../utils/hooks/useCart"; // فرض بر این است که شما از این هوک استفاده می‌کنید
+
+const BuyBoxBottom  =  ({addItemCallBack, selectedProductSizeId})  => {
+  const { items, addToCart, removeFromCart, isInCart, updateQuantity } = useCart(); // اضافه کردن هوک سبد خرید
   const productDetail = useSelector(selectProductDetail);
   const { wishlistItems, toggleWishlistItem } = useWishlist();
   const itemExists = wishlistItems.find(
     (item) => item?.productId === productDetail?.productId
   );
+  const [currentItem, setCurrentItem] = useState(null);
+
+  const size = productDetail.sizes.find(size => size.productSizeId === selectedProductSizeId);
+  const [isProductInCart, setIsProductInCart] = useState(false);
+  //   useEffect(() => {
+  //   if (selectedProductSizeId && productDetail) {
+  //     setSize(productDetail.sizes.find((size)=>size.productSizeId==selectedProductSizeId));
+  //   }
+  // }, [productDetail,selectedProductSizeId])
+  useEffect(() => {
+    if (productDetail && size) {
+      const itemInCart = isInCart(productDetail.productId, size.productSizeId); // استفاده از isInCart برای بررسی وضعیت محصول
+      setIsProductInCart(itemInCart);
+    }
+  }, [productDetail, selectedProductSizeId, isInCart]);
+
+  useEffect(() => {
+    if (productDetail && size!=null) {
+      const foundItem = items.find(item => item.productSizeId === size.productSizeId); // جستجو در items بر اساس productSizeId
+      setCurrentItem(foundItem);
+    }
+  }, [productDetail, selectedProductSizeId, items]);
+  
+
+  useEffect(()=>{
+    if(!size) return;
+    setIsProductInCart(isInCart(productDetail.productId,size.productSizeId));
+  },[productDetail,size])
+
+  const handleAddToCart = () => {
+    addItemCallBack();
+    setIsProductInCart(true)
+  };
+
+  const handleRemoveFromCart = () => {
+    removeFromCart(productDetail.productId, size.productSizeId); // حذف محصول از سبد خرید
+    setIsProductInCart(false)
+  };
+
+  const handleQuantityChange = (delta) => {
+    updateQuantity( productDetail.productId, size.productSizeId, currentItem?.quantity+delta); // تغییر مقدار محصول در سبد خرید
+  };
+
 
 
   return (
     <>
       <div className="product-Detail-buyBoxBottom-container">
         <div style={{display:"flex"}}>
-                    <button
-                      id="btn-add-to-card"
-                      className="product-Detail-buyBoxBottom-button"
-                      onClick={(e) => addItemCallBack(e)}
-                    >
-                      افزودن به سبد خرید
-                    </button>
+        {isProductInCart ? (
+          <div className="cart-controls">
+            <button className='cart-controls-button' onClick={() => handleQuantityChange(1)}>+</button>
+            <button className='cart-controls-quantity'>{NumberInPersian(currentItem?.quantity || 0)}</button>
+            {currentItem?.quantity > 1 ? (
+              <button className='cart-controls-button' onClick={() => handleQuantityChange(-1)}>-</button>
+            ) : (
+              <button className='cart-controls-button' onClick={handleRemoveFromCart}>
+                <svg
+                  style={{
+                    width: "18px",
+                    height: "18px",
+                    fill: "var(--color-icon-primary)",
+                  }}
+                >
+                  <use xlinkHref="#delete"></use>
+                </svg>
+              </button>
+            )}
+          </div>
+        ) : (
+          <button 
+            id="btn-add-to-card"
+            className={`product-detail-BuyBoxSide-button ${
+              !productDetail.inStock ? "disabled" : ""
+            }`}
+            onClick={() => {
+              if (productDetail.inStock) {
+                handleAddToCart();
+              }
+            }}
+            disabled={!productDetail.inStock} // غیر فعال کردن دکمه
+          >
+            {productDetail.inStock ? "افزودن به سبد خرید" : "نا موجود"}
+          </button>
+        )}
                     <button
                       className="product-Detail-buyBoxBottom-second-button"
                       onClick={() => toggleWishlistItem(productDetail)}
@@ -34,11 +110,23 @@ const BuyBoxBottom  =  ({addItemCallBack, selectedSize})  => {
                     </button>
           </div>
                     <div>
-                      <p className="product-price">
-                        {selectedSize
-                          ? formatPrice(selectedSize.price)
-                          : formatPrice(productDetail.defaultPrice)}
-                      </p>
+                      <div className="product-Detail-buyBoxBottom-product-price">
+                      {productDetail.inStock && (
+                        <div className="product-price">
+                          {selectedProductSizeId!=null? (
+                            <FormatPrice
+                              defaultPrice={size.price}
+                              discountPercent={productDetail.discountedPercent}
+                            />
+                          ) : (
+                            <FormatPrice
+                              defaultPrice={productDetail.defaultPrice}
+                              discountPercent={productDetail.discountedPercent}
+                            />
+                          )}
+                        </div>
+                      )}
+                      </div>
                     </div>
       </div>
     </>

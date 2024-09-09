@@ -1,0 +1,91 @@
+.tree {
+    margin: 20px;
+  }
+  
+  /* استایل نودهای درخت */
+  .tree-node {
+    //margin-left: 20px;
+    //padding-right: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .tree-node-title {
+    padding-right: 10px;
+    cursor: pointer;
+    span{
+      color: #858585;
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: 300;
+      height: 35px;
+    }
+  }
+  
+  .tree-node-title:hover {
+    span{
+    color: #1c1c1d;
+    }
+  }
+  
+  .toggle-icon {
+    margin-left: 10px;
+    font-size: 16px;
+  }
+  
+  .tree-node-children {
+    //padding-right: 20px;
+    // border-right: 2px solid;
+    //margin-top: 10px;
+    //height: 30px;
+    transition: all 0.3s ease;
+    
+  }
+  
+  // .tree-node.open .tree-node-children {
+  //   opacity: 1;
+  //   //max-height: 1000px;
+  //   padding-top: 10px;
+  // }
+  
+  .tree-node-title-back {
+    //border-right: 2px solid #a62626;
+    padding-bottom: 10px;
+    cursor: pointer;
+
+    span{
+    //color: #a62626;
+    font-weight: 700;
+    font-size: 14px;
+    }
+  }
+  
+.tree-node-title.selected {
+  //border-right: 2px solid #a62626;
+  //padding-right: 2px;
+  span{
+  //color: #a62626;
+  font-weight: 700;
+  font-size: 14px;
+  }
+}
+
+.selected-colored{
+  span{
+    //border-right: 1px solid #a62626 !important;
+    //padding-right: 5px;
+    color: #a62626 !important;
+    transition: all 0.7s ease;
+
+    //font-weight: 700;
+    }
+}
+.right-edge{
+  border-right: 1px solid #858585;
+
+  span{
+    //border-right: 1px solid #858585;
+  
+    }
+  
+}

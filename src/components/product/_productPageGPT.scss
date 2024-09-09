@@ -1,0 +1,577 @@
+
+
+.product-img {
+    width: 100%;
+    height: 200px; /* Set a fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Hide overflow to keep images uniform */
+    background: #f9f9f9;
+  }
+  
+  .product-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* This ensures the image covers the entire area while maintaining its aspect ratio */
+  }
+  .product-info {
+    width: 100%;
+    //text-align: center;
+    padding: 10px 0;
+    margin-top: 1rem;
+
+  }
+
+.product-info p,
+.product-info h3 {
+  margin: 5px 0;
+  font-size: 1rem;
+
+}
+.product-info h3 {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
+
+
+//14030406
+.product-card {
+  height: 380px;
+}
+.product-card a {
+    display: flex;
+    //align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+@media (max-width: 600px) {
+    .product-card {
+        margin-bottom: 1rem;
+        max-width: none;
+    }
+}
+
+
+/* Product detail about section */
+.product-detail-about {
+    input, select {
+        width: 100%;
+    }
+
+    h2 {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        margin-top: 1rem;
+        line-height: 100%;
+    }
+
+    p:nth-child(3) {
+        margin: 2.5rem 0;
+        font-size: 1.4rem;
+    }
+
+    p {
+        margin-top: 1rem;
+    }
+}
+
+/* Product page container styling */
+.product-page-container {
+    display: flex;
+    margin: 10rem 4rem;
+    justify-content: center;
+}
+
+/* Product detail section styling */
+.product-detail {
+   // width: 1000px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px; /* فاصله بین دو div */
+ 
+}
+
+
+
+.product-detail-about {
+    flex: 1 1 20%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-price {
+    font-size: 24px;
+    color: #e91e63;
+    margin-bottom: 20px;
+}
+
+.size-select-container {
+    margin-bottom: 10px;
+}
+
+.size-select-container select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    max-width: 500px;
+}
+
+.second-button {
+    background-color: #ff9800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-description {
+    font-size: .9rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Tabs container styling */
+.product-detail-Specification{
+    width: 100%;
+    padding-left: 20px;
+}
+
+.product-detail-image-section {
+    max-width: 50%;
+    min-width: 50%;
+    display: flex; /* تنظیمات flexbox برای مرکز کردن محتوا */
+    justify-content: center; /* مرکز کردن به صورت افقی */
+    align-items: center; /* مرکز کردن به صورت عمودی */
+    flex-direction: column;
+    @media (max-width: 1023px) {
+        width: 100%; /* برای موبایل حداکثر عرض به 100% تنظیم شود */   
+        max-width: 100%; /* محدود کردن حداکثر عرض تصویر */
+  
+      }
+  }
+
+  .product-detail-img {
+    width: 100%;
+    display: contents;
+  }
+
+  .product-detail-img img {
+
+    max-width: 100%;
+    object-fit: contain;
+    width: 500px;
+    height: 350px;
+    @media (max-width: 1023px) {
+        width: 70%; /* برای موبایل حداکثر عرض به 100% تنظیم شود */   
+        max-width: 100%; /* محدود کردن حداکثر عرض تصویر */
+  
+      }
+      @media (max-width: 768px) {
+        width: 90%; /* برای موبایل حداکثر عرض به 100% تنظیم شود */   
+        max-width: 100%; /* محدود کردن حداکثر عرض تصویر */
+  
+      }
+  }
+  .product-detail-BuyBoxSide{
+    position: sticky;
+    top:130px;
+    width: 350px;
+    max-width: 350px;
+    min-width: 350px;
+    border-top: 1px solid var(--color-neutral-200);
+    background: linear-gradient(0deg, hsla(240, 3%, 94%, .5), hsla(240, 3%, 94%, .5)), #fff;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+}
+.product-detail-BuyBoxSide h2{
+    font-size: 1.6rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 2.1;
+    color: var(--color-neutral-900);
+}
+
+.product-detail-other{
+      flex: 1; /* این دیو به اندازه‌ی باقی‌مانده فضای flexbox رشد می‌کند */
+
+}
+.product-detail-product-title{
+    flex: 1 1 ;
+    width: 100%;
+    padding-top: 10px;
+}
+.product-detail-Specification-buybox{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.product-detail-title-line {
+    height: 1px;
+    background-color: var(--color-neutral-200);
+    flex-grow: 1;
+}
+  .image-gallery {
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: center;
+    // margin-left: 10px;
+    // padding: 5px;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-top: 10px;
+    justify-content: center;
+
+  }
+  
+  .image-gallery img {
+    width: 70px;
+    height: 70px;
+    margin: 5px 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border: 1px solid ;
+    border-color: #bdbbbb;
+  }
+  
+  .image-gallery img:hover {
+    transform: scale(1.2);
+  }
+  
+ 
+
+
+.styles_Title_line_red {
+    background-color: #e91e63;
+    margin-top: 8px;
+    width: 5rem;
+    height: 0.1rem;
+    margin-bottom:  8px;
+}
+
+
+.tabs-container {
+    position: -webkit-sticky; /* برای پشتیبانی از مرورگرهای وب‌کیت مثل سافاری */
+    position: sticky;
+    top:98px;
+    background-color: white; /* تنظیم رنگ پس‌زمینه به سفید یا هر رنگ دیگری */
+    z-index: 10; /* تنظیم z-index برای قرار گرفتن روی دیگر عناصر */
+    border-bottom: 1px solid var(--color-neutral-200);
+    @media (max-width:850px){
+        top:50px;
+    }
+}
+
+
+.tab-top-bottom-border{
+    border-bottom: 4px solid #f0f0f1;
+    padding: 25px;
+}
+
+
+ 
+  .tab-content {
+    margin-top: 50px; /* فاصله بیشتر برای مطمئن شدن از 30 پیکسل فاصله */
+  }
+  
+  .tab-content > div {
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+//////////////////////////////////////////////////////////////// 
+
+.scrollspy {
+  top: 0;
+  right: 0
+}
+
+.isCurrent {
+  font-weight: bold;
+}
+
+.isCurrent a {
+    color: #e91e63;
+}
+.isCurrent div {
+    background-color: var(--color-button-primary);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 4px;
+    left: 50%;
+    width: 100%;
+}
+
+.ulTab{
+    display: flex;
+    align-items: center;    /* تراز کردن عمودی */
+    height: 8vh;          /* ارتفاع کل viewport */
+  }
+  
+  .ulTab li {
+    float: right;
+    color: var(--color-primary-500);
+  }
+  
+  .ulTab li a {
+    text-align: center;
+    text-decoration: none;
+  }
+
+
+.tabArea{
+    margin: 10px;
+    background-color: white;
+    border-radius: 8px;
+    //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 1023px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .tabTitle-redUnderline{
+        display: none;
+    }
+    .product-page-container {
+        padding: 16px;
+    }
+    .product-detail-Specification{
+        width: 100%;
+    }
+    .product-detail-other {
+        width: 100%;
+    }
+
+    // .product-detail-img,
+     .product-detail-Specification{
+        padding-left: 0px;
+     }
+    // .product-Detail-buyBoxBottom-container {
+    //      flex: 1 100%;
+    // }
+        .product-detail{
+            display: grid;
+            width: 100%;
+        }
+    
+        
+    .product-detail-about h2,
+    .product-detail-about h1,
+    .product-detail-about p {
+        margin: 8px 0;
+    }
+
+    .size-select-container,
+    .divider {
+        margin: 16px 0;
+    }
+   
+}
+
+.percent{
+    height: 20px;
+    width: 34px;
+    background: var(--color-brand-primary-700);
+    color: var(--color-white);
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 25px;
+    justify-content: center;
+
+  }
+  
+  .product-rating{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 8px;
+    height: 30px;
+    width: 100%;
+    color: var(--color-icon-rating-0-2);
+    font-size: .8rem;
+    font-weight: 700;
+    span{
+        color: #333;
+        padding-left: 5px;
+    }
+    svg{
+        width: 12px;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+/// 
+/// 
+///
+/// ///
+/// 
+/// 
+/// 
+/// buy modal after add to cart
+/* استایل کلی مودال */
+/* استایل کلی مودال */
+/* استایل کلی مودال */
+/* استایل کلی مودال */
+/* استایل کلی مودال */ 
+.buy-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.buy-modal {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column; /* تضمین می‌کند که عناصر داخل آن به درستی چینش شوند */
+    align-items: center;
+}
+
+.buy-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #dfdfdf;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.buy-modal-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.buy-modal-checkmark-container {
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.buy-modal-checkmark-svg {
+    width: 30px;
+    height: 30px;
+    //margin-right: 15px;
+}
+
+.buy-modal-checkmark-circle {
+    fill: none;
+    stroke: #4caf50;
+    stroke-width: 4;
+    stroke-dasharray: 285;
+    stroke-dashoffset: 285;
+    animation: buy-modal-circle-animation .5s ease-out forwards;
+}
+
+.buy-modal-checkmark-tick {
+    fill: none;
+    stroke: #4caf50;
+    stroke-width: 4;
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+    animation: buy-modal-tick-animation 0.3s ease-out 0.5s forwards;
+}
+
+.buy-modal-checkmark-modal-message {
+    color: #4caf50;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding-right: 10px;
+}
+
+.buy-modal-body-container {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%; /* به منظور اطمینان از پر کردن عرض کل */
+}
+
+.buy-modal-product-image {
+    max-width: 150px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.buy-modal-product-info {
+    flex-grow: 1;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px;
+}
+
+.buy-modal-btn {
+    background-color: var(--color-button-primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px; /* فاصله از محتوای بالا */
+    align-self: center; /* وسط چین کردن دکمه */
+    width: 100%;
+}
+
+@keyframes buy-modal-circle-animation {
+    0% {
+        stroke-dashoffset: 285;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes buy-modal-tick-animation {
+    0% {
+        stroke-dashoffset: 80;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// image galley slider
+
+
+// .grid-image-item img {
+//     width: 100px; /* عرض ثابت */
+//     height: 100px; /* ارتفاع ثابت */
+//     cursor: pointer;
+//     object-fit: cover; /* حفظ نسبت ابعاد تصویر */
+//     border: 1px solid var(--color-neutral-300);
+//     border-radius: 5px;
+//   }
+  
+  //view m

@@ -12,6 +12,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { usePayment } from '../utils/hooks/usePayment';
 import { useOrder } from '../utils/hooks/useOrder';
 import { useCart } from '../utils/hooks/useCart';
+import '../styles/checkout.scss';
 
 // const tabs = ["ورود", "آدرس", "روش پرداخت", "پرداخت", "پایان"];
    const tabs = ["ورود", "آدرس","روش پرداخت", "پرداخت", "پایان"];

@@ -7,8 +7,9 @@ export const fetchCategoryForMenu = createAsyncThunk('categories/fetchCategoryFo
   return models;
 });
 
-export const fetchCategoriesHirearchyByRoute = createAsyncThunk('categories/fetchCategoriesHirearchyByRoute', async () => {
-  const models = await categoryApi.getCategoriesHirearchyByRoute();
+export const fetchCategoriesHirearchyByRoute = createAsyncThunk('categories/fetchCategoriesHirearchyByRoute', async (categoryRoute) => {
+  
+  const models = await categoryApi.getCategoriesHirearchyByRoute(categoryRoute);
   return models;
 });
 
@@ -17,6 +18,11 @@ export const fetchAllCategory = createAsyncThunk('categories/fetchAllCategory', 
   return models;
 });
 
+
+export const fetchCategoryBreadCrumb = createAsyncThunk('categories/fetchCategoryBreadCrumb', async (route) => {
+  const breads = await categoryApi.getCategoryBreadCrumb(route);
+  return breads;
+});
 
 export const fetchProductBreadCrumb = createAsyncThunk('categories/fetchProductBreadCrumb', async (productId) => {
   const breads = await categoryApi.getProductBreadCrumb(productId);
@@ -46,6 +52,7 @@ const categorySlice = createSlice({
     categoriesForMenu: [],
     categoriesHirearchyForFilter:[],
     breadCrumbs:[],
+    categoryBreadCrumbs:[],
     loading: false,
     error: false,
     status: 'idle'
@@ -104,6 +111,19 @@ const categorySlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+
+
+      .addCase(fetchCategoryBreadCrumb.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCategoryBreadCrumb.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.categoryBreadCrumbs = action.payload;
+      })
+      .addCase(fetchCategoryBreadCrumb.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
     },
   });
   
@@ -116,6 +136,7 @@ export const selectCategoriesForMenu = (state) => state.category.categoriesForMe
 export const selectCategoryLoading = (state) => state.category.loading;
 export const selectCategoryError = (state) => state.category.error;
 export const selectCategories = (state) => state.category.categories;
-export const selectCategoryBreadCrumbs = (state) => state.category.breadCrumbs;
+export const selectProductBreadCrumbs = (state) => state.category.breadCrumbs;
+export const selectCategoryBreadCrumbs = (state) => state.category.categoryBreadCrumbs;
 
 export default categorySlice.reducer;

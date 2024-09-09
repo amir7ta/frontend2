@@ -1,0 +1,46 @@
+.breadCrums-container {
+    padding: 10px;
+    //background-color: #f8f9fa; /* رنگ پس‌زمینه breadcrumb */
+    border-radius: 5px;
+    font-size: 14px;
+    direction: rtl; /* راست‌چین کردن محتوا */
+}
+
+.breadCrums-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.breadCrums-container li {
+    margin: 0 5px;
+    padding: 0!important;
+}
+
+.breadCrums-container li::after {
+    content: "/";
+    padding-left: 0px;
+    color: #6c757d;
+    padding-right: 5px;
+}
+
+.breadCrums-container li:last-child::after {
+    content: "";
+}
+
+.breadCrums-container a {
+    text-decoration: none;
+    color: #6c757d; /* رنگ لینک‌ها */
+    transition: color 0.3s ease;
+}
+
+.breadCrums-container a:hover {
+    color: #0056b3; /* رنگ لینک‌ها در حالت هاور */
+}
+
+.breadCrums-container li:last-child a {
+    color: #6c757d; /* رنگ آیتم آخر */
+    pointer-events: none;
+}

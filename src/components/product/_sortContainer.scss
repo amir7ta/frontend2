@@ -1,0 +1,52 @@
+.sort-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* فضای موجود را بین المان‌ها توزیع می‌کند */
+  gap: 20px; /* فاصله بین المان‌ها */
+  font-size: small;
+  //padding-top: 40px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e8e8e8;
+
+}
+
+.sort-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-icon {
+  display: flex;
+  align-items: center;
+}
+
+.sort-label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* فاصله بین گزینه‌ها */
+  color: var(--color-neutral-500);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sort-option.selected
+{
+  color:var(--color-primary-700)
+}
+
+.sort-option:hover {
+  color: #444444; /* رنگ آیتم انتخاب شده یا هاور شده */
+  cursor: pointer;
+}
+
+.product-count {
+  color: #777;
+  /* برای قرارگیری در سمت چپ */
+  margin-right: auto;
+}

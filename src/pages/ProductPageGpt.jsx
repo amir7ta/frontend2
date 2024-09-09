@@ -18,20 +18,28 @@ import BuyBoxBottom from "../components/product/BuyBoxBottom";
 import { useLocation } from 'react-router-dom';
 
 import IntroductionTab from "../components/product/IntroductionTab";
+import ImageGallerySlider from "../components/product/ImageGallerySlider";
+
 import LoadingModal from "../components/common/LoadingModal";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductDetail, selectProductDetail, selectLoading, selectError, selectBreadCrumbs} from '../store/reducers/productSlice';
+import { fetchProductDetail, selectProductDetail, selectLoading, selectError, selectBreadCrumbs, selectStatus} from '../store/reducers/productSlice';
 import { variables } from '../utils/api/variables';
-import { useCard } from '../components/common/CardContext';
+import '../styles/product.scss';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import { fetchProductBreadCrumb, selectProductBreadCrumbs} from '../store/reducers/categorySlice';
 
 const BaseWebUrl = variables.BASE_WEB_URL
 
 function ProductPage() {
   const location = useLocation();
-  const cardReference = useCard();
   const canonicalUrl = `${BaseWebUrl}${location.pathname}`;
-
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  
+  const [selectedProductSizeId, setSelectedProductSizeId] = useState(null);
   const [commentContent, setCommentContent] = useState("");
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -39,19 +47,20 @@ function ProductPage() {
   const { addToCart } = useCart();
   const dispatch = useDispatch();
   const [mainImage, setMainImage] = useState("");
+  const [size, setSize] = useState(null);
 
   const productDetail = useSelector(selectProductDetail);
   const breadCrumbs = useSelector(selectBreadCrumbs);
   const loading = useSelector(selectLoading);
+  const apiStatus = useSelector(selectStatus);
 
   const error = useSelector(selectError);
   let addBtn, cart;
-  const speed = 1200,
-  curveDelay = 300,
-  position = "fixed"; // or absolute
   const [isMobile, setIsMobile] = useState(false)
-  const prevScrollPosition = useRef(window.scrollY);
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
 
+
+  
   const handleResize = () => {
     if (window.innerWidth < 1023) {
         setIsMobile(true)
@@ -73,6 +82,11 @@ function ProductPage() {
   }, [productDetail]);
 
   useEffect(() => {
+   if(selectedProductSizeId)
+      setSize(productDetail.sizes.find((s)=>s.productSizeId==selectedProductSizeId))
+  }, [selectedProductSizeId]);
+
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -88,6 +102,9 @@ function ProductPage() {
       if (productDetail.mainImage) {
         setMainImage(productDetail.mainImage);
       }
+      if(productDetail.defaultSize)
+          setSelectedProductSizeId(productDetail.defaultSize.productSizeId)
+    
     }
     
   }, [productDetail]);
@@ -104,44 +121,22 @@ function ProductPage() {
     }
   }
 
-  const addItem = (e)=> {
-    const bigProductImage = document.getElementById('productDetailMainImage');
-
-    let btnY = position === "fixed" ? e.target.getBoundingClientRect().top : e.target.offsetTop;
-    let btnX = position === "fixed" ? e.target.getBoundingClientRect().left : e.target.offsetLeft;
-    let flyingTumbnail = bigProductImage.cloneNode();
-    cart = cardReference.current;
-    let cartTop = cart.offsetTop - scrollPosition;
-    cart.classList.remove("addedCount");
-
-    flyingTumbnail.classList.add("flyingBtn");
-    flyingTumbnail.style.position = position;
-    flyingTumbnail.style.top = `${btnY}px`;
-    flyingTumbnail.style.left = `${btnX}px`;
-    flyingTumbnail.style.opacity = "1";
-    flyingTumbnail.style.transition = `all ${speed / 500}s ease, top ${(speed + curveDelay) / 1000}s ease, left ${speed / 500}s ease, transform ${speed / 1200}s ease ${(speed - 10) / 500}s`;
-
-    document.body.appendChild(flyingTumbnail);
-    flyingTumbnail.style.top = `${cartTop + cart.offsetHeight - 35}px`;
-    flyingTumbnail.style.left = `${cart.offsetLeft + cart.offsetWidth - 35}px`;
-    flyingTumbnail.style.maxHeight  = "50px";
-    flyingTumbnail.style.maxWidth = "50px";
-    flyingTumbnail.style.width = "50px";
-    flyingTumbnail.style.height = "50px";
-    flyingTumbnail.style.transform = "scale(0)";
-    flyingTumbnail.style
-    setTimeout(() => {
-      flyingTumbnail.remove();
-      storeItems();
-    }, speed * 1.5);
-
+  const handleAddToCart = () => {
     addToCart({
-      product: productDetail,
-      size: selectedSize?.size || productDetail.sizes[0].size,
-      price: selectedSize?.price || productDetail.defaultPrice,
-      productSizeId: selectedSize?.productSizeId || productDetail.sizes[0].productSizeId,
+        product: productDetail,
+        size: size.size || productDetail.defaultSize.size,
+        price: size.price || productDetail.defaultSize.price,
+        productSizeId: size.productSizeId || productDetail.defaultSize.productSizeId,
     });
-  }
+
+    setModalContent({
+        image: mainImage,
+        name: productDetail.name,
+        price: size.price || productDetail.defaultPrice,
+        size: size
+    });
+    setIsModalVisible(true);
+}
 
    const handleScroll = () => {
     const position = window.pageYOffset;
@@ -159,7 +154,19 @@ function ProductPage() {
   };
 
   const handleSelectedSizeChange = (newSelectedSize) => {
-    setSelectedSize(newSelectedSize);
+    setSelectedProductSizeId(newSelectedSize.productSizeId);
+  };
+
+
+  const handleGalleryModalOpen = () => {
+    setIsGalleryModalOpen(true);
+  };
+
+  const handleGalleryModalClose = () => {
+    setIsGalleryModalOpen(false);
+  };
+  const handleThumbnailClick = (imagePath) => {
+    setMainImage(imagePath);
   };
 
   if (error) {
@@ -168,96 +175,210 @@ function ProductPage() {
 
   return (
     <>
-        <Helmet>
-            <link rel="canonical" href={canonicalUrl} />
-        </Helmet>
-      <LoadingModal loading={loading} />
-      {productDetail && productDetail.images &&(
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
+      <LoadingModal loading={apiStatus == "loading"} />
+      {productDetail && productDetail.images && (
         <div className="product-page-container">
+          <div style={{width:'100%'}}>
             <div className="product-detail">
-                <div>
-                  {/* نمایش breadcrumb به عنوان لیست */}
-                  <ul>
-                      <li><NavLink to="/">صفحه اصلی</NavLink></li>
-                      {breadCrumbs && breadCrumbs.map((item, index) => (
-                          <li key={index}>
-                              <NavLink to={item.route}>{item.title}</NavLink>
-                          </li>
-                      ))}
-                  </ul>
-              </div>
-              
-              <div className="product-detail-img">
-                <img src={`${process.env.PUBLIC_URL}${mainImage}`} alt="Product" id="productDetailMainImage" />
-                <div className="image-gallery">
-                      {productDetail.images.map((image, index) => (
-                        <img
-                          key={index}
-                          src={image.path}
-                          alt={`Thumbnail ${index}`}
-                          onClick={() => setMainImage(image.path)}
-                        />
-                      ))}
+              <div className="product-detail-image-section">
+                <div className="product-detail-img">
+                  <img
+                    src={`${process.env.PUBLIC_URL}${mainImage}`}
+                    alt="Product"
+                    id="productDetailMainImage"
+                  />
                 </div>
+               
+                  <>
+                    <div className="grid-image-container">
+                    {productDetail?.images?.length > 4 && (
+                            // <button
+                            //   className="image-gallery-view-more-btn"
+                            //   //src={`${process.env.PUBLIC_URL}${productDetail.images[5].path}`}
+                            //   alt="View More"
+                            // >تصاویر بیشتر
+                            // </button>
+                            <div className="grid-image-item">
+                            <div className="size-feedback" onClick={handleGalleryModalOpen}> تصاویر بیشتر</div>
+                            </div>
+
+                      )}
+                      {productDetail?.images
+                        ?.slice(0, 4)
+                        .map((image, index) => (
+                          <div className="grid-image-item">
+                          <img
+                            className="image-gallery-thumbnails-img"
+                            key={index}
+                            src={image.path}
+                            alt={`Thumbnail ${index}`}
+                            onClick={() => handleThumbnailClick(image.path)}
+                          />
+                          </div>
+                        ))}
+                    </div>
+                      
+
+                    
+                     {/* <div class="grid-image-container">
+                      <div class="grid-image-item"><img src="https://via.placeholder.com/100" alt="Image 1"/></div>
+                      <div class="grid-image-item"><img src="https://via.placeholder.com/100" alt="Image 2"/></div>
+                      <div class="grid-image-item"><img src="https://via.placeholder.com/100" alt="Image 3"/></div>
+                      <div class="grid-image-item"><img src="https://via.placeholder.com/100" alt="Image 4"/></div>
+                      <div class="grid-image-item"><img src="https://via.placeholder.com/100" alt="Image 5"/></div>
+                  </div> */}
+                  </>
+                {isGalleryModalOpen && (
+                  <ImageGallerySlider
+                    callBackGalleryModalClose={handleGalleryModalClose}
+                    callBackImageClick={setMainImage}
+                  ></ImageGallerySlider>
+                )}
               </div>
               <div className="product-detail-other">
-                <div className ="product-detail-product-title">
-                    <h1>{productDetail.name}</h1>
+                <div className="product-detail-product-title">
+                  <h1>{productDetail.name}</h1>
                 </div>
-                <div className ="product-detail-Specification-buybox">
-                  
+                <div className="product-detail-Specification-buybox">
                   <div className="product-detail-Specification">
-                    <SpecificationPanel  onSelectedSizeChange={handleSelectedSizeChange}/>
+                    <SpecificationPanel
+                      onSelectedSizeChange={handleSelectedSizeChange}
+                    />
                   </div>
-
-                  {!isMobile &&
-                  <div className="product-detail-BuyBoxSide">
-                    <BuyBoxSide addItemCallBack={addItem} selectedSize={selectedSize}/>
-                  </div>
-                  }
-                  </div>
+                </div>
               </div>
-              {isMobile &&
-              <div className="product-detail-BuyBoxBottom">
-                <BuyBoxBottom addItemCallBack={addItem} selectedSize={selectedSize}/>
-              </div>
-              }
-              
+              {isMobile && (
+                <div className="product-detail-BuyBoxBottom">
+                  <BuyBoxBottom
+                    addItemCallBack={handleAddToCart}
+                    selectedProductSizeId={selectedProductSizeId}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="tabArea">
-                <div className="tabs-container">
-                    <Scrollspy 
-                      className="ulTab" items={ ['introduction', 'specifications', 'comments'] } 
-                      currentClassName="isCurrent" offset={-95}>
-                        <li>
-                          <a href="#introduction" onClick={(e) => handleTabClick(e, 'introduction')}>معرفی</a> 
-                          <div className='li_Title_line_red'></div>
-                        </li>   
-                        <li>
-                          <a href="#specifications" onClick={(e) => handleTabClick(e, 'specifications')}>مشخصات</a>
-                          <div className='li_Title_line_red'></div>
-                        </li>   
-                        <li>
-                          <a href="#comments" onClick={(e) => handleTabClick(e, 'comments')}>دیدگاه کاربران</a>
-                          <div className='li_Title_line_red'></div>
-                        </li>   
-                    </Scrollspy>
-                </div>
+              <div className="tabs-container">
+                <Scrollspy
+                  className="ulTab"
+                  items={["introduction", "specifications", "comments"]}
+                  currentClassName="isCurrent"
+                  offset={-95}
+                >
+                  <li>
+                    <a
+                      href="#introduction"
+                      onClick={(e) => handleTabClick(e, "introduction")}
+                    >
+                      معرفی
+                    </a>
+                    <div className="li_Title_line_red"></div>
+                  </li>
+                  <li>
+                    <a
+                      href="#specifications"
+                      onClick={(e) => handleTabClick(e, "specifications")}
+                    >
+                      مشخصات
+                    </a>
+                    <div className="li_Title_line_red"></div>
+                  </li>
+                  <li>
+                    <a
+                      href="#comments"
+                      onClick={(e) => handleTabClick(e, "comments")}
+                    >
+                      دیدگاه کاربران
+                    </a>
+                    <div className="li_Title_line_red"></div>
+                  </li>
+                </Scrollspy>
+              </div>
 
-                <div  className="tab-top-bottom-border">
-                    <IntroductionTab />
-                </div>
-                <div  className="tab-top-bottom-border">
-                  <SpecificationTab />
-                </div>
-                <div  className="tab-top-bottom-border">
-                  <CommentTab />
-                </div>
+              <div className="tab-top-bottom-border">
+                <IntroductionTab introText={productDetail.description} />
+              </div>
+              <div className="tab-top-bottom-border">
+                <SpecificationTab />
+              </div>
+              <div className="tab-top-bottom-border">
+                <CommentTab selectedProductSizeId={selectedProductSizeId} />
+              </div>
             </div>
+          </div>
+          <div>
+            {!isMobile && (
+              <div className="product-detail-BuyBoxSide">
+                <BuyBoxSide
+                  addItemCallBack={handleAddToCart}
+                  selectedProductSizeId={selectedProductSizeId}
+                />
+              </div>
+            )}
+          </div>
         </div>
       )}
-    
+
+      {isModalVisible && (
+        <div className="buy-modal-overlay">
+          <div className="buy-modal">
+            <div className="buy-modal-header">
+              <div className="buy-modal-checkmark-container">
+                <svg className="buy-modal-checkmark-svg" viewBox="0 0 100 100">
+                  <circle
+                    className="buy-modal-checkmark-circle"
+                    cx="50"
+                    cy="50"
+                    r="45"
+                  ></circle>
+                  <path
+                    className="buy-modal-checkmark-tick"
+                    d="M30 50l15 15 30-30"
+                  ></path>
+                </svg>
+                <span className="buy-modal-checkmark-modal-message">
+                  این کالا به سبد خرید اضافه شد!
+                </span>
+              </div>
+              <div
+                className="buy-modal-close"
+                onClick={() => setIsModalVisible(false)}
+              >
+                <svg
+                  style={{
+                    width: "24px",
+                    height: "24px",
+                    fill: "var(--color-icon-high-emphasis)",
+                  }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M19.293 6.707a1 1 0 00-1.414-1.414L12 10.586 6.121 4.707A1 1 0 004.707 6.12L10.586 12l-5.879 5.879a1 1 0 001.414 1.414L12 13.414l5.879 5.879a1 1 0 001.414-1.414L13.414 12l5.879-5.879z" />
+                </svg>
+              </div>
+            </div>
+
+            <div className="buy-modal-body-container">
+              <img
+                src={modalContent.image}
+                alt="Product"
+                className="buy-modal-product-image"
+              />
+              <div className="buy-modal-product-info">
+                {modalContent.name}
+                {modalContent.size && (
+                  <span>{` سایز ${modalContent.size.size}`}</span>
+                )}
+              </div>
+            </div>
+
+            <button className="buy-modal-btn">برو به سبد خرید</button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

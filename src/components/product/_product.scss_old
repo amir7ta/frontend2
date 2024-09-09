@@ -1,0 +1,241 @@
+/* General container styling */
+.shop {
+    padding: 10rem 1rem;
+    max-width: 1800px;
+    width: 100%;
+    margin: auto;
+}
+
+/* Grid layout for products */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.product-img {
+    width: 100%;
+    height: 200px; /* Set a fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Hide overflow to keep images uniform */
+    background: #f9f9f9;
+}
+  
+.product-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* This ensures the image covers the entire area while maintaining its aspect ratio */
+}
+
+.product-info {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 1rem;
+}
+
+.product-info p,
+.product-info h3 {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.product-info h3 {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
+
+/* Product card styling */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 10px; /* Add padding to create space around the card */
+    
+}
+
+.product-card img {
+    object-fit: cover;
+    width: 100%;
+    height: 240px; /* Fixed height for the image */
+    min-width: 240px;
+}
+
+.product-card a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 1200px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}
+
+/* Other styles */
+.product-detail-about {
+    input, select {
+        width: 100%;
+    }
+
+    h2 {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        margin-top: 1rem;
+        line-height: 100%;
+    }
+
+    p:nth-child(3) {
+        margin: 2.5rem 0;
+        font-size: 1.4rem;
+    }
+
+    p {
+        margin-top: 1rem;
+    }
+}
+
+/* Product page container styling */
+.product-page-container {
+    padding: 10px;
+    margin-top: 110px;
+}
+
+/* Product detail section styling */
+.product-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Other styles */
+.scrollspy {
+    top: 0;
+    right: 0;
+}
+
+.isCurrent {
+    font-weight: bold;
+}
+
+.isCurrent a {
+    color: #e91e63;
+}
+
+.isCurrent div {
+    background-color: var(--color-button-primary);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 4px;
+    left: 50%;
+    width: 100%;
+}
+
+.ulTab {
+    display: flex;
+    align-items: center; /* تراز کردن عمودی */
+    height: 8vh; /* ارتفاع کل viewport */
+}
+  
+.ulTab li {
+    float: right;
+    color: var(--color-primary-500);
+}
+  
+.ulTab li a {
+    text-align: center;
+    text-decoration: none;
+}
+
+.tabArea {
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.shop-container {
+    display: flex;
+    flex-direction: row;
+    // height: calc(100vh - 118px); /* کاهش ارتفاع برای ناوبار */
+    //margin-top: 118px; /* قرار دادن فضای خالی در بالای صفحه برای ناوبار */
+    padding: 7rem 1rem;
+    max-width: 1800px;
+    width: 100%;
+    margin: auto;
+  }
+
+  .filters-section {
+    width: 300px;
+    background-color: #fff;
+    margin-top: 4rem;
+    padding-top: 1rem;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    position: sticky; /* تغییر به sticky برای ثابت شدن */
+    //top: 195px; /* فاصله از بالای صفحه */
+    transition: all 0.3s ease; /* انتقال نرم */
+    overflow-y: auto; /* اضافه کردن اسکرول عمودی */
+    //max-height: calc(100vh - 175px); /* حداکثر ارتفاع برای اسکرول */
+   
+  }
+  
+  .filters-section.sticky {
+    top: 0; /* فاصله از بالای صفحه */
+  }
+  
+  .product-rating{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 8px;
+    height: 30px;
+    width: 100%;
+    color: var(--color-icon-rating-0-2);
+    font-size: .8rem;
+    font-weight: 700;
+    span{
+        color: #333;
+        padding-left: 5px;
+    }
+    svg{
+        width: 12px;
+    }
+}
+.percent{
+    height: 20px;
+    width: 34px;
+    background: var(--color-brand-primary-700);
+    color: var(--color-white);
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 25px;
+    justify-content: center;
+  }

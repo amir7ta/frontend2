@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy , useEffect} from 'react';
 import './styles/main.scss';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,7 +7,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import BottomMenu from './components/layout/BottomMenu';
 
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { CardProvider } from './components/common/CardContext';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -25,10 +25,19 @@ function App() {
   const location = useLocation();
   const showHeader = location.pathname !== '/checkout' ;
   const showFooter = location.pathname !== '/checkout' &&  location.pathname !== '/categories';
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const path = location.pathname;
+    const lowerCasePath = path.toLowerCase();
+    if (path !== lowerCasePath) {
+      navigate(lowerCasePath + location.search, { replace: true });
+    }
+  }, [location.pathname, location.search, navigate]);
 
   return (
     <CardProvider>
-      {showHeader && <Header />}
+      <Header />
 
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>

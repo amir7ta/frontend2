@@ -1,0 +1,207 @@
+
+.image-gallery-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0 0 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+.image-gallery-main-image {
+  margin-bottom: 15px;
+}
+
+.image-gallery-thumbnail {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  cursor: pointer;
+
+}
+
+.image-gallery-modal-content {
+  position: relative; /* به عنوان والد برای thumbnail ها */
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  height: 90%;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.image-gallery-close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 3rem;
+  cursor: pointer;
+  color: #ddd;
+  z-index: 1300;
+}
+.image-gallery-modal-image {
+  width: 400px; /* عرض ثابت */
+  height: 400px; /* ارتفاع ثابت */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* فاصله از thumbnail ها */
+}
+.image-gallery-modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* حفظ نسبت ابعاد تصویر */
+}
+
+.image-gallery-modal-thumbnails {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  overflow-x: auto;
+  padding: 10px 0;
+  background: #fff;
+  justify-content: center;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+  gap: 2px;
+  overflow-x: hidden;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.modal-image-item {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: contain;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 2px;
+}
+.modal-image-gallery-thumbnails-img {
+  flex-shrink: 0;
+  width: 100%;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.modal-image-item.selected {
+  border: 3px solid #007bff; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+}
+
+
+
+.image-gallery-thumbnails-img-container {
+  display: flex;
+  overflow-x: hidden; /* مخفی کردن آیتم‌هایی که جا نمی‌شوند */
+  white-space: nowrap; /* جلوگیری از شکستن خط و ایجاد سطر جدید */
+  gap: 10px; /* فاصله بین تصاویر */
+  padding: 10px 0; /* فاصله از بالا و پایین */
+  //margin: auto;
+  padding-right: 10px;
+
+}
+
+.image-gallery-thumbnails-img {
+  flex-shrink: 0;
+  width: 100%;
+  /* height: 100px; */
+  cursor: pointer;
+  object-fit: cover;
+  /* border: 1px solid var(--color-neutral-300); */
+  /* border-radius: 5px;
+}
+
+//view more btn
+
+.image-gallery-view-more-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+// .image-gallery-view-more-image {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: #007bff;
+// }
+
+.image-gallery-view-more-btn {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd; /* اضافه کردن خط دور */
+  background-color: #fff;
+  position: relative;
+  z-index: 1; /* بالاتر از تصویر محو شده */
+  border-radius: 5px;
+}
+
+
+
+@media (max-width: 1200px) {
+  .image-gallery-thumbnails-img {
+    width: 80px; /* عرض آیتم‌ها را برای صفحه‌های کوچکتر کاهش می‌دهد */
+    height: 80px;
+    
+  }
+  .image-gallery-view-more-container {
+    width: 80px;
+     height: 80px;
+  }
+  .image-gallery-view-more-btn{
+    font-size: .7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-gallery-thumbnails-img {
+    width: 60px; /* عرض آیتم‌ها را برای صفحه‌های خیلی کوچکتر کاهش می‌دهد */
+    height: 60px;
+  }
+  .image-gallery-view-more-container {
+    width: 60px;
+     height: 60px;
+
+  }
+}
+
+.grid-image-container {
+  display: grid;
+  direction: ltr;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* تعداد ستون‌ها با فضای موجود تغییر می‌کند */
+  gap: 10px; /* فاصله بین ستون‌ها */
+          width: 100%;
+          height: 100px;
+          overflow: hidden;
+          //overflow-y: auto; /* اسکرول افقی در صورت نیاز */
+}
+
+.grid-image-item {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: contain;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 2px;
+}
+

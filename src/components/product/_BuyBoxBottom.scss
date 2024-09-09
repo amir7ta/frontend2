@@ -19,12 +19,14 @@
   border-radius: 4px;
   cursor: pointer;
   width: 50px;
+  height: 43px;
+  margin-right: 10px;
 }
  
 .product-Detail-buyBoxBottom-container{
   display: flex;
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  --tw-shadow: 0 -1px 1px rgba(0,0,0,.14), 0 -2px 2px rgba(0,0,0,.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-ring-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-shadow);
+  --tw-shadow: 0 -1px 1px rgba(0, 0, 0, .14), 0 -2px 2px rgba(0, 0, 0, .05);
   --tw-shadow-colored: 0 -1px 1px var(--tw-shadow-color), 0 -2px 2px var(--tw-shadow-color);
   background-color: var(--color-neutral-000);
   width: 100%;
@@ -34,15 +36,17 @@
   position: fixed;
   padding: 10px;
   justify-content: space-between;
+  align-items: center;
   .second-button{
     width: 50px;
   }  
   .button{
     width: 150px;
   }  
-  .product-price{
-    padding-top: 12px;
-  }
+
+
 }
 
-  
+.product-Detail-buyBoxBottom-product-price{
+  width: 180px;
+}

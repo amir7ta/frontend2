@@ -10,6 +10,7 @@ import { selectSpecialProducts, selectProducts, fetchProducts, selectLoading, se
 import CategorySection from '../components/home/CategorySection';
 import AmazingOffersSlider from '../components/home/AmazingOffersSlider';
 import MainSlider from '../components/home/MainSlider';
+import '../styles/home.scss';
 
 function Home() {
   const { toggle, isToggled } = useToggle();
@@ -29,14 +30,8 @@ function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const filterRequest = {
-      name: '',
-      page: 1,
-      minPrice: '',
-      maxPrice: '',
-      brand: ''
-  };
-    dispatch(fetchSpecialProducts({filterRequest}));
+
+    dispatch(fetchSpecialProducts());
   }, [dispatch]);
 
   if (error) {

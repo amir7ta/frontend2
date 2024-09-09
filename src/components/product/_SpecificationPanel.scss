@@ -45,29 +45,35 @@
   
   .size-section select {
     padding: 5px;
-    margin-right: 10px;
+    //margin-right: 10px;
   }
   
   .size-feedback {
     font-size: 0.9em;
     color: #3498db;
     cursor: pointer;
+    padding-top: 10px;
   }
   
-  .features {
-    margin-bottom: 20px;
-  }
-  
-  .feature-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+  .specifications-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 20px; /* فاصله بین ردیف‌ها */
+    grid-template-columns: minmax(180px, 200px) 1fr;
+    column-gap: 20px; /* فاصله بین ستون‌ها */
   }
   
   .feature-title {
-    font-weight: bold;
-    margin-right: 5px;
+    font-weight: 500;
+    text-align: left;
+    font-size: .9rem;
   }
+  
+  .feature-value {
+    text-align: right;
+    font-size: .8rem;
+  }
+  
   
   .view-all-features {
     padding: 10px 20px;
@@ -81,3 +87,73 @@
 //     width: 100%;
 // }
   
+
+
+.horizontal-specs {
+  display: grid;
+  gap: 10px;
+}
+.spec-box {
+  background-color: var(--color-neutral-100);
+  padding: 10px;
+  border-radius: 5px;
+  //display: inline-flex; /* تنظیم باکس به صورت inline-flex */
+  flex-shrink: 0; /* جلوگیری از کوچک شدن باکس */
+  align-items: center; /* تراز کردن محتوای باکس به صورت عمودی */
+  box-sizing: border-box; /* شامل پدینگ و حاشیه در محاسبه عرض */
+  overflow: hidden; /* جلوگیری از خروج متن از باکس */
+}
+@media (min-width: 1024px) {
+  .horizontal-specs {
+    grid-template-columns: repeat(3, 1fr); /* سه ستون با عرض برابر */
+  }
+
+  .spec-box {
+    width: 100%; /* تنظیم عرض باکس‌ها به صورت کامل درون ستون */
+  }
+}
+
+/* تنظیمات برای صفحه‌های کوچک‌تر از 1023 پیکسل */
+@media (max-width: 1023px) {
+  .horizontal-specs {
+    display: flex;
+    flex-wrap: wrap; /* باکس‌ها در صورت نیاز به خط بعدی می‌روند */
+  }
+
+  .spec-box {
+    display: inline-block; /* نمایش باکس‌ها به صورت بلوک‌های درون‌خطی */
+    box-sizing: border-box; /* شامل پدینگ و حاشیه در محاسبه عرض */
+    max-width: 100%; /* اطمینان از اینکه باکس‌ها از عرض صفحه خارج نمی‌شوند */
+    overflow: hidden; /* جلوگیری از خروج محتوا از باکس */
+    white-space: normal; /* اجازه می‌دهد محتوا در چند سطر نمایش داده شود */
+  }
+}
+
+.spec-box-feature-title {
+  color: #888;
+  white-space: normal; /* محتوای عنوان می‌تواند در چند سطر نمایش داده شود */
+}
+
+.spec-box-feature-value {
+  white-space: normal; /* محتوای مقدار می‌تواند در چند سطر نمایش داده شود */
+}
+
+/* تنظیمات برای صفحه‌های کوچک‌تر از 600 پیکسل */
+@media (max-width: 600px) {
+  .horizontal-specs {
+    gap: 5px; /* کاهش فاصله بین باکس‌ها */
+  }
+
+  .spec-box {
+    padding: 8px; /* کاهش پدینگ در صفحه‌های کوچک‌تر */
+  }
+}
+
+.spec-box-feature-title,
+.spec-box-feature-value {
+  text-align: right;
+  font-size: .8rem;
+  white-space: nowrap; /* جلوگیری از شکستن متن به خطوط جدید */
+  overflow: hidden; /* مخفی کردن بخش‌های اضافی متن */
+  text-overflow: ellipsis; /* جایگزین کردن متن اضافی با سه نقطه */
+}

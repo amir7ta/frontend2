@@ -69,6 +69,20 @@
     z-index: 9;
   }
 
+  .review-container-button {
+    border: 1px solid var(--color-button-primary);
+    background-color: transparent;
+    color: var(--color-button-primary);
+    padding: calc(2* var(--spacing-base)) calc(4* var(--spacing-base));
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 2.17;
+    border-radius: 8px;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+  }
+
   .comment-section{
     display: flex;
     flex-wrap: wrap;
@@ -88,7 +102,7 @@
   }
   .sticky-review-container {
     //top: 700px; /* فاصله از بالای صفحه هنگام چسبندگی */
-    position: relative;
+    position: static;
   }
 
 
@@ -102,18 +116,93 @@
 
 
 
-// @media (min-width: 1024px) {
-//     .text-h5 {
-//         font-size: 1.6rem;
-//     }
-// }
-// .text-h5{
-//     font-size: 1.4rem;
-//     font-weight: 700;
-//     line-height: 2.1;
+.comment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.comment-modal {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+.comment-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #dfdfdf;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.comment-modal-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+// .comment-modal-container {
+//   display: flex;
+//   align-items: center;
+//   text-align: left;
 // }
 
-// .py-3 {
-//     padding-top: 12px;
-//     padding-bottom: 12px;
-// }
+.comment-modal-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* دو ستون با عرض مساوی */
+  grid-template-rows: auto auto; /* دو ردیف */
+  gap: 20px; /* فاصله بین آیتم‌ها */
+}
+
+.comment-div-item:nth-child(3) {
+  grid-column: span 2; /* آیتم سوم را در هر دو ستون قرار می‌دهد */
+}
+
+.comment-modal-title {
+  color: #2c2c2c;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding-right: 10px;
+}
+
+.comment-modal-product-image {
+  max-width: 150px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.comment-modal-product-info {
+  flex-grow: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.comment-modal-btn {
+  background-color: var(--color-button-primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px; /* فاصله از محتوای بالا */
+  align-self: center; /* وسط چین کردن دکمه */
+  width: 100%;
+}
+

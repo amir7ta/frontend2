@@ -35,7 +35,9 @@ const getCategoriesForMenu = async () => {
 
 const getCategoriesHirearchyByRoute = async (route) => {
   try {
-    const response = await axios.get(`${API_URL}/${route}/forfilter`);
+    const response = await axios.get(`${API_URL}/forfilter`, {
+      params: route ? { route } : {}
+    });
     return response.data;
   } catch (error) {
     console.error('Error get Categories Hirearchy By Route for filter:', error);
@@ -49,6 +51,17 @@ const getCategoryById = async (categoryId) => {
     return response.data;
   } catch (error) {
     console.error('Error get Category By Id:', error);
+    throw error;
+  }
+}
+
+
+const getCategoryBreadCrumb = async (route) => {
+  try {
+    const response = await axios.get(`${API_URL}/breadcrumb/${route}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching category breadcrumb:', error);
     throw error;
   }
 }
@@ -104,5 +117,6 @@ export default {
   addCategory,
   updateCategory,
   deleteCategory,
-  getCategoriesHirearchyByRoute
+  getCategoriesHirearchyByRoute,
+  getCategoryBreadCrumb
 };
