@@ -113,12 +113,6 @@ export const fetchProductDetail = createAsyncThunk('products/fetchProductDetail'
     images,
     defaultSize
   };
-  console.log("response : ", response);
-  if (response && mainImage) {
-    console.log("Product detail is fetched");
-  } else {
-    console.error("Product detail is missing main image");
-  }
 
   return productDetail;
 });

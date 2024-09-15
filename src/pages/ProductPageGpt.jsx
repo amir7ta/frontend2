@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 // import axios from "axios";
 import { Helmet } from 'react-helmet-async';
 
@@ -59,8 +58,66 @@ function ProductPage() {
   const [isMobile, setIsMobile] = useState(false)
   const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
 
+  const [showViewMoreButton, setShowViewMoreButton] = useState(false);
+  const [imagesToShow, setImagesToShow] = useState(5); // تعداد پیش‌فرض تصاویر برای نمایش
+  const galleryContainerRef = useRef(null);
 
-  
+  // useEffect(() => {
+  //   const galleryContainer = document.querySelector('.grid-image-container');
+  //   setContainerWidth(galleryContainer ? galleryContainer.offsetWidth : 0);
+
+  //   // تابع برای محاسبه تعداد تصاویر قابل مشاهده بر اساس عرض صفحه
+  //   const updateVisibleImages = () => {
+  //     const width = window.innerWidth;
+  //     if (width < 600) {
+  //       setVisibleImages(2);
+  //     } else if (width < 800) {
+  //       setVisibleImages(3);
+  //     } else {
+  //       setVisibleImages(5);
+  //     }
+  //   };
+
+  //   // بروزرسانی تعداد تصاویر قابل مشاهده بر اساس تغییر اندازه صفحه
+  //   updateVisibleImages();
+  //   window.addEventListener('resize', updateVisibleImages);
+
+  //   return () => {
+  //     window.removeEventListener('resize', updateVisibleImages);
+  //   };
+
+
+  // }, []);
+
+ 
+  useEffect(() => {
+    if(!productDetail || !productDetail.images)
+      return;
+
+    const updateImagesToShow = () => {
+      if (galleryContainerRef.current) {
+        const containerWidth = galleryContainerRef.current.offsetWidth;
+        const imageWidth = 110; // عرض هر تصویر
+        const calculatedImagesToShow = Math.floor(containerWidth / imageWidth);
+        setImagesToShow(calculatedImagesToShow);
+        setShowViewMoreButton(productDetail.images.length > calculatedImagesToShow);
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(updateImagesToShow);
+    if (galleryContainerRef.current) {
+      resizeObserver.observe(galleryContainerRef.current);
+    }
+
+    updateImagesToShow(); // برای محاسبه تعداد تصاویر در بارگذاری اولیه
+
+    return () => {
+      if (galleryContainerRef.current) {
+        resizeObserver.unobserve(galleryContainerRef.current);
+      }
+    };
+  }, [productDetail]);
+
   const handleResize = () => {
     if (window.innerWidth < 1023) {
         setIsMobile(true)
@@ -185,16 +242,23 @@ function ProductPage() {
             <div className="product-detail">
               <div className="product-detail-image-section">
                 <div className="product-detail-img">
+                  {mainImage=='images/products/noimage.png' ?
+                  <img
+                    src={`/${process.env.PUBLIC_URL}${mainImage}`}
+                    alt="Product"
+                    id="productDetailMainImage"
+                  /> :
                   <img
                     src={`${process.env.PUBLIC_URL}${mainImage}`}
                     alt="Product"
                     id="productDetailMainImage"
                   />
+                  }
                 </div>
                
                   <>
-                    <div className="grid-image-container">
-                    {productDetail?.images?.length > 4 && (
+                    <div className="grid-image-container" ref={galleryContainerRef}>
+                    {showViewMoreButton   && (
                             // <button
                             //   className="image-gallery-view-more-btn"
                             //   //src={`${process.env.PUBLIC_URL}${productDetail.images[5].path}`}
@@ -207,12 +271,12 @@ function ProductPage() {
 
                       )}
                       {productDetail?.images
-                        ?.slice(0, 4)
+                        ?.slice(0, imagesToShow)
                         .map((image, index) => (
                           <div className="grid-image-item">
                           <img
                             className="image-gallery-thumbnails-img"
-                            key={index}
+                            key={image.productImageId}
                             src={image.path}
                             alt={`Thumbnail ${index}`}
                             onClick={() => handleThumbnailClick(image.path)}

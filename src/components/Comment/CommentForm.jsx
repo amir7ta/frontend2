@@ -101,21 +101,21 @@ function CommentForm({callBackSuccess, callBackClose, commentToReply, modalConte
                                 {({ isSubmitting , setFieldValue }) => (
                                   <Form>
                                     <div>
-                                    <label htmlFor="productRating">امتیاز:</label>
+                                    <label htmlFor="rating">امتیاز:</label>
                                                           <StarRatings
-                                                          name="productRating" 
+                                                          name="rating" 
                                                               rating={rating}
                                                               starRatedColor="gold"
                                                               changeRating={(newRating) => {
                                                                 handleRatingChange(newRating);
-                                                                setFieldValue('productRating', newRating);
+                                                                setFieldValue('rating', newRating);
                                                             }}
                                                               numberOfStars={5}
                                                               starDimension="25px"
                                                               starSpacing="5px"
                                                               title="امتیاز"
                                                           />
-                                      <ErrorMessage name="productRating" component="div" className='errorMessage'/>
+                                      <ErrorMessage name="rating" component="div" className='errorMessage'/>
                                     </div>
                                     <div>
                                       {commentToReply&& (<label htmlFor="comment">پاسخ به : {commentToReply.text}</label>)}

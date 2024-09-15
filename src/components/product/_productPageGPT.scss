@@ -341,6 +341,9 @@
     //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
+
+
 /* Responsive design */
 @media (max-width: 1023px) {
     .product-grid {
@@ -384,6 +387,29 @@
     }
    
 }
+
+@media (max-width: 800px) {
+    .product-page-container {
+        padding: 10px;
+        margin-left:2rem;
+        margin-right:2rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .product-page-container {
+        padding: 5px;
+        margin-left:1rem;
+        margin-right:1rem;    }
+}
+
+// @media (max-width: 500px) {
+//     .product-page-container {
+//         padding: 0px;
+//         margin-left:0rem;
+//         margin-right:0rem;
+//     }
+// }
 
 .percent{
     height: 20px;

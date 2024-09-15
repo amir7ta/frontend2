@@ -140,9 +140,9 @@ const CommentTab = ({selectedProductSizeId}) => {
         {isModalOpen && (
           <div style={{"zIndex":'1000'}} className="modal">
             <div className="modal-content">
-              <span className="close" onClick={closeModal}>
+              {/* <span className="close" onClick={closeModal}>
                 &times;
-              </span>
+              </span> */}
               {!showSuccessMessage && (
                 <CommentForm callBackSuccess={CommentSubmited} callBackClose={closeModal}  modalContent={modalContent}/>
               )}

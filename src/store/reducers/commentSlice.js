@@ -10,7 +10,7 @@ export const fetchComments = createAsyncThunk('comments/fetchComments', async (p
 });
 
 export const createComment = createAsyncThunk('comments/createComment', async (model) => {
-  const createdProduct = await commentApi.addComment(model);
+  const createdProduct = await commentApi.addComment({...model,productRating:model.rating});
   return createdProduct;
 });
 
