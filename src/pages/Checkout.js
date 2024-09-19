@@ -104,13 +104,13 @@ function Checkout() {
         <div className="checkout-bottom">
           {!isLastTab ? (
             activeTab === loginTab ? (
-              <Link to="/cart"><button className='second-button'>بازگشت</button></Link>
+              <Link to="/cart"><button className='checkout-back-button'>بازگشت</button></Link>
             ) : (
-              <a><button className='second-button' onClick={() => GoBack()}>بازگشت</button></a>
+              <a><button className='checkout-back-button' onClick={() => GoBack()}>بازگشت</button></a>
             )
           ) : null}
           {currentUser && !isSecondLastTab && !isLastTab && (
-            <a><button onClick={() => GoNext()}>بعدی</button></a>
+            <a><button className="checkout-next-button" onClick={() => GoNext()}>بعدی</button></a>
           )}
            {currentUser &&  isSecondLastTab && (
             // <a><button onClick={() => DoPayment()}>پرداخت</button></a>

@@ -232,3 +232,55 @@ margin-top: 24px;
     justify-content: space-between;
     align-items: center;
 }
+
+
+.cart-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #fff;
+    border: 1px solid #e73b3b;
+    border-radius: 4px;
+  }
+  
+  .cart-controls-button {
+    background-color: transparent;
+    border: 0px; /* حاشیه قرمز برای دکمه‌ها */
+    color: red; /* رنگ متن قرمز */
+    font-size: 18px; /* اندازه فونت */
+    width: 32px; /* عرض دکمه‌ها */
+    height: 32px; /* ارتفاع دکمه‌ها */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* نشان‌گر اشاره‌گر */
+    border-radius: 4px; /* گوشه‌های گرد */
+   
+  }
+  .cart-controls-quantity {
+    background-color: transparent;
+    border: 0px; /* حاشیه قرمز برای دکمه‌ها */
+    color: red; /* رنگ متن قرمز */
+    font-size: 14px; /* اندازه فونت */
+    width: 32px; /* عرض دکمه‌ها */
+    height: 32px; /* ارتفاع دکمه‌ها */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* نشان‌گر اشاره‌گر */
+    border-radius: 4px; /* گوشه‌های گرد */
+   
+  }
+  
+  
+  .cart-controls button:hover {
+    background-color: #f8d7da; /* پس‌زمینه قرمز کم‌رنگ هنگام هاور */
+  }
+  
+  .divider {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}

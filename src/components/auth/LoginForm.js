@@ -1,4 +1,4 @@
-import React,{ useState }  from 'react';
+import React,{ useState, useEffect }  from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { icons } from '../../assets/icons/icons';
@@ -22,8 +22,13 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { login } = useUser();
+  const { login , currentUser} = useUser();
 
+  useEffect(()=>{
+       if (currentUser && location.pathname === '/authentication') {
+        navigate('/account');
+      }
+  },[currentUser])
   const handleChange = (e) => {
     const {name, value} = e.target;
     if(value === ''){
@@ -88,10 +93,8 @@ const handleSubmit = async(e) => {
         'password':formValues.password._value
       }
 
-      const user = await login(requestData);
-      if (user && location.pathname === '/authentication') {
-        navigate('/account');
-      }
+      await login(requestData);
+     
     }
   }
   const [formValues, setFormValues] = useState({
@@ -112,6 +115,8 @@ const handleSubmit = async(e) => {
     <Container component="main" maxWidth="sm">
     <Box
       sx={{
+        border:1,
+        borderColor:'rgb(211, 211, 211)',
         boxShadow: 3,
         borderRadius: 2,
         px: 4,

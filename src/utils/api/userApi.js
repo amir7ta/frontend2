@@ -34,18 +34,17 @@ const login = async (loginData) => {
     const response = await axios.post(`${API_URL}/login`, loginData);
     if (response.data.token) {
       localStorage.setItem('user', JSON.stringify(response.data));
-      const token = response.data.token;
-      const decodedToken = jwtDecode(token);
-      return decodedToken.nameid;
+      const decodedToken = jwtDecode(response.data.token);
+      return {'decodedToken':decodedToken, 'token':response.data.token, 'user':response.data.user };
     }
-    return { token: null };
+    return null;
   } catch (error) {
     if (error.response && error.response.status === 401) {
       alert('Invalid email or password');
     } else {
       alert('An error occurred');
     }
-    return { token: null };
+    return null;
   }
   
 };

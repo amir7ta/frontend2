@@ -14,9 +14,5 @@ export const getUser = createAsyncThunk("user/get", async (userId) => {
   });
   
 export const login = createAsyncThunk("user/login", async (loginData) => {
-  console.log("in slice", loginData)
-    const userId = await userApi.login(loginData);
-    console.log("in slice userid", userId)
-    return userId;
-  
+    return await userApi.login(loginData);
   });

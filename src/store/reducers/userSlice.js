@@ -4,9 +4,9 @@ import { login } from "../actions/userActions";
 const initialState = {
   currentUser: null,
   token: localStorage.getItem("token") || "",
-  token: "",
   isLoading: false,
   error: null,
+  decodedToken :localStorage.getItem("decodedToken") || ""
 }
 
 export const userSlice = createSlice({
@@ -15,6 +15,7 @@ export const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("decodedToken");
       state.currentUser = null;
       state.token = "";
     },
@@ -39,7 +40,10 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.token = action.payload.token;
+        state.decodedToken = action.payload.decodedToken;
         state.currentUser = action.payload.user;
+        localStorage.setItem('token',action.payload.token);
+        localStorage.setItem('decodedToken',action.payload.decodedToken)
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -52,6 +56,7 @@ export const userSlice = createSlice({
 });
 
 export const selectToken = (state) => state.user.token;
+export const selectDecodedToken = (state) => state.user.decodedToken;
 export const selectCurrentUser = (state) => state.user.currentUser;
 export const selectIsLoading = (state) => state.user.isLoading;
 export const selectError = (state) => state.user.error;
