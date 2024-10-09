@@ -23,6 +23,15 @@ const getProduct = async (productId) => {
   }
 }
 
+const checkDiscount = async (discountCode) => {
+  try {
+    const response = await axios.get(`${API_URL}/checkDiscount/${discountCode}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    throw error;
+  }
+}
 const getProductBreadCrumb = async (productId) => {
   try {
     console.log(">>getProductBreadCrumb")
@@ -71,5 +80,6 @@ export default {
   getProduct,
   addProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  checkDiscount
 };

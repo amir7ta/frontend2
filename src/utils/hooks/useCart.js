@@ -12,6 +12,9 @@ export const useCart = () => {
   const total = useSelector(state => state.cart.total);
   const quantity = items.reduce((acc, item) => acc + item.quantity, 0);
   const orderId = useSelector(state => state.cart.orderId);
+  const error = useSelector(state => state.cart.error);
+  const errorMessage = useSelector(state => state.cart.errorMessage);
+  const discountPrice = useSelector(state => state.cart.discountPrice);
 
   useEffect(() => {
     dispatch(calculateSubtotal());
@@ -52,12 +55,7 @@ export const useCart = () => {
   };
 
   const applyDiscountHandler = (discountCode) => {
-    const discount = 0.1;
-    if(discountCode.toLowerCase() === "10off"){
-      dispatch(applyDiscount({ discount }));
-    } else{
-      alert("کد تخفیف اشتباه است")
-    }
+    dispatch(applyDiscount(discountCode));
   }; 
 
   const applyCardIsSavedHandler = (orderId) => {
@@ -83,7 +81,10 @@ export const useCart = () => {
     total: total, 
     quantity,
     discount,
-    orderId
+    orderId,
+    error,
+    errorMessage,
+    discountPrice
   };
 };
 

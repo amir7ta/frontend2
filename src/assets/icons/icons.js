@@ -20,4 +20,4 @@ export const icons = {
   question:faQuestionCircle,
   notOk:faExclamationCircle,
    star:faStar
-};
+  };

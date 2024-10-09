@@ -9,8 +9,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 
-function Payment() {
-  const [value, setValue] = React.useState('');
+function Payment({selected,onChange}) {
+  const [value, setValue] = React.useState(selected);
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState('لطفا درگاه پرداخت را انتخاب نمایید.');
   const { setBankName} = usePayment();
@@ -20,7 +20,8 @@ function Payment() {
   const handleRadioChange = (event) => {
     setValue(event.target.value);
     setBankName(event.target.value);
-    setHelperText(' ');
+    onChange(event.target.value)
+    // setHelperText(' ');
     setError(false);
   };
 
@@ -35,7 +36,7 @@ function Payment() {
       <h1>نحوه پرداخت</h1>
       <div className="line-divider"></div>
       
-      <div className="payment-option">
+      {/* <div className="payment-option">
         
         <label>
           <input name="bankName" type="radio" value="ZIBAL" onChange={e=>handleChange(e)} checked={bankState === "ZIBAL"} />
@@ -48,7 +49,7 @@ function Payment() {
           <input name="bankName" type="radio" value="ZARINPAL" onChange={handleChange} checked={bankState === "ZARINPAL"}/>
           درگاه پرداخت &#40; زرین پال&#41;
         </label>  
-      </div>
+      </div> */}
    
       {/* <p>شما به درگاه بانکی هدایت می شوید.</p> */}
 
@@ -64,10 +65,10 @@ function Payment() {
           <FormControlLabel value="ZARINPAL" control={<Radio />} label="درگاه پرداخت زرین پال" />
 
         </RadioGroup>
-        <FormHelperText>{helperText}</FormHelperText>
-        <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">
+        {/* <FormHelperText>{helperText}</FormHelperText> */}
+        {/* <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">
           Check Answer
-        </Button>
+        </Button> */}
 
     </div>
   )

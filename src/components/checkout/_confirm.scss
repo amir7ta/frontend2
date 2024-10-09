@@ -5,13 +5,15 @@
     padding: 1rem;
     width: 100%;
     margin-top: 1rem;
+    max-width: 350px;
+    max-height: 550px;
     button{
         border-radius: 0px;
     }
     .line{
         background: $color-lightgrey;
     }
-    @media (max-width: 850px) {
+    @media (max-width: 1000px) {
         flex-wrap: wrap-reverse;
         margin: 1rem 0 0 0;
         max-width: none;
@@ -24,6 +26,13 @@
     width: 100%;    
     max-width: 300px;
     margin-left: 2rem;
+    @media (max-width:750px) {
+        width: 100%;
+        max-width: none;
+        input{
+                width: 100%;
+        }
+    }
 }
 
 .payment-method{
@@ -49,16 +58,70 @@
 .complete{
     width: 100%;
     @include flex(center, center, column);
-    svg{
-        color: $color-blue;
-        height: 100px;   
-        margin: 4rem 0 1rem;
-    }
-    button{
-        margin-top: 1rem;
-    }
+    // svg{
+    //     color: $color-blue;
+    //     height: 100px;   
+    //     margin: 4rem 0 1rem;
+    // }
+    // button{
+    //     margin-top: 1rem;
+    // }
 }
 
+.complete-success{
+    @include flex(center, center, column);
+    width: 100%;
+    direction: rtl;
+    svg{
+        font-size: 50px;
+        color: #3f8d41;
+    }
+    h1{
+       display: inline-block;
+        padding: 1px 1px;
+        color: #4CAF50;
+        justify-content: center;
+        align-items: center;
+        animation: success-animation 1s ease-in-out;
+    }
+    p{
+        padding: 1rem;
+    }
+    @keyframes success-animation {
+        0% {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      button{
+        width: 150px;
+        padding: 5px;
+        background-color: var(--color-button-primary);
+        color: white;
+        border :#c6c9cb;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover{
+        width: 150px;
+        padding: 5px;
+        background-color: var(--color-button-primary);
+        color: white;
+        border :#178edd;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      
+}
 .wating{
     width: 100%;
     @include flex(center, center, column);
@@ -71,3 +134,19 @@
         margin-top: 1rem;
     }
 }
+
+.checkout-complete-pay-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* فاصله بین آیکون و متن */
+  }
+  .checkout-complete-pay-button .fa {
+    font-size: 16px; /* یا هر اندازه‌ای که می‌خواهید */
+  }
+
+  .not-success-pay{
+    color: var(--color-hint-text-error);
+    padding: 2rem;
+
+  }

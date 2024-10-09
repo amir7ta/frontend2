@@ -1,15 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import ProductSizes from './SizesTable';
-import { useProduct } from '../../utils/hooks/useProduct';
 import { useStock } from '../../utils/hooks/useUtil';
-
+import {
+  selectProducts,
+  selectMoreProducts,
+  selectLoading,
+  selectError,
+  selectStatus,
+  fetchMoreProducts,
+  fetchProducts,
+} from "../../store/reducers/productSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 function Products() {
-  const { products, fetchProducts, createProduct, updateExistingProduct, removeProduct } = useProduct();
+  const products = useSelector(selectProducts);
+  const moreProducts = useSelector(selectMoreProducts);
+  const loading = useSelector(selectLoading);
+  const apiStatus = useSelector(selectStatus);
+  const error = useSelector(selectError);
+  
   const [localProduct, setLocalProduct] = useState({});
   const getStock = useStock();
   const product = products.find((product) => product?.productId === localProduct?.productId);
-
+  const filtersFromParams = {
+    // minPrice: params.get("minprice"),
+    // maxPrice: params.get("maxprice"),
+    // inStock: params.get("instock") === "true",
+    // brands: [],
+    // categoryRoute,
+    // sort: params.get("sort") ? parseInt(params.get("sort"), 10) : null,
+    // page: params.get("page"),
+    // pageSize: params.get("pagesize"),
+  };
   const mapProduct=(prod)=>{
     console.log(prod)
     return ( 
@@ -23,9 +45,7 @@ function Products() {
   useEffect(() => {
     fetchProducts();
   }, [products])
-  useEffect(() => {
-    console.log(products);
-  }, [])
+ 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

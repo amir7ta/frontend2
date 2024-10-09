@@ -30,19 +30,19 @@ export const fetchProductBreadCrumb = createAsyncThunk('categories/fetchProductB
 });
 
 
-export const createCategory = createAsyncThunk('products/createCategory', async (product) => {
-  const createdProduct = await categoryApi.addProduct(product);
-  return createdProduct;
+export const createCategory = createAsyncThunk('products/createCategory', async (model) => {
+  const created = await categoryApi.addCategory(model);
+  return created;
 });
 
-export const updateExistingCategory = createAsyncThunk('products/updateExistingCategory', async ({ productId, product }) => {
-  const updated = await categoryApi.updateProduct(productId, product);
+export const updateExistingCategory = createAsyncThunk('products/updateExistingCategory', async ({ categoryId, category }) => {
+  const updated = await categoryApi.updateCategory(categoryId, category);
   return updated;
 });
 
-export const removeProduct = createAsyncThunk('products/removeProduct', async (productId) => {
-  const deletedProduct = await productApi.deleteProduct(productId);
-  return deletedProduct;
+export const deleteCategory = createAsyncThunk('products/deleteCategory', async (categoryId) => {
+  const deleted = await categoryApi.deleteCategory(categoryId);
+  return deleted;
 });
 
 const categorySlice = createSlice({

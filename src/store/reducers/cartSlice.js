@@ -1,6 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import productApi from '../../utils/api/productApi';
 
 export const DELIVERY_THRESHOLD = 1000000;
+
+export const applyDiscount = createAsyncThunk('cart/applyDiscount', async (discountCode) => {
+   const result = await productApi.checkDiscount(discountCode);
+  return result;
+});
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -11,8 +17,12 @@ const cartSlice = createSlice({
       subtotal: 0,
       delivery: 0,
       discount: 0,
+      discountPrice: 0,
       total: 0,
-      orderId:0
+      orderId:0,
+      error :false,
+      errorMessage:'',
+      status:'',
   },
   reducers: {
     addToCart: (state, action) => {
@@ -57,20 +67,39 @@ const cartSlice = createSlice({
     updateDelivery: (state, action) => {
       state.delivery = action.payload.deliveryCost;
     },
-    applyDiscount: (state, action) => {
-      state.discount = action.payload.discount;
-      console.log("discount sat:",state.discount)
-    },
+    // applyDiscount: (state, action) => {
+    //   state.discount = action.payload.discount;
+    //   console.log("discount sat:",state.discount)
+    // },
     applyCardIsSaved: (state, action) => {
       state.orderId = action.payload.orderId;
       console.log("cart is saved:",state.orderId)
     },
     getTotal: (state) => {
-      state.total =  state.subtotal - (state.subtotal * state.discount) + state.delivery;
+      state.total =  state.subtotal - (state.subtotal/100 * state.discount) + state.delivery;
+      state.discountPrice = state.discount? (state.subtotal/100 * state.discount):0;
+
     }
-  }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(applyDiscount.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(applyDiscount.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.discount = action.payload;
+        state.error=false;
+      })
+      .addCase(applyDiscount.rejected, (state, action) => {
+        state.status = 'failed';
+        state.errorMessage = 'کد تخفیف معتبر نمی باشد';
+        state.discount ='';
+        state.error = true;
+      });
+  },
 });
 
-export const { addToCart, removeFromCart, updateQuantity, clearCart, calculateSubtotal, updateDelivery, applyDiscount, getTotal, applyCardIsSaved } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, clearCart, calculateSubtotal, updateDelivery, getTotal, applyCardIsSaved } = cartSlice.actions;
 
 export default cartSlice.reducer;

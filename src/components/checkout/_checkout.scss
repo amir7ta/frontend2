@@ -6,6 +6,7 @@
     @media (max-width: 850px) {
         display: block;
         padding: 5rem 1rem;
+        padding-bottom: 150px;
     }
 }
 
@@ -23,6 +24,7 @@
     p, span{
     font-size: 0.7rem;
     text-align: center;
+    width: 70px;
     }
     span{
         border: 1px solid $color-lightgrey;
@@ -61,7 +63,7 @@
 .checkout-container{
     @include flex(flex-start, center, column);
     width: 100%;    
-    max-width: 800px;
+    max-width: 1200px;
     padding: 1rem;
     min-height: 80vh;
 }
@@ -70,10 +72,10 @@
     min-height: 20vh;
     margin-top: 2rem;
     width: 100%;    
-    max-width: 800px;
-    button {
-        display: inline-block;
-      }
+    max-width: 1200px;
+    // button {
+    //     display: inline-block;
+    //   }
     h1, h2{
         font-size: 1rem;
         margin: 0.5rem 0 0rem;
@@ -103,15 +105,35 @@
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
+    @media (max-width:850px) {
+        width: 100%;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        position: fixed;
+        bottom: 4.5rem;
+        padding: 10px;
+        background: rgb(160, 159, 159);
+        box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid #e0e0e0;
+    }
 }
 
 .checkout-contentbox{
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    @media (max-width:1000px) {
+        flex-direction: column;
+    }
 }
 
 
 .checkout-left{
     width: 100%;
+    margin-left:10px ;
+
 }
 
 .checkout-next-button{
@@ -129,7 +151,7 @@
     margin-right: 10px;
   }
   .checkout-back-button{
-    background-color: #ff9800;
+    background-color: #ff9900ea;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,3 +178,82 @@
     height: 43px;
     margin-right: 10px;
   }
+
+  .error {
+    color: #fff;
+    background-color: #e74c3c;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .error::before {
+    content: '⚠️ ';
+    font-size: 16px;
+  }
+
+
+
+
+  .delivery-address {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+  }
+  
+  .location-icon {
+    font-size: 24px;
+    color: #e74c3c; // رنگ نماد لوکیشن
+    margin-right: 10px;
+  }
+  
+  .address-details p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .line-divider {
+    border-bottom: 1px solid #e0e0e0;
+    margin: 15px 0;
+  }
+  
+  .discount-code {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .discount-code input {
+    width: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .discount-code button {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .discount-code button:hover {
+    background-color: #45a049;
+  }
+  
+  .error {
+    color: #ffffff;
+    background-color: #e74c3c;
+    font-size: 12px;
+    margin-top: 10px;
+    width: 100%;
+  }
+.rotated-icon{
+    transform: rotate(180deg);
+}
