@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { variables } from './variables.js';
+import qs from 'qs';
 
 const API_URL = variables.CATEGORY_API
 
@@ -78,9 +79,13 @@ const getProductBreadCrumb = async (productId) => {
   }
 }
 
-const addCategory = async (product) => {
+const addCategory = async (Category) => {
   try {
-    const response = await axios.post(API_URL, product);
+    const response = await axios.post(API_URL, Category, {
+      headers: {
+        'Content-Type': 'multipart/form-data' // هدر مناسب برای ارسال فرم
+      }
+    });
     return response.data;
   } catch (error) {
     console.error('Error adding Category:', error);
@@ -88,19 +93,50 @@ const addCategory = async (product) => {
   }
 }
 
-const updateCategory = async (productId, product) => {
+const activeCategory = async (categoryId) => {
   try {
-    const response = await axios.put(`${API_URL}/${productId}`, product);
+    const response = await axios.post(`${API_URL}/active`, categoryId, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error active Category:', error);
+    throw error;
+  }
+}
+
+const deactiveCategory = async (categoryId) => {
+  try {
+    const response = await axios.post(`${API_URL}/deactive`, categoryId, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });    return response.data;
+  } catch (error) {
+    console.error('Error deactive Category:', error);
+    throw error;
+  }
+}
+
+const updateCategory = async (categoryId, category) => {
+  try {
+    const response = await axios.put(`${API_URL}/${categoryId}`, category, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     return response.data;
   } catch (error) {
     console.error('Error updating Category:', error);
     throw error;
   }
-}
+};
 
-const deleteCategory = async (productId) => {
+const deleteCategory = async (categoryId) => {
   try {
-    const response = await axios.delete(`${API_URL}/${productId}`);
+    const response = await axios.delete(`${API_URL}/${categoryId}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting Category:', error);
@@ -118,5 +154,7 @@ export default {
   updateCategory,
   deleteCategory,
   getCategoriesHirearchyByRoute,
-  getCategoryBreadCrumb
+  getCategoryBreadCrumb,
+  deactiveCategory,
+  activeCategory
 };

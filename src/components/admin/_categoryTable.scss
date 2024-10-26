@@ -24,14 +24,14 @@ form {
   margin-bottom: 20px;
 }
 
-input[type="text"],
-input[type="number"] {
-  padding: 8px;
-  margin: 0 10px;
-  width: 150px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+// input[type="text"],
+// input[type="number"] {
+//   padding: 8px;
+//   margin: 0 10px;
+//   width: 150px;
+//   border: 1px solid #ccc;
+//   border-radius: 4px;
+// }
 
 button {
   padding: 8px 12px;
@@ -45,11 +45,11 @@ button[type="submit"] {
   color: rgb(0, 0, 0);
 }
 
-button:not([type="submit"]) {
-  background-color: #f44336;
-  color: rgb(0, 0, 0);
-  margin-left: 5px;
-}
+// button:not([type="submit"]) {
+//   background-color: #f44336;
+//   color: rgb(0, 0, 0);
+//   margin-left: 5px;
+// }
 
 button[type="submit"]:hover,
 button:not([type="submit"]):hover {
@@ -90,4 +90,40 @@ button:not([type="submit"]):hover {
 .pagination-container button:hover:not(:disabled) {
   background-color: #0056b3;
   color: white;
+}
+.cat-filter-container {
+  padding: 10px;
+  display: none !important;
+  flex-wrap: wrap;
+  gap: 8px;
+  // grid-template-columns: repeat(3, 1fr); /* در نمای دسکتاپ هر فیلتر یک سوم عرض */
+  @media (min-width: 1000px) {
+      grid-template-columns: repeat(3, 1fr); /* در نمای دسکتاپ هر فیلتر یک سوم عرض */
+  }
+}
+
+.cat-filter-container.open {
+  display: flex !important; /* وقتی که فیلترها باز می‌شوند، نمایش داده می‌شوند */
+}
+
+.cat-filter-item {
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 150px; /* مقدار اولیه برای موبایل */
+  //max-width: 300px; /* مقدار محدود کننده */
+}
+.cat-grid-toolbar{
+  padding: 10px;
+}
+/* استایل دکمه */
+.filter-button {
+  padding: 10px 15px;
+  background-color: #b67701; /* رنگ پس‌زمینه */
+  color: white; /* رنگ متن */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer; /* نشانگر ماوس به شکل دست */
+}
+.filter-button:hover {
+  background-color: #ffa601; /* رنگ پس‌زمینه هنگام هاور */
 }

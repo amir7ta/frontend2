@@ -8,6 +8,20 @@
         padding: 1rem;
     }
 }
+.admin-container{
+    min-height: 90vh;
+    width: 100%;
+    margin: auto;
+    max-width: 1800px;
+    padding: 5rem 1rem;
+    @media (max-width: 850px) {
+        padding: 1rem;
+    }
+    h2{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
 
 .flex{
     @include flex(center, flex-start, row);

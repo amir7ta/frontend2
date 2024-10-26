@@ -3,3 +3,4 @@ export const modalGridPageSize = 5;
 // export const baseHostUrl = "http://localhost:1499";
 export const baseHostUrl = "https://localhost:7089";
 export const baseApiUrl = `${baseHostUrl}/api/v1`;
+export const CATEGORY_IMAGES = `${baseHostUrl}/images/categories`;

@@ -30,17 +30,45 @@ export const fetchProductBreadCrumb = createAsyncThunk('categories/fetchProductB
 });
 
 
-export const createCategory = createAsyncThunk('products/createCategory', async (model) => {
-  const created = await categoryApi.addCategory(model);
+export const createCategory = createAsyncThunk('categories/createCategory', async (category) => {
+  const formData = new FormData();  // تعریف formData در اینجا
+  formData.append('categoryId', '');
+  formData.append('title', category.title);
+  formData.append('parentCategoryId', category.parentCategoryId ?? '');
+  formData.append('route', category.route);
+  formData.append('image', category.image);  // اضافه کردن فایل تصویر به FormData
+  formData.append('imagePath', category.imagePath);  // اضافه کردن فایل تصویر به FormData
+  const created = await categoryApi.addCategory(formData);
   return created;
 });
 
-export const updateExistingCategory = createAsyncThunk('products/updateExistingCategory', async ({ categoryId, category }) => {
-  const updated = await categoryApi.updateCategory(categoryId, category);
+export const activeCategory = createAsyncThunk('categories/activeCategory', async (categoryId) => {
+  
+  const result = await categoryApi.activeCategory(categoryId);
+  return result;
+});
+
+export const deactiveCategory = createAsyncThunk('categories/deactiveCategory', async (categoryId) => {
+  
+  const result = await categoryApi.deactiveCategory(categoryId);
+  return result;
+});
+
+export const updateExistingCategory = createAsyncThunk('categories/updateExistingCategory', async ({ categoryId, category }) => {
+  const formData = new FormData();
+  
+  // اضافه کردن فیلدهای دسته بندی به FormData
+  formData.append('categoryId', category.categoryId);
+  formData.append('title', category.title);
+  formData.append('parentCategoryId', category.parentCategoryId ?? '');
+  formData.append('route', category.route);
+  formData.append('image', category.image);  // اضافه کردن فایل تصویر به FormData
+  formData.append('imagePath', category.imagePath);  // اضافه کردن فایل تصویر به FormData
+  const updated = await categoryApi.updateCategory(categoryId, formData);
   return updated;
 });
 
-export const deleteCategory = createAsyncThunk('products/deleteCategory', async (categoryId) => {
+export const deleteCategory = createAsyncThunk('categories/deleteCategory', async (categoryId) => {
   const deleted = await categoryApi.deleteCategory(categoryId);
   return deleted;
 });
@@ -122,6 +150,48 @@ const categorySlice = createSlice({
       })
       .addCase(fetchCategoryBreadCrumb.rejected, (state, action) => {
         state.status = 'failed';
+        state.error = action.error.message;
+      })
+
+      .addCase(updateExistingCategory.pending, (state) => {
+        state.status = 'loading';
+        state.loading = true;
+      })
+      .addCase(updateExistingCategory.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.loading = false;
+      })
+      .addCase(updateExistingCategory.rejected, (state, action) => {
+        state.status = 'failed';
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      .addCase(activeCategory.pending, (state) => {
+        state.status = 'loading';
+        state.loading = true;
+      })
+      .addCase(activeCategory.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.loading = false;
+      })
+      .addCase(activeCategory.rejected, (state, action) => {
+        state.status = 'failed';
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      .addCase(deactiveCategory.pending, (state) => {
+        state.status = 'loading';
+        state.loading = true;
+      })
+      .addCase(deactiveCategory.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.loading = false;
+      })
+      .addCase(deactiveCategory.rejected, (state, action) => {
+        state.status = 'failed';
+        state.loading = false;
         state.error = action.error.message;
       })
     },
